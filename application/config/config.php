@@ -26,7 +26,7 @@ $config['base_url']	= 'http://localhost/biblioeedam/';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -224,7 +224,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = '1bc29b36f623ba82aaf6724fd3b16718';
 
 /*
 |--------------------------------------------------------------------------

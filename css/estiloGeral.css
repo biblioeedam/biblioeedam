@@ -1,0 +1,20 @@
+
+body{
+    background-image: url("imagens/fundoTop2.png");
+    background-position: center top;
+    background-repeat: repeat-x;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.centralizar {
+    text-align: center;
+}
+
+.titulo03 {
+    margin: 20px 20px 30px 20px;
+}
+
+.pJustificado {
+    text-align: justify;
+}
