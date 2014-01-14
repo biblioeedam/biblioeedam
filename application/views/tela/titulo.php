@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title> Prefeitura Municipal de São João da Ponte</title>
+        <title> Sistema Biblioteca  </title>
 
         <link rel="stylesheet" href="<?php echo base_url(); ?>bt/css/bootstrap.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>bt/css/bootstrap.min.css">
