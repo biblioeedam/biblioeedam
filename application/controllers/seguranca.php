@@ -58,7 +58,7 @@ class seguranca extends CI_Controller {
             $teste = TRUE;
         }
         if ($teste == TRUE) {
-            $this->form_validation->set_rules('usuario', 'Usuario', 'required|trim|min_length[5]');
+            $this->form_validation->set_rules('login', 'Login', 'required|trim|min_length[5]');
             $this->form_validation->set_rules('senha', 'Senha', 'required|min_length[6]|callback_validarUsuario_check');
             $this->form_validation->set_rules('textoImagem', 'Codigo', '');
         }
@@ -91,7 +91,7 @@ class seguranca extends CI_Controller {
 
     function validarUsuario_check() {
         $dadosLogin = array(
-            'usuario_funcionario' => $this->input->post('usuario'),
+            'login_funcionario' => $this->input->post('login'),
             'senha_funcionario' => md5($this->input->post('senha'))
         );
 
@@ -106,7 +106,7 @@ class seguranca extends CI_Controller {
                 $dadosUser = array(
                     'id_funcionario' => $ul->id_funcionario,
                     'nome_funcionario' => $ul->nome_funcionario,
-                    'usuario_funcionario' => $ul->usuario_funcionario,
+                    'login_funcionario' => $ul->login_funcionario,
                     'senha_funcionario' => $ul->senha_funcionario
                 );
                 $this->session->set_userdata($dadosUser);

@@ -13,7 +13,7 @@ class inicio extends CI_Controller {
 
     public function index() {
 
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('usuario_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
 
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');

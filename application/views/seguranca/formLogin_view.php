@@ -50,8 +50,8 @@
                         <span class="text-error"> 
                             <?php echo validation_errors(); ?>
                         </span>
-                        <label> usuario: </label>
-                        <input type="text" name="usuario" class="form-control" required /><br/>
+                        <label> Login: </label>
+                        <input type="text" name="login" class="form-control" required /><br/>
                         <label> Senha: </label>
                         <input type="password" name="senha" class="form-control" required />                        
                         <br/>

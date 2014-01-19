@@ -17,7 +17,7 @@ class funcionario_model extends CI_Model {
     }
 
     function obterFuncionarioLogin($dados) {
-        return $this->db->get_where('funcionario', array('usuario_funcionario' => $dados['usuario_funcionario'], 'senha_funcionario' => $dados['senha_funcionario']));
+        return $this->db->get_where('funcionario', array('login_funcionario' => $dados['login_funcionario'], 'senha_funcionario' => $dados['senha_funcionario']));
     }
 
 //put your code here
