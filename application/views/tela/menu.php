@@ -40,7 +40,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo base_url("#") ?>"> SubMenu01</a></li>
                         <li><a href="<?php echo base_url("#") ?>"> SubMenu02</a></li>
-                        <li><a href="<?php echo base_url("#") ?>"> SubMenu03</a></li>
+                        <li><a href="<?php echo base_url("funcionarios_controller") ?>"> Funcionario</a></li>
 
                     </ul>
                 </li>
