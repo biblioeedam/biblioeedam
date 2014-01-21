@@ -6,13 +6,15 @@
 </head>
 <body>
    <div>
+       Usuários Cadastrados
         <ul>
         <?php
-            foreach ($usuarios as $a){
+        
+            foreach ($funcionario as $a){
                 
                 echo '<li>';
-                echo anchor("funcionarios_controller/apagar_funcionario/$a->id",'Apagar - ');
-                echo $a->nome.'&nbsp; &nbsp; / &nbsp;'.$a->email;
+                //echo anchor("funcionarios/apagar_funcionario/$a->id",'Apagar - ');
+                echo $a->nome_funcionario.'&nbsp; &nbsp; / &nbsp;'.$a->login_funcionario;
                 
                 echo '</li>';
                 
