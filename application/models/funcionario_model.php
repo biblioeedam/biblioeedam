@@ -29,6 +29,12 @@ class funcionario_model extends CI_Model {
         $this->db->insert('funcionario', $dados);
         return $this->db->affected_rows();
     }
+    
+    function apagarFuncionario(){
+        $this->db->where('id_funcionario',$this->uri->segment(3));
+        $this->db->delete('funcionario');
+        return $this->db->affected_rows();
+    }
 
 //put your code here
 }

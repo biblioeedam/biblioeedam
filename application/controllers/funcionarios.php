@@ -27,10 +27,24 @@ class funcionarios extends CI_Controller {
                    
     }
     
-    function cadastrar_funcionario(){
+    function cadastrarFuncionario(){
+        $datos = array(
+                    nome_funcionario => $this->input->post('nome'),
+                    login_funcionario=> $this->input->post('login'),
+                    senha_funcionario=> $this->input->post('senha')
+                    
+                );
+                if($this->funcionario_model->cadastrarFuncionario($datos)){
+                    redirect('funcionarios');
+                }
     }
     
-    function apagar_funcionario(){
+    function apagarFuncionario(){
+        if($this->funcionario_model->apagarFuncionario()){
+          redirect('funcionarios');
+        }else{
+          die('Maiko Thadeu Erro');
+        }
         
     }
 
