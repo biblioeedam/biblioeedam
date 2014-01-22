@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Pratileira extends CI_Controller {
+class Prateleira extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -13,7 +13,7 @@ class Pratileira extends CI_Controller {
         $this->load->database();
         $this->load->helper('form');
         $this->load->library('form_validation');
-        $this->load->model("pratileira_model");
+        $this->load->model("prateleira_model");
     }
 
     public function index() {
@@ -21,14 +21,14 @@ class Pratileira extends CI_Controller {
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
 
             $dados = array(
-                'todas_prateleiras' => $this->pratileira_model->obterTodasPrateleiras()->result()
+                'todas_prateleiras' => $this->prateleira_model->obterTodasPrateleiras()->result()
             );
 
 
 
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
-            $this->load->view('pratileira/tabela_pratileira_view', $dados);
+            $this->load->view('prateleira/tabela_prateleira_view', $dados);
 
             $this->load->view('tela/rodape');
         } else {
@@ -36,24 +36,24 @@ class Pratileira extends CI_Controller {
         }
     }
 
-    public function nova_pratileira() {
+    public function nova_prateleira() {
 
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
 
-            $proxima_pratileira = 0;
+            $proxima_prateleira = 0;
 
-            foreach ($this->pratileira_model->obterUltimaPratileira()->result() as $up) {
-                $proxima_pratileira = $up->ultima_pratileira + 1;
+            foreach ($this->prateleira_model->obterUltimaPrateleira()->result() as $up) {
+                $proxima_prateleira = $up->ultima_prateleira + 1;
             }
 
             $dados = array(
-                'proxima_pratileira' => $proxima_pratileira,
+                'proxima_prateleira' => $proxima_prateleira,
             );
 
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
-            $this->load->view('pratileira/forme_nova_pratileira_view', $dados);
+            $this->load->view('prateleira/forme_nova_prateleira_view', $dados);
 
             $this->load->view('tela/rodape');
         } else {
@@ -61,35 +61,35 @@ class Pratileira extends CI_Controller {
         }
     }
 
-    public function salva_pratileira() {
+    public function salva_prateleira() {
 
-        $this->form_validation->set_rules('nomePratileira', 'Nome Pratileira', "required");
+        $this->form_validation->set_rules('nomePrateleira', 'Nome Prateleira', "required");
 
         if ($this->form_validation->run() == false) {
-            foreach ($this->pratileira_model->obterUltimaPratileira()->result() as $up) {
-                $proxima_pratileira = $up->ultima_pratileira + 1;
+            foreach ($this->prateleira_model->obterUltimaPrateleira()->result() as $up) {
+                $proxima_prateleira = $up->ultima_prateleira + 1;
             }
 
             $dados = array(
-                'proxima_pratileira' => $proxima_pratileira,
+                'proxima_prateleira' => $proxima_prateleira,
             );
 
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
-            $this->load->view('pratileira/forme_nova_pratileira_view', $dados);
+            $this->load->view('prateleira/forme_nova_prateleira_view', $dados);
             $this->load->view('tela/rodape');
         } else {
 
-            $nome_pratileira = $_POST['nomePratileira'];
+            $nome_prateleira = $_POST['nomePrateleira'];
 
             $dados = array(
-                'id_patileira' => '',
-                'nome_patileira' => $nome_pratileira
+                'id_prateleira' => '',
+                'nome_prateleira' => $nome_prateleira
             );
 
-            $this->pratileira_model->salvarPratileira($dados)->result();
+            $this->prateleira_model->salvarPrateleira($dados);
 
-            redirect(base_url('pratileira'));
+            redirect(base_url('prateleira'));
         }
     }
 
@@ -98,16 +98,16 @@ class Pratileira extends CI_Controller {
         $id_prateleira = $this->uri->segment(3);
 
         if (empty($id_prateleira)) {
-            redirect(base_url('pratileira'));
+            redirect(base_url('prateleira'));
         } else {
             $id_prateleira;
             $nome_prateleira;
 
-            $query = $this->pratileira_model->obterUmaPrateleira($id_prateleira)->result();
+            $query = $this->prateleira_model->obterUmaPrateleira($id_prateleira)->result();
 
             foreach ($query as $qr) {
-                $id_prateleira = $qr->id_patileira;
-                $nome_prateleira = $qr->nome_patileira;
+                $id_prateleira = $qr->id_prateleira;
+                $nome_prateleira = $qr->nome_prateleira;
             }
 
             $dados = array(
@@ -117,29 +117,29 @@ class Pratileira extends CI_Controller {
 
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
-            $this->load->view('pratileira/forme_alterar_pratileira_view', $dados);
-                $this->load->view('tela/rodape');
+            $this->load->view('prateleira/forme_alterar_prateleira_view', $dados);
+            $this->load->view('tela/rodape');
         }
     }
 
-    public function salva_pratileira_alterada() {
-        $this->form_validation->set_rules('nomePratileira', 'Nome Pratileira', "required");
-       
+    public function salva_prateleira_alterada() {
+        $this->form_validation->set_rules('nomePrateleira', 'Nome Prateleira', "required");
+
         $id_prateleira = $_POST['idPrateleira'];
-        
+
         if ($this->form_validation->run() == false) {
-            redirect('pratileira/alterar_prateleira/' . $id_prateleira);
+            redirect('prateleira/alterar_prateleira/' . $id_prateleira);
         } else {
 
-            $nome_pratileira = $_POST['nomePratileira'];
+            $nome_prateleira = $_POST['nomePrateleira'];
 
             $dados = array(
-                'nome_patileira' => $nome_pratileira
+                'nome_prateleira' => $nome_prateleira
             );
 
-            $this->pratileira_model->salvarPratileiraAlterada($dados,$id_prateleira);
+            $this->prateleira_model->salvarPrateleiraAlterada($dados, $id_prateleira);
 
-            redirect(base_url('pratileira'));
+            redirect(base_url('prateleira'));
         }
     }
 
@@ -148,12 +148,12 @@ class Pratileira extends CI_Controller {
         $id_prateleira = $this->uri->segment(3);
 
         if (empty($id_prateleira)) {
-            redirect(base_url('pratileira'));
+            redirect(base_url('prateleira'));
         } else {
 
-            $this->pratileira_model->excluirPratileira($id_prateleira);
+            $this->prateleira_model->excluirPrateleira($id_prateleira);
 
-            redirect(base_url('pratileira'));
+            redirect(base_url('prateleira'));
         }
     }
 
