@@ -33,7 +33,7 @@ class prateleira_model extends CI_Model {
         $this->db->where('id_prateleira',$id_pratelerira);
         $this->db->update('prateleira', $dados);
     }
-                function excluirPrateleira($id) {
+    function excluirPrateleira($id) {
         $this->db->delete('prateleira', array('id_prateleira' => $id));
     }
 

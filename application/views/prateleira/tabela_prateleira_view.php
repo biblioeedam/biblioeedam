@@ -26,5 +26,4 @@
             <?php } ?>
         </tbody>
     </table>
-
 </div>

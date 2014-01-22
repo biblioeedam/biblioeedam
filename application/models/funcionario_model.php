@@ -21,19 +21,25 @@ class funcionario_model extends CI_Model {
     }
     
     function obterTodosFuncionarios(){
-        $query = $this->db->get('funcionario');
-        return $query->result();
+        return $this->db->get('funcionario');
     }
     
-    function cadastrarFuncionario($dados=array()){
+    function obterUmFuncionario($id_funcionario) {
+        return $this->db->get_where('funcionario', array('id_funcionario' => $id_funcionario));
+    }
+    
+    function salvarFuncionario($dados=array()){
         $this->db->insert('funcionario', $dados);
         return $this->db->affected_rows();
     }
     
-    function apagarFuncionario(){
-        $this->db->where('id_funcionario',$this->uri->segment(3));
-        $this->db->delete('funcionario');
-        return $this->db->affected_rows();
+    function salvarFuncionarioAlterado($dados,$id_funcionario){
+        $this->db->where('id_funcionario',$id_funcionario);
+        $this->db->update('funcionario', $dados);
+    }
+    
+    function excluirFuncionario($id){
+        $this->db->delete('funcionario', array('id_funcionario' => $id));
     }
 
 //put your code here

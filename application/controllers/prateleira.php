@@ -24,8 +24,6 @@ class Prateleira extends CI_Controller {
                 'todas_prateleiras' => $this->prateleira_model->obterTodasPrateleiras()->result()
             );
 
-
-
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
             $this->load->view('prateleira/tabela_prateleira_view', $dados);
