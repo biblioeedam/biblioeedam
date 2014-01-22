@@ -118,7 +118,7 @@ class Pratileira extends CI_Controller {
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
             $this->load->view('pratileira/forme_alterar_pratileira_view', $dados);
-            $this->load->view('tela/rodape');
+                $this->load->view('tela/rodape');
         }
     }
 
