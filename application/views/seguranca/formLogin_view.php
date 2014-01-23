@@ -46,7 +46,7 @@
                 <form name="frmLogin" action="<?php echo base_url() . "seguranca/logarUsuario" ?>" method="post">
                     <fieldset>
 
-                        <legend> Painel de Controle </legend>
+                        <legend> BIBLIO EEDAM - LOGIN </legend>
                         <span class="text-error"> 
                             <?php echo validation_errors(); ?>
                         </span>

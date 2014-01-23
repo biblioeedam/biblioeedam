@@ -21,7 +21,7 @@ class funcionario_model extends CI_Model {
     }
     
     function obterTodosFuncionarios(){
-        return $this->db->get('funcionario');
+        return $this->db->get_where('funcionario', array('status_funcionario' => 'a'));
     }
     
     function obterUmFuncionario($id_funcionario) {
@@ -38,11 +38,12 @@ class funcionario_model extends CI_Model {
         $this->db->update('funcionario', $dados);
     }
     
-    function excluirFuncionario($id){
-        $this->db->delete('funcionario', array('id_funcionario' => $id));
+    //Função exclui funcionario logicamente
+    function excluirFuncionario($dados, $id_funcionario){
+        $this->db->where('id_funcionario',$id_funcionario);
+        $this->db->update('funcionario', $dados);
     }
 
-//put your code here
 }
 
 ?>

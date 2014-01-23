@@ -16,6 +16,7 @@ class funcionarios extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->model("funcionario_model");
+        $this->load->model("privilegios_model");
     }
     
     function index(){
@@ -38,11 +39,12 @@ class funcionarios extends CI_Controller {
     public function novo_funcionario() {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
-
-           
+               
+            $dados = array('todos_privilegios' => $this->privilegios_model->obterTodosPrivilegios()->result());
+            
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
-            $this->load->view('funcionarios/forme_novo_funcionario_view');
+            $this->load->view('funcionarios/forme_novo_funcionario_view',$dados);
             $this->load->view('tela/rodape');
         } else {
             redirect(base_url() . "seguranca");
@@ -50,16 +52,25 @@ class funcionarios extends CI_Controller {
     }
     
     function salva_funcionario(){
-        $datos = array(
-                    nome_funcionario => $this->input->post('nome'),
-                    login_funcionario=> $this->input->post('login'),
-                    senha_funcionario=> md5($this->input->post('senha'))
-                    
-                );
+        
+        $this->form_validation->set_rules('senha', 'Senha', 'required|matches[senha2]');
+        $this->form_validation->set_rules('senha2', 'Confirmação de Senha', 'required'); 
+        
+        if ($this->form_validation->run() == FALSE){
+            redirect(base_url()."funcionarios/novo_funcionario");
+        }else{
+            $datos = array(
+                        'nome_funcionario' => $this->input->post('nome'),
+                        'login_funcionario' => $this->input->post('login'),
+                        'senha_funcionario' => md5($this->input->post('senha')),
+                        'id_privilegio' => $this->input->post('tipoPermissao'),
+                        'status_funcionario' => 'a'
+                    );
                 
-                if($this->funcionario_model->salvarFuncionario($datos)){
-                    redirect('funcionarios');
-                }
+            if($this->funcionario_model->salvarFuncionario($datos)){
+                redirect('funcionarios');
+            }
+        }         
     }
     
         public function alterar_funcionario() {
@@ -69,9 +80,7 @@ class funcionarios extends CI_Controller {
         if (empty($id_funcionario)) {
             redirect(base_url('funcionario'));
         } else {
-            $id_funcionario;
-            $nome_funcionario;
-
+           
             $query = $this->funcionario_model->obterUmFuncionario($id_funcionario)->result();
 
             foreach ($query as $qr) {
@@ -93,6 +102,7 @@ class funcionarios extends CI_Controller {
         }
     }
     
+    //Função que exclui funcionario logicamente
     public function salva_funcionario_alterado() {
        
             $id_funcionario = $_POST['idFuncionario'];
@@ -115,13 +125,19 @@ class funcionarios extends CI_Controller {
     }
     
     function excluir_funcionario(){
+        
         $id_funcionario = $this->uri->segment(3);
-
+        
+        //Paramento de funcionarios inativo(i)
+        $dados = array(
+                'status_funcionario' => 'i'
+                );
+        
         if (empty($id_funcionario)) {
             redirect(base_url('funcionarios'));
         } else {
-
-            $this->funcionario_model->excluirFuncionario($id_funcionario);
+            
+            $this->funcionario_model->excluirFuncionario($dados, $id_funcionario);
 
             redirect(base_url('funcionarios'));
         }
