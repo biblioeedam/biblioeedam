@@ -41,19 +41,9 @@ class Prateleira extends CI_Controller {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
 
-            $proxima_prateleira = 0;
-
-            foreach ($this->prateleira_model->obterUltimaPrateleira()->result() as $up) {
-                $proxima_prateleira = $up->ultima_prateleira + 1;
-            }
-
-            $dados = array(
-                'proxima_prateleira' => $proxima_prateleira,
-            );
-
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
-            $this->load->view('prateleira/forme_nova_prateleira_view', $dados);
+            $this->load->view('prateleira/forme_nova_prateleira_view');
 
             $this->load->view('tela/rodape');
         } else {
@@ -66,17 +56,10 @@ class Prateleira extends CI_Controller {
         $this->form_validation->set_rules('nomePrateleira', 'Nome Prateleira', "required");
 
         if ($this->form_validation->run() == false) {
-            foreach ($this->prateleira_model->obterUltimaPrateleira()->result() as $up) {
-                $proxima_prateleira = $up->ultima_prateleira + 1;
-            }
-
-            $dados = array(
-                'proxima_prateleira' => $proxima_prateleira,
-            );
 
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
-            $this->load->view('prateleira/forme_nova_prateleira_view', $dados);
+            $this->load->view('prateleira/forme_nova_prateleira_view');
             $this->load->view('tela/rodape');
         } else {
 
@@ -150,8 +133,18 @@ class Prateleira extends CI_Controller {
         if (empty($id_prateleira)) {
             redirect(base_url('prateleira'));
         } else {
+            $verificador = 0;
+            $query = $this->prateleira_model->verificarPrateleiraUtilisada($id_prateleira)->result();
+            foreach ($query as $qy) {
+                $verificador = $qy->prateleira;
+            }
 
-            $this->prateleira_model->excluirPrateleira($id_prateleira);
+            if ($verificador > 0) {
+                
+            } else {
+
+                $this->prateleira_model->excluirPrateleira($id_prateleira);
+            }
 
             redirect(base_url('prateleira'));
         }

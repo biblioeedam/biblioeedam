@@ -7,7 +7,7 @@
             <div class="form-group">
                 <label for="nomePrateleira" class="col-sm-2 control-label">Nome Prateleria</label>
                 <div class="col-sm-10">
-                    <input name="nomePrateleira" class="form-control" id="nomePrateleira" value="<?php echo $proxima_prateleira; ?>" placeholder="Informe o numero da prateleira">
+                    <input name="nomePrateleira" class="form-control" id="nomePrateleira" value="" placeholder="Informe o numero da prateleira">
                     <span class="text-danger"> 
                         <?php echo validation_errors(); ?>
                     </span>
