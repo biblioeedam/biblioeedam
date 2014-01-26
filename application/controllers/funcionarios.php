@@ -5,8 +5,8 @@ if (!defined('BASEPATH'))
     exit
             ('No direct script access allowed');
 
-class funcionarios extends CI_Controller {
-        
+class Funcionarios extends CI_Controller {       
+    
     public function __construct() {
         parent::__construct();
         $this->load->helper('url');
@@ -57,23 +57,29 @@ class funcionarios extends CI_Controller {
         $this->form_validation->set_rules('senha2', 'Confirmação de Senha', 'required'); 
         
         if ($this->form_validation->run() == FALSE){
-            redirect(base_url()."funcionarios/novo_funcionario");
+            
+            $dados = array('todos_privilegios' => $this->privilegios_model->obterTodosPrivilegios()->result());
+            $this->load->view('tela/titulo');
+            $this->load->view('tela/menu');
+            $this->load->view('funcionarios/forme_novo_funcionario_view',$dados);
+            $this->load->view('tela/rodape');
+            
         }else{
-            $datos = array(
+            $dados = array(
                         'nome_funcionario' => $this->input->post('nome'),
                         'login_funcionario' => $this->input->post('login'),
                         'senha_funcionario' => md5($this->input->post('senha')),
                         'id_privilegio' => $this->input->post('tipoPermissao'),
-                        'status_funcionario' => 'a'
+                        'status_funcionario' => '1'
                     );
                 
-            if($this->funcionario_model->salvarFuncionario($datos)){
+            if($this->funcionario_model->salvarFuncionario($dados)){
                 redirect('funcionarios');
             }
         }         
     }
     
-        public function alterar_funcionario() {
+    public function alterar_funcionario() {
 
         $id_funcionario = $this->uri->segment(3);
 
@@ -82,7 +88,8 @@ class funcionarios extends CI_Controller {
         } else {
            
             $query = $this->funcionario_model->obterUmFuncionario($id_funcionario)->result();
-
+            $privilegios = array('todos_privilegios' => $this->privilegios_model->obterTodosPrivilegios()->result());
+            
             foreach ($query as $qr) {
                 $id_funcionario = $qr->id_funcionario;
                 $nome_funcionario = $qr->nome_funcionario;
@@ -92,7 +99,8 @@ class funcionarios extends CI_Controller {
             $dados = array(
                 'id_funcionario' => $id_funcionario,
                 'nome_funcionario' => $nome_funcionario,
-                'login_funcionario' => $login_funcionario
+                'login_funcionario' => $login_funcionario,
+                'dadosPrivilegios' => $privilegios
             );
 
             $this->load->view('tela/titulo');
@@ -105,22 +113,37 @@ class funcionarios extends CI_Controller {
     //Função que exclui funcionario logicamente
     public function salva_funcionario_alterado() {
        
-            $id_funcionario = $_POST['idFuncionario'];
+            $this->form_validation->set_rules('senha', 'Senha', 'required|matches[senha2]');
+            $this->form_validation->set_rules('senha2', 'Confirmação de Senha', 'required'); 
+        
+            if ($this->form_validation->run() == FALSE){
+                $dados = array('todos_privilegios' => $this->privilegios_model->obterTodosPrivilegios()->result());
+                $this->load->view('tela/titulo');
+                $this->load->view('tela/menu');
+                $this->load->view('funcionarios/forme_novo_funcionario_view',$dados);
+                $this->load->view('tela/rodape');
+            }else{    
+                $id_funcionario = $_POST['idFuncionario'];
 
-            $nome_funcionario = $_POST['nome'];
+                $nome_funcionario = $_POST['nome'];
 
-            $login_funcionario = $_POST['login'];
-            
-            $senha_funcionario = $_POST['senha'];
-            $dados = array(
-                'nome_funcionario' => $nome_funcionario,
-                'login_funcionario' => $login_funcionario,
-                'senha_funcionario' => md5($senha_funcionario)
-            );
+                $login_funcionario = $_POST['login'];
 
-            $this->funcionario_model->salvarFuncionarioAlterado($dados, $id_funcionario);
+                $senha_funcionario = $_POST['senha'];
+                
+                $tipoPermissao = $_POST['tipoPermissao'];
+                
+                $dados = array(
+                    'nome_funcionario' => $nome_funcionario,
+                    'login_funcionario' => $login_funcionario,
+                    'senha_funcionario' => md5($senha_funcionario),
+                    'id_privilegio' => $tipoPermissao
+                );
 
-            redirect(base_url('funcionarios'));
+                $this->funcionario_model->salvarFuncionarioAlterado($dados, $id_funcionario);
+
+                redirect(base_url('funcionarios'));
+            }
         
     }
     
