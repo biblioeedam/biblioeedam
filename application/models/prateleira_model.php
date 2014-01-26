@@ -16,9 +16,10 @@ class prateleira_model extends CI_Model {
         return $this->db->get('prateleira');
     }
 
-    function obterUltimaPrateleira() {
-        $this->db->select_max('id_prateleira', 'ultima_prateleira');
-        return $query = $this->db->get('prateleira');
+    function verificarPrateleiraUtilisada($id_prateleira) {
+        $this->db->select_max('prateleira_id_prateleira', 'prateleira');
+        $this->db->where('prateleira_id_prateleira', $id_prateleira);
+        return $query = $this->db->get('secao_prateleira');
     }
 
     function obterUmaPrateleira($id_prateleira) {
@@ -28,11 +29,12 @@ class prateleira_model extends CI_Model {
     function salvarPrateleira($dados) {
         $this->db->insert('prateleira', $dados);
     }
-    
-    function salvarPrateleiraAlterada($dados,$id_pratelerira){
-        $this->db->where('id_prateleira',$id_pratelerira);
+
+    function salvarPrateleiraAlterada($dados, $id_prateleira) {
+        $this->db->where('id_prateleira', $id_prateleira);
         $this->db->update('prateleira', $dados);
     }
+
     function excluirPrateleira($id) {
         $this->db->delete('prateleira', array('id_prateleira' => $id));
     }

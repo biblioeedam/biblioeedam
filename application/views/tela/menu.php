@@ -45,10 +45,10 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Prateleira <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Organização <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo base_url("prateleira") ?>"> Prateleira</a></li>
-                        <li><a href="<?php echo base_url("#") ?>"> SubMenu02</a></li>
+                        <li><a href="<?php echo base_url("secao") ?>"> Seção </a></li>
                         <li><a href="<?php echo base_url("#") ?>"> SubMenu03</a></li>
 
                     </ul>

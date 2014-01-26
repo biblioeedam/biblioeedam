@@ -17,7 +17,10 @@
                 </div><br/>
                 <label for="senha" class="col-sm-2 control-label"> Senha: </label>
                 <div class="col-sm-10">
-                    <input type="password" name="senha" class="form-control" required />   
+                    <input type="password" name="senha" class="form-control" />   
+                    <span class="text-danger"> 
+                        <?php echo validation_errors(); ?>
+                    </span>
                 </div>
                 <br/>
                 <label for="senha2" class="col-sm-2 control-label"> Confirmação de Senha: </label>
@@ -33,7 +36,7 @@
                 <br/>
                 <?php foreach ($todos_privilegios as $tp) { ?>
                 <br/>    
-                <label for="tipoPermissao" class="col-sm-2 control-label"><?php echo $tp->descricao_privilegio ?></label>
+                <label for="tipoPermissao" class="col-sm-2 control-label"><?php echo $tp->nome_privilegio ?></label>
                 <div class="col-sm-10"><br/>    
                     <input type="radio" name="tipoPermissao" value="<?php echo $tp->id_privilegio ?>" class="form-control" required />
                 </div>
