@@ -36,7 +36,7 @@
                 <br/>
                 <?php foreach ($todos_privilegios as $tp) { ?>
                 <br/>    
-                <label for="tipoPermissao" class="col-sm-2 control-label"><?php echo $tp->nome_privilegio ?></label>
+                <label for="tipoPermissao" class="col-sm-2 control-label"><?php echo $tp->descricao_privilegio ?></label>
                 <div class="col-sm-10"><br/>    
                     <input type="radio" name="tipoPermissao" value="<?php echo $tp->id_privilegio ?>" class="form-control" required />
                 </div>
