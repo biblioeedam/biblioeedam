@@ -125,11 +125,11 @@ class Funcionarios extends CI_Controller {
 
                 $nome_funcionario = $_POST['nome'];
 
-        $id_funcionario = $_POST['idFuncionario'];
+                $id_funcionario = $_POST['idFuncionario'];
 
                 $login_funcionario = $_POST['login'];
 
-        $nome_funcionario = $_POST['nome'];
+                $nome_funcionario = $_POST['nome'];
 
                 $senha_funcionario = $_POST['senha'];
                 
@@ -142,7 +142,7 @@ class Funcionarios extends CI_Controller {
                     'id_privilegio' => $tipoPermissao
                 );
 
-        $login_funcionario = $_POST['login'];
+                $login_funcionario = $_POST['login'];
 
                 $this->funcionario_model->salvarFuncionarioAlterado($dados, $id_funcionario);
 
