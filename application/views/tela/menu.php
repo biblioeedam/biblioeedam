@@ -27,20 +27,18 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Leitor <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu02 <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo base_url("#") ?>"> SubMenu01</a></li>
                         <li><a href="<?php echo base_url("#") ?>"> SubMenu02</a></li>
-                        <li><a href="<?php echo base_url("leitores") ?>"> Leitor</a></li>
 
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Funcionarios <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Pessoas <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo base_url("#") ?>"> SubMenu01</a></li>
-                        <li><a href="<?php echo base_url("#") ?>"> SubMenu02</a></li>
-                        <li><a href="<?php echo base_url("funcionarios") ?>"> Funcionario</a></li>
+                        <li><a href="<?php echo base_url("leitores") ?>"> Leitores</a></li>
+                        <li><a href="<?php echo base_url("funcionarios") ?>"> Funcionarios</a></li>
 
                     </ul>
                 </li>
