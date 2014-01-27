@@ -6,7 +6,9 @@
                 Novo Funcionario
             </legend>
             <div class="form-group">
-                
+                <span class="text-danger"> 
+                        <?php echo validation_errors(); ?>
+                </span>
                 <label for="nome" class="col-sm-2 control-label"> Nome: </label>
                 <div class="col-sm-10">
                     <input type="text" name="nome" class="form-control" required />
@@ -17,18 +19,12 @@
                 </div><br/>
                 <label for="senha" class="col-sm-2 control-label"> Senha: </label>
                 <div class="col-sm-10">
-                    <input type="password" name="senha" class="form-control" />   
-                    <span class="text-danger"> 
-                        <?php echo validation_errors(); ?>
-                    </span>
+                    <input type="password" name="senha" class="form-control" />  
                 </div>
                 <br/>
                 <label for="senha2" class="col-sm-2 control-label"> Confirmação de Senha: </label>
                 <div class="col-sm-10">
-                    <input type="password" name="senha2" class="form-control" required />    
-                    <span class="text-danger"> 
-                        <?php echo validation_errors(); ?>
-                    </span>
+                    <input type="password" name="senha2" class="form-control" required />   
                 </div>
                 <br/>
                 

@@ -50,9 +50,9 @@ class Funcionarios extends CI_Controller {
     }
 
     function salva_funcionario() {
-
-        $this->form_validation->set_rules('senha', 'Senha', 'required|matches[senha2]');
-        $this->form_validation->set_rules('senha2', 'Confirmação de Senha', 'required'); 
+    
+        $this->form_validation->set_rules('senha', 'Senha', 'required|min_length[6]|max_length[10]');
+        $this->form_validation->set_rules('senha2', 'Confirmação de Senha', 'required|matches[senha]'); 
         
         if ($this->form_validation->run() == FALSE){
             
