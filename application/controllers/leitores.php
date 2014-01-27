@@ -105,7 +105,6 @@ class Leitores extends CI_Controller {
                 $nomeMae_leitor = $qr->nomeMae_leitor;  
                 $telefone_leitor = $qr->telefone_leitor;
                 $dataCadastro_leitor = $qr->dataCadastro_leitor;
-                //'status_leitor' => 1,
                 $rua_residencia_leitor = $qr->rua_residencia_leitor; 
                 $numero_residencia_leitor = $qr->numero_residencia_leitor; 
                 $bairro_residencia_leitor = $qr->bairro_residencia_leitor;
@@ -126,7 +125,6 @@ class Leitores extends CI_Controller {
                 'nomeMae_leitor' => $nomeMae_leitor,  
                 'telefone_leitor' => $telefone_leitor,
                 'dataCadastro_leitor' => $dataCadastro_leitor,
-                //'status_leitor' => 1,
                 'rua_residencia_leitor' => $rua_residencia_leitor,
                 'numero_residencia_leitor' => $numero_residencia_leitor,
                 'bairro_residencia_leitor' => $bairro_residencia_leitor,
