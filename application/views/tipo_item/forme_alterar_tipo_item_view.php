@@ -3,7 +3,7 @@
         <input type="hidden" name="idTipoItem" value="<?php echo $id_tipo_item ?>"
                <fieldset>
             <legend>
-                Nova Tipo Item
+                Alterar Tipo Item
             </legend>
             <div class="form-group">
                 <label for="nomeTipoItem" class="col-sm-2 control-label">Nome Tipo Item</label>

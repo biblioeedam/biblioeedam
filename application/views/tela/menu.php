@@ -22,7 +22,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo base_url("#") ?>"> SubMenu01</a></li>
                         <li><a href="<?php echo base_url("tipo_item") ?>"> Tipo Item</a></li>
-                        <li><a href="<?php echo base_url("#") ?>"> SubMenu03</a></li>
+                        <li><a href="<?php echo base_url("categoria_item") ?>"> Categoria Item </a></li>
 
                     </ul>
                 </li>
