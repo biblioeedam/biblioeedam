@@ -18,9 +18,9 @@
                 <!--<li class="active"><a href="#">Link</a></li>
                 <li><a href="#">Link</a></li>-->
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu01 <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> acervo <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo base_url("#") ?>"> SubMenu01</a></li>
+                        <li><a href="<?php echo base_url("item") ?>"> Item </a></li>
                         <li><a href="<?php echo base_url("tipo_item") ?>"> Tipo Item</a></li>
                         <li><a href="<?php echo base_url("categoria_item") ?>"> Categoria Item </a></li>
 
