@@ -11,7 +11,7 @@ class funcionario_model extends CI_Model {
     }
     
     function obterTodosFuncionarios(){
-        return $this->db->get_where('funcionario', array('status_funcionario' => 'a'));
+        return $this->db->get_where('funcionario', array('status_funcionario' => 1));
     }
     
     function obterUmFuncionario($id_funcionario) {
@@ -32,6 +32,12 @@ class funcionario_model extends CI_Model {
     function excluirFuncionario($dados, $id_funcionario){
         $this->db->where('id_funcionario',$id_funcionario);
         $this->db->update('funcionario', $dados);
+    }
+    
+    function obterLogin($funcionario_login){
+        $this->db->where('funcionario_login', $funcionario_login);
+        $this->db->get('funcionario', $funcionario_login);
+        return $this->db-affected_rows();
     }
 
 }
