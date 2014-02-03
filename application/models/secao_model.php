@@ -38,8 +38,8 @@ class secao_model extends CI_Model {
     function obterPrateleirasPorSecao($id_secao) {
         $this->db->select('nome_prateleira');
         $this->db->from('secao S');
-        $this->db->join('secao_prateleira SP', 'SP.secao_id_secao=S.id_secao');
-        $this->db->join('prateleira P', 'SP.prateleira_id_prateleira=P.id_prateleira');
+        $this->db->join('secao_prateleira SP', 'SP.id_secao=S.id_secao');
+        $this->db->join('prateleira P', 'SP.id_prateleira=P.id_prateleira');
         $this->db->where('S.id_secao', $id_secao);
         return $this->db->get();
         /*
@@ -65,7 +65,7 @@ class secao_model extends CI_Model {
     }
 
     function excluirSecaoPrateleira($id_secao) {
-        $this->db->delete('secao_prateleira', array('secao_id_secao' => $id_secao));
+        $this->db->delete('secao_prateleira', array('id_secao' => $id_secao));
     }
 
     //put your code here

@@ -32,7 +32,7 @@
                     <td><?php echo $ti->volume_item ?></td>
                     <td><?php echo $ti->editora_item ?></td>
                     
-                    <td><a class="btn btn-default" href="<?php echo base_url("item/localizar_item/".$ti->id_item) ?>"> Localização </a></td>
+                    <td><a class="btn btn-default" href="<?php echo base_url("item/localizacao_item/".$ti->id_item) ?>"> Localização </a></td>
                     
                     <td><a class="btn btn-default" href="<?php echo base_url("item/alterar_item/".$ti->id_item) ?>"> Alterar </a></td>
                     <td><a class="btn btn-default" href="<?php echo base_url("item/excluir_item/".$ti->id_item) ?>">Excluir</a></td>
