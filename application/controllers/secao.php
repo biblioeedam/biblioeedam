@@ -48,9 +48,6 @@ class secao extends CI_Controller {
             );
 
 
-
-            // print_r($todas_secoes);
-
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
             $this->load->view('secao/tabela_secao_view', $dados);
@@ -115,8 +112,8 @@ class secao extends CI_Controller {
 
             foreach ($prateleiras as $p => $prateleira) {
                 $dados_secao_prateleira[] = array(
-                    'secao_id_secao' => $id_secao,
-                    'prateleira_id_prateleira' => $prateleira
+                    'id_secao' => $id_secao,
+                    'id_prateleira' => $prateleira
                 );
             }
 
@@ -186,8 +183,8 @@ class secao extends CI_Controller {
 
             foreach ($prateleiras as $p => $prateleira) {
                 $dados_secao_prateleira[] = array(
-                    'secao_id_secao' => $id_secao,
-                    'prateleira_id_prateleira' => $prateleira
+                    'id_secao' => $id_secao,
+                    'id_prateleira' => $prateleira
                 );
             }
 
