@@ -272,6 +272,7 @@ class Leitores extends CI_Controller {
             $this->load->view('tela/menu');
             $this->load->view('leitores/cartao_leitor_view',$dados);
             $this->load->view('tela/rodape');
+           
     }
     
     

@@ -1,33 +1,47 @@
-<?php
-echo $id_leitor, '</br>';
-echo $nome_leitor, '</br>';
-echo $nome_tipo_leitor, '</br>';
+<table border="1">
+    <tbody>
+        <tr>
+            <td>Código: <?php echo $id_leitor;?> </td>
+            <td>Nome: <?php echo $nome_leitor; ?> </td>
+        </tr>    
+    <tr>
+        <td>Tipo de Leitor: <?php echo $nome_tipo_leitor; ?> </td>
+        <td>Fone: <?php echo $telefone_leitor; ?> </td>
+        
+    </tr>
+    <tr>
+        <td>Série: <?php echo $serie_leitor; ?> </td>
+        <td>Turma: <?php echo $turma_leitor; ?> </td>
+    </tr>
+    <tr>
+        <td>Turno: <?php echo $turno_leitor; ?> </td>
+        <td>Emissão:</td>
+    </tr>
+    </tbody>
+</table>
 
-echo $serie_leitor, '</br>';
-echo $turma_leitor, '</br>';
-echo $turno_leitor, '</br>';
-echo $telefone_leitor, '</br>';
-
-
-?>
 <br/>
 
-<table class="table">
+<table border="1" width="500">
         <thead>
             <tr>
-                <td>Nome do Livro</td>
-                <td>Código do Livro</td>
-                <td>Pegou em</td>
-                <td>Devolver em</td>
+                <td width="150">Nome do Livro</td>
+                <td width="90">Código do Livro</td>
+                <td width="80">Pegou em</td>
+                <td width="80">Devolver em</td>
             </tr>
         </thead>
         <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+            <?php
+                for ($i=0; $i<=30; $i++){
+                    echo '<tr>
+                            <td>.</td>
+                            <td>.</td>
+                            <td>.</td>
+                            <td>.</td>
+                          </tr>';
+                }   
+            ?>
         </tbody>
 </table>
         
