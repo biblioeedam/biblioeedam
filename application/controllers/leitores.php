@@ -171,6 +171,7 @@ class Leitores extends CI_Controller {
         }
     }
     
+    //Salva os dados do leitor a ser alterado
     function salvar_leitor_alterado(){
             $this->form_validation->set_rules('id_leitor');
             $this->form_validation->set_rules('tipo_leitor','Tipo de Leitor','required');
@@ -241,18 +242,38 @@ class Leitores extends CI_Controller {
             }
     }
     
-    /*
-    function excluir_leitor(){
-        $id_leitor = $this->uri->segment(3);
-
-        if (empty($id_leitor)) {
-            redirect(base_url('leitores'));
-        } else {
-
-            $this->leitores_model->excluirLeitor($id_leitor);
-
-            redirect(base_url('leitores'));
-        }
-    }*/
+    //Emite cartão da biblioteca de determinado Leitor
+    function emitir_cartao_leitor(){
+        
+            $id_leitor = $this->uri->segment(3);
+            
+            $query = $this->leitores_model->obterDadosCartaoLeitor($id_leitor)->result();
+          
+            foreach ($query as $rs){
+                $nome_tipo_leitor = $rs->nome_tipo_leitor;
+                $nome_leitor = $rs->nome_leitor;
+                $serie_leitor = $rs->serie_leitor;
+                $turma_leitor = $rs->turma_leitor;
+                $turno_leitor = $rs->turno_leitor;
+                $telefone_leitor = $rs->telefone_leitor;
+            }
+            
+            $dados=array(
+              'id_leitor' => $id_leitor,
+              'nome_tipo_leitor' => $nome_tipo_leitor,  
+              'nome_leitor' => $nome_leitor,
+              'serie_leitor' => $serie_leitor,
+              'turma_leitor' => $turma_leitor,
+              'turno_leitor' => $turno_leitor,
+              'telefone_leitor' => $telefone_leitor  
+            );
+            
+            $this->load->view('tela/titulo');
+            $this->load->view('tela/menu');
+            $this->load->view('leitores/cartao_leitor_view',$dados);
+            $this->load->view('tela/rodape');
+    }
+    
+    
 }
 

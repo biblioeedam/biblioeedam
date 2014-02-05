@@ -21,7 +21,7 @@
                     <td><?php echo $tp->id_leitor ?></td>
                     <td><?php echo $tp->nome_leitor ?></td>
                     <td><?php echo $tp->serie_leitor ?></td>
-                    <td><a class="btn btn-default" href="<?php echo base_url("leitores") ?>"> Emitir </a></td>
+                    <td><a class="btn btn-default" href="<?php echo base_url("leitores/emitir_cartao_leitor/".$tp->id_leitor) ?>"> Emitir </a></td>
                     <td><a class="btn btn-default" href="<?php echo base_url("leitores/alterar_leitor/".$tp->id_leitor) ?>"> Alterar </a></td>
                 </tr>
             <?php } ?>
