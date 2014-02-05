@@ -10,8 +10,9 @@
                 <td>Id</td>
                 <td>Nome</td>
                 <td>Serie</td>
+                <td>Cartão</td>
                 <td>Alterar</td>
-                <td>Excluir</td>
+              
             </tr>
         </thead>
         <tbody>
@@ -20,8 +21,8 @@
                     <td><?php echo $tp->id_leitor ?></td>
                     <td><?php echo $tp->nome_leitor ?></td>
                     <td><?php echo $tp->serie_leitor ?></td>
+                    <td><a class="btn btn-default" href="<?php echo base_url("leitores") ?>"> Emitir </a></td>
                     <td><a class="btn btn-default" href="<?php echo base_url("leitores/alterar_leitor/".$tp->id_leitor) ?>"> Alterar </a></td>
-                    <td><a class="btn btn-default" href="<?php echo base_url("leitores/excluir_leitor/".$tp->id_leitor) ?>"> Excluir </a></td>
                 </tr>
             <?php } ?>
         </tbody>

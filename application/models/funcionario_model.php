@@ -14,6 +14,10 @@ class funcionario_model extends CI_Model {
         return $this->db->get_where('funcionario', array('status_funcionario' => 1));
     }
     
+    function contaFuncionarios(){
+        return $this->db->count_all_results('funcionario');
+    }
+    
     function obterUmFuncionario($id_funcionario) {
         return $this->db->get_where('funcionario', array('id_funcionario' => $id_funcionario));
     }

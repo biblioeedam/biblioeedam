@@ -16,6 +16,7 @@ class Funcionarios extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model("funcionario_model");
         $this->load->model("privilegios_model");
+        $this->load->library('pagination');
     }
 
     function index() {
@@ -37,7 +38,10 @@ class Funcionarios extends CI_Controller {
     public function novo_funcionario() {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
-
+            
+            //$maximo = 3;
+            //$inicio = (!$this->uri->segment("3")) ? 0 : $this->uri->segment("3");
+            
             $dados = array('todos_privilegios' => $this->privilegios_model->obterTodosPrivilegios()->result());
 
             $this->load->view('tela/titulo');
@@ -55,7 +59,7 @@ class Funcionarios extends CI_Controller {
             $this->form_validation->set_rules('nome','Nome','required');
             $this->form_validation->set_rules('login', 'Login', 'required|is_unique[funcionario.login_funcionario]');
             $this->form_validation->set_rules('senha', 'Senha', 'required|min_length[6]|max_length[10]');
-            $this->form_validation->set_rules('senha2', 'Confirmação de Senha', 'required|matches[senha]'); 
+            $this->form_validation->set_rules('senha2', 'Repetir a Senha', 'required|matches[senha]'); 
             $this->form_validation->set_rules('tipoPermissao','Tipo de Permissão','required');
 
             if ($this->form_validation->run() == FALSE){
@@ -123,7 +127,7 @@ class Funcionarios extends CI_Controller {
             $id_funcionario = $this->uri->segment(3);
             $this->form_validation->set_rules('nome','Nome','required');
             $this->form_validation->set_rules('senha', 'Senha', 'required|min_length[6]|max_length[10]');
-            $this->form_validation->set_rules('senha2', 'Confirmação de Senha', 'required|matches[senha]'); 
+            $this->form_validation->set_rules('senha2', 'Repetir a Senha', 'required|matches[senha]'); 
             $this->form_validation->set_rules('tipoPermissao','Tipo de Permissão','required');
           
             
