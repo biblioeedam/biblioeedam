@@ -53,7 +53,7 @@
                     <div class="col-sm-5" style="height: 100px; overflow: auto">
                         <div class="col-sm-13">  
                             <?php foreach ($todos_privilegios as $tp) { ?>
-                            <input type="radio" name="tipoPermissao" value="<?php echo $tp->id_privilegio ?>"/> <?php echo $tp->descricao_privilegio ?> <br/>
+                            <input type="radio" name="tipoPermissao" value="<?php echo $tp->id_privilegio ?>"/> <?php echo $tp->nome_privilegio ?> <br/>
                             <?php } ?>
                             <span class="text-danger"> 
                                 <?php echo form_error('tipoPermissao'); ?>

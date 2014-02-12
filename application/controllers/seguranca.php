@@ -71,6 +71,7 @@ class seguranca extends CI_Controller {
                 'img_path' => './captcha/',
                 'img_url' => base_url() . 'captcha/',
                 // 'font_path' => './path/to/fonts/texb.ttf',
+                
                 'img_width' => '130',
                 'img_height' => 30,
                 'expiration' => 7200
@@ -107,7 +108,9 @@ class seguranca extends CI_Controller {
                     'id_funcionario' => $ul->id_funcionario,
                     'nome_funcionario' => $ul->nome_funcionario,
                     'login_funcionario' => $ul->login_funcionario,
-                    'senha_funcionario' => $ul->senha_funcionario
+                    'senha_funcionario' => $ul->senha_funcionario,
+                    'status_funcionario' => $ul->status_funcionario,
+                    'privilegio_funcionario' => $ul->id_privilegio
                 );
                 $this->session->set_userdata($dadosUser);
             }
@@ -130,6 +133,8 @@ class seguranca extends CI_Controller {
         $this->session->unset_userdata('nome_funcionario');
         $this->session->unset_userdata('usuario_funcionario');
         $this->session->unset_userdata('senha_funcionario');
+        $this->session->unset_userdata('status_funcionario');
+        $this->session->unset_userdata('privilegio_funcionario');
 
         redirect(base_url());
     }
