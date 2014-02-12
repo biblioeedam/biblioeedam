@@ -5,6 +5,9 @@
         <legend>
             Alterar Dados de Leitor
         </legend>
+            <span class="text-danger"> 
+                <?php validation_errors(); ?>
+            </span>
             <div class="col-sm-6">
                     <div class="form-group">
                         <label for="tipo_leitor" class="col-sm-3 control-label"> Tipo de Leitor </label>
@@ -111,6 +114,9 @@
                     <label for="telefone_leitor" class="col-sm-3 control-label"> Telefone para contato* </label>
                     <div class="col-sm-8">
                         <input type="text" name="telefone_leitor" value="<?php echo $telefone_leitor; ?>" class="form-control"/>
+                        <span class="text-danger"> 
+                            <?php echo form_error('telefone_leitor'); ?>
+                        </span>
                     </div>
                 </div>
                 
@@ -139,6 +145,9 @@
                     <label for="cidade_leitor" class="col-sm-3 control-label"> Cidade* </label>
                     <div class="col-sm-8">
                         <input type="text" name="cidade_leitor" value="<?php echo $cidade_leitor; ?>" class="form-control" />
+                        <span class="text-danger"> 
+                            <?php echo form_error('cidade_leitor'); ?>
+                        </span>
                     </div>
                 </div>
                 

@@ -9,7 +9,9 @@
             <span class="text-danger"> 
              (*)são campos obrigatorios
             </span>
-          
+            <span class="text-danger"> 
+                  <?php validation_errors(); ?>
+            </span>
             
             <div class="col-sm-11">
                  <div class="form-group">

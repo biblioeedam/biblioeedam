@@ -34,6 +34,9 @@
                     <label for="cpf_leitor" class="col-sm-3 control-label"> CPF </label>
                     <div class="col-sm-8">
                         <input type="text" name="cpf_leitor" class="form-control" value="<?php echo set_value('cpf_leitor');?>" placeholder="CPF"/>
+                        <span class="text-danger"> 
+                            <?php echo form_error('cpf_leitor'); ?>
+                        </span>
                     </div>
                 </div>
                 
