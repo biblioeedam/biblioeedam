@@ -20,7 +20,7 @@ class Leitores_basico extends CI_Controller {
 
     public function index() {
 
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
             $dados = array(
                 'todos_leitores' => $this->leitores_model->obterTodosLeitores()->result()
@@ -38,7 +38,7 @@ class Leitores_basico extends CI_Controller {
 
     public function novo_leitor() {
  
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
             
             $tipos_leitores = array(
                 'todos_tipos_leitores' => $this->tipos_leitores_model->obterTodosTiposLeitores()->result()
@@ -54,7 +54,7 @@ class Leitores_basico extends CI_Controller {
     }
     
     function salvar_leitor(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
             $this->form_validation->set_rules('tipo_leitor','Tipo de Leitor','required');
             $this->form_validation->set_rules('nome_leitor','Nome','required');
@@ -116,7 +116,7 @@ class Leitores_basico extends CI_Controller {
     }
     
     function alterar_leitor(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
             $id_leitor = $this->uri->segment(3);
 
@@ -183,7 +183,7 @@ class Leitores_basico extends CI_Controller {
     
     //Salva os dados do leitor a ser alterado
     function salvar_leitor_alterado(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
             $this->form_validation->set_rules('id_leitor');
             $this->form_validation->set_rules('tipo_leitor','Tipo de Leitor','required');
@@ -308,7 +308,7 @@ class Leitores_basico extends CI_Controller {
     
     //Emite cartão da biblioteca de determinado Leitor
     function emitir_cartao_leitor(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
             $id_leitor = $this->uri->segment(3);
             
