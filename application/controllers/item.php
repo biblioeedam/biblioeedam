@@ -16,6 +16,7 @@ class Item extends CI_Controller {
         $this->load->model("item_model");
         $this->load->model("categoria_item_model");
         $this->load->model("tipo_item_model");
+        $this->load->model("secao_model");
     }
 
     public function index() {
@@ -173,11 +174,24 @@ class Item extends CI_Controller {
                     $this->load->view('item/forme_localizacao_item_view', $dados);
                     $this->load->view('tela/rodape');
                 } else {
+
+
+
+                    $prateleiras = '';
+                    $query = $this->secao_model->obterPrateleirasPorSecao($secaoSalva)->result();
+                    foreach ($query as $qy) {
+                        $prateleiras = $prateleiras . '<button class="btn btn-default">' . $qy->nome_prateleira . '</button>';
+                    }
+
+
+
+
                     // dados para formulario de alteracao e informações sobre o item
                     $dados = array(
                         'id_item' => $id_item,
                         'id_ordem' => $ordemSalva,
                         'id_secao' => $secaoSalva,
+                        'prateleiras_secao' => $prateleiras,
                         'todos_itens' => $this->item_model->obterItenSelecionado($id_item)->result(),
                         'ordem_item' => $this->item_model->obterTodasOrdens()->result(),
                         'secao_item' => $this->item_model->obterTodasSecoes()->result(),
@@ -251,8 +265,7 @@ class Item extends CI_Controller {
             // Verificando se os campos são validos.
             if ($this->form_validation->run() == false) {
                 // Redirecionando para o formulario de alteracao novamente.
-                redirect(base_url("item/localizacao_item/".$id_item));
-                
+                redirect(base_url("item/localizacao_item/" . $id_item));
             } else {
 
                 // capturando os dados do formulario que foi validado.
@@ -277,31 +290,24 @@ class Item extends CI_Controller {
         }
     }
 
-    public function alterar_categoria_item() {
+    public function alterar_item() {
 
-        $id_categoria_item = $this->uri->segment(3);
+        $id_item = $this->uri->segment(3);
 
-        if (empty($id_categoria_item)) {
-            redirect(base_url('categoria_item'));
+        if (empty($id_item)) {
+            redirect(base_url('item'));
         } else {
-            $id_categoria_item;
-            $nome_categoria_item;
 
-            $query = $this->categoria_item_model->obterUmaCategoriaItem($id_categoria_item)->result();
-
-            foreach ($query as $qr) {
-                $id_categoria_item = $qr->id_categoria_item;
-                $nome_categoria_item = $qr->nome_categoria_item;
-            }
 
             $dados = array(
-                'id_categoria_item' => $id_categoria_item,
-                'nome_categoria_item' => $nome_categoria_item
+                'item' => $this->item_model->obterItenSelecionado($id_item)->result(),
+                'categoria_item' => $this->categoria_item_model->obterTodasCategoriasItens()->result(),
+                'tipo_item' => $this->tipo_item_model->obterTodosTiposItens()->result(),
             );
 
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
-            $this->load->view('categoria_item/forme_alterar_categoria_item_view', $dados);
+            $this->load->view('item/forme_alterar_item_view', $dados);
             $this->load->view('tela/rodape');
         }
     }

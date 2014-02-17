@@ -34,6 +34,34 @@
                 </table>
             </div>
 
+            <div class="row">
+                <div class="col-lg-12 thumbnail">
+                    <span class="text-info">Este item esta na seção: </span>      
+                    <span class="text-success"><?php
+                    foreach ($secao_item as $si) {
+                        if ($si->id_secao == $id_secao) {
+                            echo $si->nome_secao;
+                        }
+                    }
+                    ?></span>
+                    <span class="text-info">
+                        ,Na prateleira : </span>
+                    <span class="text-success"><?php echo $prateleiras_secao ?> </span>
+                    <span class="text-info">
+                        ,na letra: </span>
+                    <span class="text-success">
+                            <?php
+                            foreach ($ordem_item as $oi) {
+                                if ($oi->id_ordem_item == $id_ordem) {
+                                     echo $oi->nome_ordem_item ;
+                                }
+                            }
+                            ?>
+                    </span>
+                </div>
+
+            </div>
+
             <div class="col-sm-6">
 
 
@@ -79,13 +107,13 @@
                                 <?php } else { ?>
 
                                     <option value="<?php echo $si->id_secao ?>"><?php echo $si->nome_secao ?></option>
-                                <?php
+                                    <?php
                                 }
                             }
                             ?>
                         </select>
                         <span class="text-danger"> 
-<?php echo form_error('secaoItem'); ?>
+                            <?php echo form_error('secaoItem'); ?>
                         </span>
                     </div>
                 </div>
