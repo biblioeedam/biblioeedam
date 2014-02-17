@@ -28,6 +28,8 @@ class Leitores_model extends CI_Model {
         return $this->db->get();
         
     }
+    
+    //Criar aqui um metodo para incluir tipos de ação
 
 }
 ?>
