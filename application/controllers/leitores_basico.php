@@ -3,7 +3,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Leitores extends CI_Controller {
+class Leitores_basico extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -20,9 +20,9 @@ class Leitores extends CI_Controller {
 
     public function index() {
 
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
-            
-            //verifica se exite valor no campo de busca na tabela de leitores 
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
+
+            //verifica se exite valor no campo de busca na tabela de leitores para usuarios de permissão básica 
             $nome_leitor = $this->input->post('nome_busca_leitor');
             if(!empty($nome_leitor)){
                 $dados = array(
@@ -33,9 +33,10 @@ class Leitores extends CI_Controller {
                     'todos_leitores' => $this->leitores_model->obterTodosLeitores()->result()
                 );
             }
+            
             $this->load->view('tela/titulo');
-            $this->load->view('tela/menu');
-            $this->load->view('leitores/tabela_leitores_view',$dados);
+            $this->load->view('tela/menu_basico');
+            $this->load->view('leitores_basico/tabela_leitores_view',$dados);
 
             $this->load->view('tela/rodape');
         } else {
@@ -45,15 +46,15 @@ class Leitores extends CI_Controller {
 
     public function novo_leitor() {
  
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
             
             $tipos_leitores = array(
                 'todos_tipos_leitores' => $this->tipos_leitores_model->obterTodosTiposLeitores()->result()
             );
 
             $this->load->view('tela/titulo');
-            $this->load->view('tela/menu');
-            $this->load->view('leitores/forme_novo_leitor_view',$tipos_leitores);
+            $this->load->view('tela/menu_basico');
+            $this->load->view('leitores_basico/forme_novo_leitor_view',$tipos_leitores);
             $this->load->view('tela/rodape');
         } else {
             redirect(base_url() . "seguranca");
@@ -61,7 +62,7 @@ class Leitores extends CI_Controller {
     }
     
     function salvar_leitor(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
             $this->form_validation->set_rules('tipo_leitor','Tipo de Leitor','required');
             $this->form_validation->set_rules('nome_leitor','Nome','required');
@@ -87,8 +88,8 @@ class Leitores extends CI_Controller {
                     'todos_tipos_leitores' => $this->tipos_leitores_model->obterTodosTiposLeitores()->result()
                 );
                 $this->load->view('tela/titulo');
-                $this->load->view('tela/menu');
-                $this->load->view('leitores/forme_novo_leitor_view',$tipos_leitores);
+                $this->load->view('tela/menu_basico');
+                $this->load->view('leitores_basico/forme_novo_leitor_view',$tipos_leitores);
                 $this->load->view('tela/rodape');
             }
             else{
@@ -113,7 +114,7 @@ class Leitores extends CI_Controller {
                     'referencia_residencia_leitor' => $this->input->post('referencia_residencia_leitor'),
                 );
                 if($this->leitores_model->salvarLeitor($dados)){
-                    redirect('leitores');
+                    redirect('leitores_basico');
                 } 
             }
         }else{
@@ -123,12 +124,12 @@ class Leitores extends CI_Controller {
     }
     
     function alterar_leitor(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
             $id_leitor = $this->uri->segment(3);
 
             if (empty($id_leitor)) {
-                redirect(base_url('leitores'));
+                redirect(base_url('leitores_basico'));
             } else {
 
                 $tipos_leitores = array(
@@ -179,8 +180,8 @@ class Leitores extends CI_Controller {
                 );
 
                 $this->load->view('tela/titulo');
-                $this->load->view('tela/menu');
-                $this->load->view('leitores/forme_alterar_leitor_view', $dados);
+                $this->load->view('tela/menu_basico');
+                $this->load->view('leitores_basico/forme_alterar_leitor_view', $dados);
                 $this->load->view('tela/rodape');
             }
         }else{
@@ -190,7 +191,7 @@ class Leitores extends CI_Controller {
     
     //Salva os dados do leitor a ser alterado
     function salvar_leitor_alterado(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
             $this->form_validation->set_rules('id_leitor');
             $this->form_validation->set_rules('tipo_leitor','Tipo de Leitor','required');
@@ -262,8 +263,8 @@ class Leitores extends CI_Controller {
                 );
 
                 $this->load->view('tela/titulo');
-                $this->load->view('tela/menu');
-                $this->load->view('leitores/forme_alterar_leitor_view', $dados);
+                $this->load->view('tela/menu_basico');
+                $this->load->view('leitores_basico/forme_alterar_leitor_view', $dados);
                 $this->load->view('tela/rodape');
 
             }else{
@@ -306,7 +307,7 @@ class Leitores extends CI_Controller {
 
                 $this->leitores_model->salvarLeitorAlterado($dados, $id_leitor);
 
-                redirect(base_url('leitores'));
+                redirect(base_url('leitores_basico'));
             }
         }else{
             redirect(base_url() . "seguranca");
@@ -315,7 +316,7 @@ class Leitores extends CI_Controller {
     
     //Emite cartão da biblioteca de determinado Leitor
     function emitir_cartao_leitor(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
             $id_leitor = $this->uri->segment(3);
             
@@ -341,8 +342,8 @@ class Leitores extends CI_Controller {
             );
             
             $this->load->view('tela/titulo');
-            $this->load->view('tela/menu');
-            $this->load->view('leitores/cartao_leitor_view',$dados);
+            $this->load->view('tela/menu_basico');
+            $this->load->view('leitores_basico/cartao_leitor_view',$dados);
             $this->load->view('tela/rodape');
         }else{
             redirect(base_url() . "seguranca");
@@ -424,9 +425,6 @@ class Leitores extends CI_Controller {
         }
     }
 
-    public function busca_um_leitor(){
-        
-    }
     
     
 }

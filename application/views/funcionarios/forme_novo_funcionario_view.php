@@ -4,11 +4,14 @@
             <legend>
                 Novo Funcionario
             </legend>
+            <span class="text-danger"> 
+             (*)são campos obrigatorios
+            </span>
             <div class="col-sm-11">
                 <div class="form-group">
-                    <label for="nome" class="col-sm-2 control-label"> Nome </label>
+                    <label for="nome" class="col-sm-2 control-label"> Nome* </label>
                     <div class="col-sm-5">
-                        <input type="text" name="nome" class="form-control"/>
+                        <input type="text" name="nome" class="form-control" value="<?php echo set_value('nome'); ?>" placeholder="Nome do Funcionario"/>
                         <span class="text-danger"> 
                             <?php echo form_error('nome'); ?>
                         </span>
@@ -16,9 +19,9 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="login" class="col-sm-2 control-label"> Login </label>
+                    <label for="login" class="col-sm-2 control-label"> Login* </label>
                     <div class="col-sm-5">
-                        <input type="text" name="login" class="form-control"/>
+                        <input type="text" name="login" class="form-control" value="<?php echo set_value('login'); ?>" placeholder="Nome de Login"/>
                         <span class="text-danger"> 
                             <?php echo form_error('login'); ?>
                         </span>
@@ -26,9 +29,9 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="senha" class="col-sm-2 control-label"> Senha </label>
+                    <label for="senha" class="col-sm-2 control-label"> Senha* </label>
                     <div class="col-sm-5">
-                        <input type="password" name="senha" class="form-control"/>  
+                        <input type="password" name="senha" class="form-control" value="<?php echo set_value('senha'); ?>" placeholder="Senha"/>  
                         <span class="text-danger"> 
                             <?php echo form_error('senha'); ?>
                         </span>
@@ -36,9 +39,9 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="senha2" class="col-sm-2 control-label"> Confirmação de Senha </label>
+                    <label for="senha2" class="col-sm-2 control-label"> Repita a Senha* </label>
                     <div class="col-sm-5">
-                        <input type="password" name="senha2" class="form-control"/> 
+                        <input type="password" name="senha2" class="form-control" value="<?php echo set_value('senha2'); ?>" placeholder="Repetir a Senha"/> 
                         <span class="text-danger"> 
                             <?php echo form_error('senha2'); ?>
                         </span>
@@ -46,11 +49,11 @@
                 </div>
                
                 <div class="form-group col-lg-8" >
-                    <label class="col-sm-3 control-label">Tipo de Permissão</label>
+                    <label class="col-sm-3 control-label">Tipo de Permissão*</label>
                     <div class="col-sm-5" style="height: 100px; overflow: auto">
                         <div class="col-sm-13">  
                             <?php foreach ($todos_privilegios as $tp) { ?>
-                            <input type="radio" name="tipoPermissao" value="<?php echo $tp->id_privilegio ?>"/> <?php echo $tp->descricao_privilegio ?> <br/>
+                            <input type="radio" name="tipoPermissao" value="<?php echo $tp->id_privilegio ?>"/> <?php echo $tp->nome_privilegio ?> <br/>
                             <?php } ?>
                             <span class="text-danger"> 
                                 <?php echo form_error('tipoPermissao'); ?>

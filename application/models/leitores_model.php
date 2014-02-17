@@ -1,19 +1,20 @@
 <?php
 
 class Leitores_model extends CI_Model {
-/*
-    function obterFuncionarioLogin($dados) {
-        return $this->db->get_where('funcionario', array('login_funcionario' => $dados['login_funcionario'], 'senha_funcionario' => $dados['senha_funcionario']));
-    }
-   */  
+ 
     function obterTodosLeitores(){
-        return $this->db->get_where('leitor');
+        return $this->db->get('leitor');
     }
    
     function obterUmLeitor($id_leitor) {
         return $this->db->get_where('leitor', array('id_leitor' => $id_leitor));
     }
     
+    function obterUmLeitor2($nome_leitor){
+        $this->db->like('nome_leitor',$nome_leitor);
+        return $this->db->get('leitor');
+    }
+            
     function salvarLeitor($dados=array()){
         $this->db->insert('leitor', $dados);
         return $this->db->affected_rows();
@@ -24,9 +25,16 @@ class Leitores_model extends CI_Model {
         $this->db->update('leitor', $dados);
     }
    
-    function excluirLeitor($id_leitor){
-        $this->db->delete('leitor', array('id_leitor' => $id_leitor));
+    function obterDadosCartaoLeitor($id_leitor){
+        $this->db->select('nome_tipo_leitor,nome_leitor,serie_leitor,turma_leitor,turno_leitor,telefone_leitor');
+        $this->db->from('leitor');
+        $this->db->join('tipo_leitor','leitor.id_tipo_leitor = tipo_leitor.id_tipo_leitor');
+        $this->db->where('id_leitor', $id_leitor);
+        return $this->db->get();
+        
     }
+    
+    //Criar aqui um metodo para incluir tipos de ação
 
 }
 ?>

@@ -2,6 +2,13 @@
     <h3>Funcionarios</h3>
 
     <a class="btn btn-default" href="<?php echo base_url("funcionarios/novo_funcionario"); ?>" title="Novo Funcionario">Novo Funcionario</a>
+    
+    <form name="form_busca_funcionario" method="post" action="funcionarios"> 
+        <div class="col-sm-offset-0 col-sm-0">
+            <input type="text" name="nome_busca_funcionario" placeholder="Nome do Funcionario"/> <input type="submit" name="botao" value="Buscar" class="btn btn-primary"/>  
+        </div>
+    </form>
+    
     <br/>
     <br/>
     <table class="table">

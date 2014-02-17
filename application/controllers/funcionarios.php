@@ -16,14 +16,23 @@ class Funcionarios extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model("funcionario_model");
         $this->load->model("privilegios_model");
+        $this->load->library('pagination');
     }
 
     function index() {
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
 
-            $dados = array(
-                'todos_funcionarios' => $this->funcionario_model->obterTodosFuncionarios()->result()
-            );
+            //verifica se exite valor no campo de busca na tabela de leitores 
+            $nome_funcionario = $this->input->post('nome_busca_funcionario');
+            if(!empty($nome_funcionario)){    
+                $dados = array(
+                    'todos_funcionarios' => $this->funcionario_model->obterUmFuncionario2($nome_funcionario)->result()
+                );
+            }  else {
+                $dados = array(
+                    'todos_funcionarios' => $this->funcionario_model->obterTodosFuncionarios()->result()
+                ); 
+            }
 
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
@@ -36,8 +45,11 @@ class Funcionarios extends CI_Controller {
 
     public function novo_funcionario() {
 
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
-
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
+            
+            //$maximo = 3;
+            //$inicio = (!$this->uri->segment("3")) ? 0 : $this->uri->segment("3");
+            
             $dados = array('todos_privilegios' => $this->privilegios_model->obterTodosPrivilegios()->result());
 
             $this->load->view('tela/titulo');
@@ -50,12 +62,12 @@ class Funcionarios extends CI_Controller {
     }
 
     function salva_funcionario() {
-       if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+       if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
 
             $this->form_validation->set_rules('nome','Nome','required');
-            $this->form_validation->set_rules('login', 'Login', 'required|is_unique[funcionario.login_funcionario]');
+            $this->form_validation->set_rules('login', 'Login', 'required|trim|min_length[5]|is_unique[funcionario.login_funcionario]');
             $this->form_validation->set_rules('senha', 'Senha', 'required|min_length[6]|max_length[10]');
-            $this->form_validation->set_rules('senha2', 'Confirmação de Senha', 'required|matches[senha]'); 
+            $this->form_validation->set_rules('senha2', 'Repetir a Senha', 'required|matches[senha]'); 
             $this->form_validation->set_rules('tipoPermissao','Tipo de Permissão','required');
 
             if ($this->form_validation->run() == FALSE){
@@ -85,7 +97,7 @@ class Funcionarios extends CI_Controller {
     }
 
     public function alterar_funcionario() {
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
             $id_funcionario = $this->uri->segment(3);
 
             if (empty($id_funcionario)) {
@@ -98,11 +110,13 @@ class Funcionarios extends CI_Controller {
                 foreach ($query as $qr) {
                     $id_funcionario = $qr->id_funcionario;
                     $nome_funcionario = $qr->nome_funcionario;
+                    $id_privilegio = $qr->id_privilegio;
                 }
 
                 $dados = array(
                     'id_funcionario' => $id_funcionario,
                     'nome_funcionario' => $nome_funcionario,
+                    'id_privilegio' => $id_privilegio,
                     'dadosPrivilegios' => $privilegios
                 );
 
@@ -118,12 +132,12 @@ class Funcionarios extends CI_Controller {
 
     //Função que exclui funcionario logicamente
     public function salva_funcionario_alterado() {
-       if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+       if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
 
             $id_funcionario = $this->uri->segment(3);
             $this->form_validation->set_rules('nome','Nome','required');
             $this->form_validation->set_rules('senha', 'Senha', 'required|min_length[6]|max_length[10]');
-            $this->form_validation->set_rules('senha2', 'Confirmação de Senha', 'required|matches[senha]'); 
+            $this->form_validation->set_rules('senha2', 'Repetir a Senha', 'required|matches[senha]'); 
             $this->form_validation->set_rules('tipoPermissao','Tipo de Permissão','required');
           
             
@@ -170,7 +184,7 @@ class Funcionarios extends CI_Controller {
     }
 
     function excluir_funcionario() {
-       if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+       if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
 
             $id_funcionario = $this->uri->segment(3);
 

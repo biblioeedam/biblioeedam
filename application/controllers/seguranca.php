@@ -71,6 +71,7 @@ class seguranca extends CI_Controller {
                 'img_path' => './captcha/',
                 'img_url' => base_url() . 'captcha/',
                 // 'font_path' => './path/to/fonts/texb.ttf',
+                
                 'img_width' => '130',
                 'img_height' => 30,
                 'expiration' => 7200
@@ -92,14 +93,15 @@ class seguranca extends CI_Controller {
     function validarUsuario_check() {
         $dadosLogin = array(
             'login_funcionario' => $this->input->post('login'),
-            'senha_funcionario' => md5($this->input->post('senha'))
+            'senha_funcionario' => md5($this->input->post('senha')),
+            'status_funcionario' => 1
         );
 
         $userLogin = $this->funcionario_model->obterFuncionarioLogin($dadosLogin)->result();
 
         if (empty($userLogin)) {
 
-            $this->form_validation->set_message('validarUsuario_check', 'Usuario ou senha incorreto!');
+            $this->form_validation->set_message('validarUsuario_check', 'Usuario ou senha incorreto! Ou o usuario foi excluído!');
             return FALSE;
         } else {
             foreach ($userLogin as $ul) {
@@ -107,7 +109,9 @@ class seguranca extends CI_Controller {
                     'id_funcionario' => $ul->id_funcionario,
                     'nome_funcionario' => $ul->nome_funcionario,
                     'login_funcionario' => $ul->login_funcionario,
-                    'senha_funcionario' => $ul->senha_funcionario
+                    'senha_funcionario' => $ul->senha_funcionario,
+                    'status_funcionario' => $ul->status_funcionario,
+                    'privilegio_funcionario' => $ul->id_privilegio
                 );
                 $this->session->set_userdata($dadosUser);
             }
@@ -117,7 +121,7 @@ class seguranca extends CI_Controller {
 
     function codigoValidacao_check($cod) {
         if ($this->input->post('textoImagem') != $this->session->userdata('textCaptcha')) {
-            $this->form_validation->set_message('codigoValidacao_check', 'O %s esta incorreta!');
+            $this->form_validation->set_message('codigoValidacao_check', 'O %s esta incorreto!');
             return FALSE;
         } else {
             $this->session->unset_userdata('textCaptcha');
@@ -130,6 +134,8 @@ class seguranca extends CI_Controller {
         $this->session->unset_userdata('nome_funcionario');
         $this->session->unset_userdata('usuario_funcionario');
         $this->session->unset_userdata('senha_funcionario');
+        $this->session->unset_userdata('status_funcionario');
+        $this->session->unset_userdata('privilegio_funcionario');
 
         redirect(base_url());
     }

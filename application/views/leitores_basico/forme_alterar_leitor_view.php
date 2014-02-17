@@ -1,5 +1,5 @@
 <div class="col-lg-12">
-    <form class="form-horizontal" role="form" action="<?php echo base_url('leitores/salvar_leitor_alterado') ?>" method="post">
+    <form class="form-horizontal" role="form" action="<?php echo base_url('leitores_basico/salvar_leitor_alterado') ?>" method="post">
         <input type="hidden" name="id_leitor" value="<?php echo $id_leitor; ?>"
         <fieldset>
         <legend>
@@ -168,7 +168,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-4">
                         <button type="submit" class="btn btn-primary">Salvar</button>
-                        <a href="<?php echo base_url('leitores') ?>" class="btn btn-default">Cancelar</a>
+                        <a href="<?php echo base_url('leitores_basico') ?>" class="btn btn-default">Cancelar</a>
                     </div>
                 </div>
             </div>
