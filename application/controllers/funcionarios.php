@@ -22,9 +22,17 @@ class Funcionarios extends CI_Controller {
     function index() {
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
 
-            $dados = array(
-                'todos_funcionarios' => $this->funcionario_model->obterTodosFuncionarios()->result()
-            );
+            //verifica se exite valor no campo de busca na tabela de leitores 
+            $nome_funcionario = $this->input->post('nome_busca_funcionario');
+            if(!empty($nome_funcionario)){    
+                $dados = array(
+                    'todos_funcionarios' => $this->funcionario_model->obterUmFuncionario2($nome_funcionario)->result()
+                );
+            }  else {
+                $dados = array(
+                    'todos_funcionarios' => $this->funcionario_model->obterTodosFuncionarios()->result()
+                ); 
+            }
 
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');

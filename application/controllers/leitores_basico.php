@@ -22,9 +22,17 @@ class Leitores_basico extends CI_Controller {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
-            $dados = array(
-                'todos_leitores' => $this->leitores_model->obterTodosLeitores()->result()
-            );
+            //verifica se exite valor no campo de busca na tabela de leitores para usuarios de permissão básica 
+            $nome_leitor = $this->input->post('nome_busca_leitor');
+            if(!empty($nome_leitor)){
+                $dados = array(
+                    'todos_leitores' => $this->leitores_model->obterUmLeitor2($nome_leitor)->result()
+                );
+            }else{    
+                $dados = array(
+                    'todos_leitores' => $this->leitores_model->obterTodosLeitores()->result()
+                );
+            }
             
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu_basico');

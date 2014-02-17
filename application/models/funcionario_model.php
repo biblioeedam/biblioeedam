@@ -22,6 +22,11 @@ class funcionario_model extends CI_Model {
         return $this->db->get_where('funcionario', array('id_funcionario' => $id_funcionario));
     }
     
+    function obterUmFuncionario2($nome_funcionario){
+        $this->db->like('nome_funcionario',$nome_funcionario);
+        return $this->db->get('funcionario');
+    }
+    
     function salvarFuncionario($dados=array()){
         $this->db->insert('funcionario', $dados);
         return $this->db->affected_rows();

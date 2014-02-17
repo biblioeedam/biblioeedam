@@ -10,6 +10,11 @@ class Leitores_model extends CI_Model {
         return $this->db->get_where('leitor', array('id_leitor' => $id_leitor));
     }
     
+    function obterUmLeitor2($nome_leitor){
+        $this->db->like('nome_leitor',$nome_leitor);
+        return $this->db->get('leitor');
+    }
+            
     function salvarLeitor($dados=array()){
         $this->db->insert('leitor', $dados);
         return $this->db->affected_rows();
