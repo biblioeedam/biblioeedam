@@ -291,20 +291,25 @@ class Item extends CI_Controller {
     }
 
     public function alterar_item() {
-
+        // capturando o seguimento 3 do url.
         $id_item = $this->uri->segment(3);
-
+        // verificando se o seguimento 3 é vasiu
         if (empty($id_item)) {
+            // redirecionando para a tabela de item.
             redirect(base_url('item'));
         } else {
 
-
+            //  Pegando dados para o formulario de alteração.
             $dados = array(
+                //Item a ser alterado.
                 'item' => $this->item_model->obterItenSelecionado($id_item)->result(),
+                // Categoraias para disponibilizar no formulario de alteração 
                 'categoria_item' => $this->categoria_item_model->obterTodasCategoriasItens()->result(),
+                // Tipo para disponibilizar no formulario de alteração 
                 'tipo_item' => $this->tipo_item_model->obterTodosTiposItens()->result(),
             );
 
+            // Mostrando o formulário de alteração de item.
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
             $this->load->view('item/forme_alterar_item_view', $dados);
@@ -312,24 +317,69 @@ class Item extends CI_Controller {
         }
     }
 
-    public function salva_categoria_item_alterada() {
-        $this->form_validation->set_rules('nomeCategoriaItem', 'Nome Categoria Item', "required");
+    public function salvar_item_alterado() {
+        // verificando usuário logado.
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
+            
+            // Id do item a ser alterado.
+            $id_item = $_POST['idItem'];
+            
+            // regras de validação para os campos.
+            $this->form_validation->set_rules('nomeItem', 'Nome Item', "required");
+            $this->form_validation->set_rules('numeroRegistroItem', 'Numero Registro', "required");
+            $this->form_validation->set_rules('autorItem', 'Autor', "required");
+            $this->form_validation->set_rules('origemItem', 'Origem', "required");
+            $this->form_validation->set_rules('volumeItem', 'Volume', "required|numeric");
+            $this->form_validation->set_rules('editoraItem', 'Editora', "required");
+            $this->form_validation->set_rules('descricaoItem', 'Descrição', "");
+            $this->form_validation->set_rules('dataLancamentoItem', 'Data Lançamento', "required");
+            $this->form_validation->set_rules('categoriaItem', 'Categoria', "required");
+            $this->form_validation->set_rules('tipoItem', 'Tipo', "required");
 
-        $id_categoria_item = $_POST['idCategoriaItem'];
+            // verificando se as regras de todos os campos foram validas.
+            if ($this->form_validation->run() == false) {
+                // redirecionando para o formulario de alteração.
+                redirect(base_url('item/alterar_item/'.$id_item));
+                    
+            } else {
+                // Capturando os dados do formulário para ser alterado.
+                $nome_item = $_POST['nomeItem'];
+                $numero_registro_item = $_POST['numeroRegistroItem'];
+                $autor_item = $_POST['autorItem'];
+                $origem_item = $_POST['origemItem'];
+                $volume_item = $_POST['volumeItem'];
+                $editora_item = $_POST['editoraItem'];
+                $descricao_item = $_POST['descricaoItem'];
+                $data_lancamento_item = $_POST['dataLancamentoItem'];
+                $categoria_item = $_POST['categoriaItem'];
+                $tipo_item = $_POST['tipoItem'];
 
-        if ($this->form_validation->run() == false) {
-            redirect('categoria_item/alterar_categoria_item/' . $id_categoria_item);
+                
+                //date_default_timezone_set('UTC');
+
+                $dados = array(
+                    //'id_item' => '',
+                    'nome_item' => $nome_item,
+                    'numRegistro_item' => $numero_registro_item,
+                    'autor_item' => $autor_item,
+                    'origem_item' => $origem_item,
+                    //'dataCadastro_item' => date("Y-m-d", time()),
+                    'volume_item' => $volume_item,
+                    'editora_item' => $editora_item,
+                    'descricao_item' => $descricao_item,
+                    'dataLancamento_item' => implode("-", array_reverse(explode("/", $data_lancamento_item))),
+                    'id_funcionario' => $this->session->userdata('id_funcionario'),
+                    'id_tipo_item' => $tipo_item,
+                    'id_categoria_item' => $categoria_item
+                );
+
+
+                $this->item_model->salvarItemAlterado($dados,$id_item);
+
+                redirect(base_url('item'));
+            }
         } else {
-
-            $nome_categoria_item = $_POST['nomeCategoriaItem'];
-
-            $dados = array(
-                'nome_categoria_item' => $nome_categoria_item
-            );
-
-            $this->categoria_item_model->salvarCategoriaItemAlterada($dados, $id_categoria_item);
-
-            redirect(base_url('categoria_item'));
+            redirect(base_url() . "seguranca");
         }
     }
 

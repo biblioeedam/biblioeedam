@@ -53,9 +53,9 @@ class item_model extends CI_Model {
         $this->db->update('item_secao_ordem_item', $dados);
     }
 
-    function salvarCategoriaItemAlterada($dados, $id_categoria_item) {
-        $this->db->where('id_categoria_item', $id_categoria_item);
-        $this->db->update('categoria_item', $dados);
+    function salvarItemAlterado($dados, $id_item) {
+        $this->db->where('id_item', $id_item);
+        $this->db->update('item', $dados);
     }
 
     function excluirCategoriaItem($id_tipo_item) {
