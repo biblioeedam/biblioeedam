@@ -20,8 +20,7 @@ class Leitores extends CI_Controller {
 
     public function index() {
 
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
-            
+if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {            
             //verifica se exite valor no campo de busca na tabela de leitores 
             $nome_leitor = $this->input->post('nome_busca_leitor');
             if(!empty($nome_leitor)){
@@ -45,8 +44,7 @@ class Leitores extends CI_Controller {
 
     public function novo_leitor() {
  
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
-            
+if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {            
             $tipos_leitores = array(
                 'todos_tipos_leitores' => $this->tipos_leitores_model->obterTodosTiposLeitores()->result()
             );
@@ -61,8 +59,7 @@ class Leitores extends CI_Controller {
     }
     
     function salvar_leitor(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
-
+if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
             $this->form_validation->set_rules('tipo_leitor','Tipo de Leitor','required');
             $this->form_validation->set_rules('nome_leitor','Nome','required');
             $this->form_validation->set_rules('cpf_leitor', 'CPF', 'callback_cpf_check|trim|numeric|min_length[11]|max_length[11]|is_unique[leitor.cpf_leitor]');
@@ -123,8 +120,7 @@ class Leitores extends CI_Controller {
     }
     
     function alterar_leitor(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
-
+if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
             $id_leitor = $this->uri->segment(3);
 
             if (empty($id_leitor)) {
@@ -190,8 +186,7 @@ class Leitores extends CI_Controller {
     
     //Salva os dados do leitor a ser alterado
     function salvar_leitor_alterado(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
-
+if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
             $this->form_validation->set_rules('id_leitor');
             $this->form_validation->set_rules('tipo_leitor','Tipo de Leitor','required');
             $this->form_validation->set_rules('nome_leitor','Nome','required');
@@ -315,8 +310,7 @@ class Leitores extends CI_Controller {
     
     //Emite cartão da biblioteca de determinado Leitor
     function emitir_cartao_leitor(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
-
+if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
             $id_leitor = $this->uri->segment(3);
             
             $query = $this->leitores_model->obterDadosCartaoLeitor($id_leitor)->result();
@@ -424,10 +418,7 @@ class Leitores extends CI_Controller {
         }
     }
 
-    public function busca_um_leitor(){
-        
-    }
-    
+   
     
 }
 
