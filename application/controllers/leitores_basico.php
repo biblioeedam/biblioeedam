@@ -16,12 +16,22 @@ class Leitores_basico extends CI_Controller {
         $this->load->model('leitores_model');
         $this->load->model('tipos_leitores_model');
         $this->load->helper('date');
+        $this->load->library("pagination");
     }
 
     public function index() {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
+            //Configurações da paginação de dados
+            $config['base_url'] = base_url("leitores_basico/index");
+            $config['total_rows'] = $this->leitores_model->obterTodosLeitores()->num_rows(); 
+            $config['per_page'] = 1;    
+            $qtde = $config['per_page'];
+            $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
+            $this->pagination->initialize($config);
+            
+            
             //verifica se exite valor no campo de busca na tabela de leitores para usuarios de permissão básica 
             $nome_leitor = $this->input->post('nome_busca_leitor');
             if(!empty($nome_leitor)){
@@ -30,7 +40,8 @@ class Leitores_basico extends CI_Controller {
                 );
             }else{    
                 $dados = array(
-                    'todos_leitores' => $this->leitores_model->obterTodosLeitores()->result()
+                    'todos_leitores' => $this->leitores_model->obterTodosLeitores($qtde,$inicio)->result(),
+                    'paginacao' => $this->pagination->create_links(),
                 );
             }
             

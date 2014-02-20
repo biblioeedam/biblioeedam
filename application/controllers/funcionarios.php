@@ -16,21 +16,30 @@ class Funcionarios extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model("funcionario_model");
         $this->load->model("privilegios_model");
-        $this->load->library('pagination');
+        $this->load->library("pagination");
     }
 
     function index() {
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
-
+            
+            //Configurações da paginação de dados
+            $config['base_url'] = base_url("funcionarios/index");
+            $config['total_rows'] = $this->funcionario_model->obterTodosFuncionarios()->num_rows(); 
+            $config['per_page'] = 2;    
+            $qtde = $config['per_page'];
+            $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
+            $this->pagination->initialize($config);
+            
             //verifica se exite valor no campo de busca na tabela de leitores 
             $nome_funcionario = $this->input->post('nome_busca_funcionario');
             if(!empty($nome_funcionario)){    
                 $dados = array(
-                    'todos_funcionarios' => $this->funcionario_model->obterUmFuncionario2($nome_funcionario)->result()
+                    'todos_funcionarios' => $this->funcionario_model->obterUmFuncionario2($nome_funcionario)->result(),
                 );
             }  else {
                 $dados = array(
-                    'todos_funcionarios' => $this->funcionario_model->obterTodosFuncionarios()->result()
+                    'todos_funcionarios' => $this->funcionario_model->obterTodosFuncionarios($qtde,$inicio)->result(),
+                    'paginacao' => $this->pagination->create_links(),
                 ); 
             }
 
@@ -38,6 +47,7 @@ class Funcionarios extends CI_Controller {
             $this->load->view('tela/menu');
             $this->load->view('funcionarios/tabela_funcionarios_view', $dados);
             $this->load->view('tela/rodape');
+            
         } else {
             redirect(base_url() . "seguranca");
         }
@@ -47,8 +57,6 @@ class Funcionarios extends CI_Controller {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {
             
-            //$maximo = 3;
-            //$inicio = (!$this->uri->segment("3")) ? 0 : $this->uri->segment("3");
             
             $dados = array('todos_privilegios' => $this->privilegios_model->obterTodosPrivilegios()->result());
 
@@ -188,7 +196,7 @@ class Funcionarios extends CI_Controller {
 
             $id_funcionario = $this->uri->segment(3);
 
-            //Paramento de funcionarios inativo(i)
+            //Paramento para tornar funcionarios inativo(0)
             $dados = array(
                 'status_funcionario' => '0'
             );
