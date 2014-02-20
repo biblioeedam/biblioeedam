@@ -27,14 +27,6 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu02 <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="<?php echo base_url("acoes_basicas") ?>"> Ações</a></li>
-                        <li><a href="<?php echo base_url("#") ?>"> SubMenu02</a></li>
-
-                    </ul>
-                </li>
-                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Pessoas <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo base_url("leitores") ?>"> Leitores</a></li>
@@ -50,6 +42,9 @@
                         <li><a href="<?php echo base_url("#") ?>"> SubMenu03</a></li>
 
                     </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="<?php echo base_url("acoes_basicas") ?>"> Ações Básicas</a>
                 </li>
 
             </ul>
