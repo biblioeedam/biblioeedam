@@ -72,9 +72,6 @@
                 <td>Autor</td>
                 <td>Origem</td>
                 <td>Volume</td>
-                <td>Editora</td>
-                
-                <td>Localização</td>
             </tr>
         </thead>
         <tbody>
@@ -87,9 +84,6 @@
                     <td><?php echo $ti->autor_item ?></td>
                     <td><?php echo $ti->origem_item ?></td>
                     <td><?php echo $ti->volume_item ?></td>
-                    <td><?php echo $ti->editora_item ?></td>
-                    
-                    <td><a class="btn btn-default" href="<?php echo base_url("item/localizacao_item/".$ti->id_item) ?>"> Localização </a></td>
                     
                 </tr>
             <?php } ?>

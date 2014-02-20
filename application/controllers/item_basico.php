@@ -26,12 +26,16 @@ class Item_basico extends CI_Controller {
             $nome_item = $this->input->post('nome_item');
             if(!empty($nome_item)){ 
                 $dados = array(
-                    'todos_itens' => $this->item_model->obterUmItem($nome_item)->result()
+                    'todos_itens' => $this->item_model->obterUmItem($nome_item)->result(),
+                    'categoria_item' => $this->categoria_item_model->obterTodasCategoriasItens()->result(),
+                    'tipo_item' => $this->tipo_item_model->obterTodosTiposItens()->result()
                 );
                         
             }else{
                 $dados = array(
-                    'todos_itens' => $this->item_model->obterTodosItens()->result()
+                    'todos_itens' => $this->item_model->obterTodosItens()->result(),
+                    'categoria_item' => $this->categoria_item_model->obterTodasCategoriasItens()->result(),
+                    'tipo_item' => $this->tipo_item_model->obterTodosTiposItens()->result()
                 );
             }
             
