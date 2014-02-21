@@ -62,6 +62,10 @@ class item_model extends CI_Model {
         $this->db->delete('categoria_item', array('id_categoria_item' => $id_tipo_item));
     }
 
+    function obterUmItem($nome_item){
+        $this->db->like('nome_item',$nome_item);
+        return $this->db->get_where('item');
+    }
     //put your code here
 }
 

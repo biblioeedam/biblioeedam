@@ -28,13 +28,25 @@
                 </li>
                 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Pessoas <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Acervo <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo base_url("leitores_basico") ?>"> Leitores</a></li>
-                        <li><a href="<?php echo base_url("#") ?>"> SubMenu02</a></li>
+                        <li><a href="<?php echo base_url("item_basico") ?>"> Localizar Itens</a></li>
 
                     </ul>
                 </li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Pessoas <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php echo base_url("leitores_basico") ?>"> Leitores</a></li>
+                        
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="<?php echo base_url("#") ?>"> Usuário Mestre</a>
+                </li>
+                
+                
                
 
             </ul>
