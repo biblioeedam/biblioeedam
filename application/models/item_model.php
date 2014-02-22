@@ -64,7 +64,28 @@ class item_model extends CI_Model {
 
     function obterUmItem($nome_item){
         $this->db->like('nome_item',$nome_item);
-        return $this->db->get_where('item');
+        return $this->db->get('item');
+    }
+    
+    //Obtem itens com os parametros tipo_item e categoria_item
+    function obterItem1($id_tipo_item, $id_categoria_item){
+        $this->db->where('id_tipo_item',$id_tipo_item);
+        $this->db->where('id_categoria_item',$id_categoria_item);
+        return $this->db->get('item');
+    }
+    //Obtem itens com os parametros tipo_item e nome_item
+    function obterItem2($id_tipo_item, $nome_item){
+        $this->db->where('id_tipo_item',$id_tipo_item);
+        $this->db->like('nome_item',$nome_item);
+        return $this->db->get('item');
+    }
+    
+    //Obtem itens com os parametros tipo_item, categoria_item e nome_item
+    function obterItem3($id_tipo_item,$id_categoria_item,$nome_item){
+        $this->db->where('id_tipo_item',$id_tipo_item);
+        $this->db->where('id_categoria_item',$id_categoria_item);
+        $this->db->like('nome_item',$nome_item);
+        return $this->db->get('item');
     }
     //put your code here
 }
