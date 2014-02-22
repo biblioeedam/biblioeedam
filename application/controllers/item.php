@@ -135,11 +135,11 @@ class Item extends CI_Controller {
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
 
             // Capturando o seguimento três da URL atual
-            $id_item = $this->uri->segment(3);
+           echo  $id_item = $this->uri->segment(3);
 
             // verificando se o seguimento existe
             if (empty($id_item)) {
-                redirect(base_url("item"));
+                //redirect(base_url("item"));
             } else {
 
                 // verificando se a localização para o item já existe.
@@ -320,10 +320,10 @@ class Item extends CI_Controller {
     public function salvar_item_alterado() {
         // verificando usuário logado.
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
-            
+
             // Id do item a ser alterado.
             $id_item = $_POST['idItem'];
-            
+
             // regras de validação para os campos.
             $this->form_validation->set_rules('nomeItem', 'Nome Item', "required");
             $this->form_validation->set_rules('numeroRegistroItem', 'Numero Registro', "required");
@@ -339,8 +339,7 @@ class Item extends CI_Controller {
             // verificando se as regras de todos os campos foram validas.
             if ($this->form_validation->run() == false) {
                 // redirecionando para o formulario de alteração.
-                redirect(base_url('item/alterar_item/'.$id_item));
-                    
+                redirect(base_url('item/alterar_item/' . $id_item));
             } else {
                 // Capturando os dados do formulário para ser alterado.
                 $nome_item = $_POST['nomeItem'];
@@ -354,8 +353,7 @@ class Item extends CI_Controller {
                 $categoria_item = $_POST['categoriaItem'];
                 $tipo_item = $_POST['tipoItem'];
 
-                
-                //date_default_timezone_set('UTC');
+
 
                 $dados = array(
                     //'id_item' => '',
@@ -363,7 +361,7 @@ class Item extends CI_Controller {
                     'numRegistro_item' => $numero_registro_item,
                     'autor_item' => $autor_item,
                     'origem_item' => $origem_item,
-                    //'dataCadastro_item' => date("Y-m-d", time()),
+                   
                     'volume_item' => $volume_item,
                     'editora_item' => $editora_item,
                     'descricao_item' => $descricao_item,
@@ -374,7 +372,7 @@ class Item extends CI_Controller {
                 );
 
 
-                $this->item_model->salvarItemAlterado($dados,$id_item);
+                $this->item_model->salvarItemAlterado($dados, $id_item);
 
                 redirect(base_url('item'));
             }
@@ -383,25 +381,23 @@ class Item extends CI_Controller {
         }
     }
 
-    public function excluir_categoria_item() {
-
-        $id_categoria_item = $this->uri->segment(3);
-
-        if (empty($id_categoria_item)) {
-            redirect(base_url('categoria_item'));
+    // função para fazer exclusão de item de maneira logica.
+    public function excluir_item() {
+        // Capturando o seguimento 3 da url que é o id do item a ser excluido
+        $id_item = $this->uri->segment(3);
+        // verificando se o seguimente 3 existe o esta vasio
+        if (empty($id_item)) {
+            // redirecionando para a tabela inicial de item
+            redirect(base_url('item'));
         } else {
-            $verificador = 0;
-            $query = $this->categoria_item_model->verificarCategoriaItemUtilisado($id_categoria_item)->result();
-            foreach ($query as $qy) {
-                $verificador = $qy->categoria_item;
-            }
-
-            if ($verificador > 0) {
-                
-            } else {
-                $this->categoria_item_model->excluirCategoriaItem($id_categoria_item);
-            }
-            redirect(base_url('categoria_item'));
+            // atribuindo valores ao status para ser excluido
+            $dados = array(
+                'status_item' => 0,
+            );
+            // enviando os dados para o model excluir o item
+            $this->item_model->excluirItem($dados,$id_item);
+            // redirecionando para a tebela inicial de item.
+            redirect(base_url('item'));
         }
     }
 

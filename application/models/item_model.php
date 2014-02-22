@@ -13,6 +13,7 @@
 class item_model extends CI_Model {
 
     function obterTodosItens() {
+        $this->db->where('status_item !=',0);
         return $this->db->get('item');
     }
 
@@ -35,14 +36,17 @@ class item_model extends CI_Model {
         return $query = $this->db->get('item');
     }
 
+    // obtendo um item pelo id
     function obterItenSelecionado($id_item) {
         return $this->db->get_where('item', array('id_item' => $id_item));
     }
-
+    
+    //Salvando os dados do item
     function salvarItem($dados) {
         $this->db->insert('item', $dados);
     }
-
+    
+    // Salvando a localização dos itens
     function salvarItemSecaoOrdemItem($dados) {
         $this->db->insert('item_secao_ordem_item', $dados);
     }
@@ -52,14 +56,16 @@ class item_model extends CI_Model {
         $this->db->where('id_item', $id_item);
         $this->db->update('item_secao_ordem_item', $dados);
     }
-
+    // função para salvar as alterações do item
     function salvarItemAlterado($dados, $id_item) {
         $this->db->where('id_item', $id_item);
         $this->db->update('item', $dados);
     }
-
-    function excluirCategoriaItem($id_tipo_item) {
-        $this->db->delete('categoria_item', array('id_categoria_item' => $id_tipo_item));
+    
+    // excluindo o item de forma logica.
+    function excluirItem($dados,$id_item) {
+        $this->db->where('id_item', $id_item);
+        $this->db->update('item', $dados);
     }
 
     function obterUmItem($nome_item){
