@@ -18,7 +18,7 @@
                 <!--<li class="active"><a href="#">Link</a></li>
                 <li><a href="#">Link</a></li>-->
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> acervo <b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Acervo <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo base_url("item") ?>"> Item </a></li>
                         <li><a href="<?php echo base_url("tipo_item") ?>"> Tipo Item</a></li>
@@ -41,6 +41,14 @@
                         <li><a href="<?php echo base_url("secao") ?>"> Seção </a></li>
                         <li><a href="<?php echo base_url("#") ?>"> SubMenu03</a></li>
 
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Relatórios <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="<?php echo base_url("#") ?>">Empréstimos</a></li>
+                        <li><a href="<?php echo base_url("#") ?>">Devoluções Atrasadas</a></li>
+                        <li><a href="<?php echo base_url("#") ?>">Dados do Leitor</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

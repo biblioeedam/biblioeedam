@@ -76,8 +76,8 @@
                 <td>Autor</td>
                 <td>Origem</td>
                 <td>Volume</td>
-                <td>Prateleira</td>
                 <td>Seção</td>
+                <td>Prateleira</td>
             </tr>
         </thead>
         <tbody>
