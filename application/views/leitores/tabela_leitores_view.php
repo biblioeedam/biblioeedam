@@ -8,16 +8,13 @@
             <input type="text" name="nome_busca_leitor" placeholder="Nome do Leitor"/> <input type="submit" name="botao" value="Buscar" class="btn btn-primary"/>  
         </div>
     </form>
-    
-                
-    
     <br/>
     
     <br/>
     <table class="table">
         <thead>
             <tr>
-                <td>Id</td>
+                <td>Código</td>
                 <td>Nome</td>
                 <td>Serie</td>
                 <td>Cartão</td>

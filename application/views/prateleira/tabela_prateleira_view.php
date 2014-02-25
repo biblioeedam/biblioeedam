@@ -7,7 +7,7 @@
     <table class="table">
         <thead>
             <tr>
-                <td>Id</td>
+                <td>Código</td>
                 <td>Nome</td>
                 <td>Alterar</td>
                 <td>Excluir</td>

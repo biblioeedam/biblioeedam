@@ -14,7 +14,6 @@
                 <td>Origem</td>
                 <td>Volume</td>
                 <td>Editora</td>
-                
                 <td>Localização</td>
                 <td>Alterar</td>
                 <td>Excluir</td>

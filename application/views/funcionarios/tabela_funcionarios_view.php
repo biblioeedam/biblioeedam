@@ -14,7 +14,7 @@
     <table class="table">
         <thead>
             <tr>
-                <td>Id</td>
+                <td>Código</td>
                 <td>Nome</td>
                 <td>Login</td>
                 <td>Alterar</td>
