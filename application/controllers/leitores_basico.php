@@ -349,7 +349,8 @@ class Leitores_basico extends CI_Controller {
               'serie_leitor' => $serie_leitor,
               'turma_leitor' => $turma_leitor,
               'turno_leitor' => $turno_leitor,
-              'telefone_leitor' => $telefone_leitor  
+              'telefone_leitor' => $telefone_leitor,
+              'dataAtual' => date('d/m/Y')   
             );
             
             $this->load->view('tela/titulo');

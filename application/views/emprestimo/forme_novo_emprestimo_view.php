@@ -1,24 +1,21 @@
 <script src="../../../js/jquery.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function(){
+   /* $(document).ready(function(){
         var path = '<?php echo site_url(); ?>';
         $("input[name='cod_leitor']").change(function(){
             var cod_leitor = $("input[name='cod_leitor']");
             var nome_leitor = $("input[name=nome_leitor]");
             $( nome_leitor ).val('Aguarde, carregando...');
-            $.getJSON( path + '/emprestimo/obter_nome_leitor/' + cod_leitor, function (data){
-                function(data){
-                    alert('oi');
-                    $( nome_leitor ).val(data.nome_leitor);
-                }
-            );
+            $.post('<?php echo base_url()?>emprestimo/obter_nome_leitor',{id_leitor :cod_leitor},function(response){
+                alert('oi');
+            }); 
         });
-    });
+    });*/
 </script>
 
 <div class="col-lg-12">
-    <form class="form-horizontal" role="form" action="<?php echo base_url('leitores/salvar_leitor') ?>" method="post">
+    <form class="form-horizontal" role="form" action="<?php echo base_url('emprestimo/liberar_emprestimo') ?>" method="post">
         <fieldset>
             <legend>
                 Emprestimos
@@ -26,28 +23,40 @@
            
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label for="cod_leitor" class="col-sm-3 control-label"> Código Leitor </label>
+                    <label for="cod_leitor" class="col-sm-3 control-label"> Código do Leitor </label>
                     <div class="col-sm-8">
                         <input type="text" name="cod_leitor" class="form-control" placeholder="Código do Leitor"/>
+                        <span class="text-danger"> 
+                            <?php echo form_error('cod_leitor'); ?>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="nome_leitor" class="col-sm-3 control-label"> Nome do Leitor </label>
                     <div class="col-sm-8">
                         <input type="text" name="nome_leitor" class="form-control" readonly="true"/>
+                        <span class="text-danger"> 
+                            <?php echo form_error('nome_leitor'); ?>
+                        </span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="dt_emprestimo" class="col-sm-3 control-label"> Data do Emprestimo </label>
                     <div class="col-sm-8">
-                        <input type="text" name="dt_emprestimo" class="form-control" readonly="true"/>
+                        <input type="text" name="dt_emprestimo" class="form-control" value="<?php echo $dtAtual; ?>" readonly="true"/>
+                        <span class="text-danger"> 
+                            <?php echo form_error('dt_emprestimo'); ?>
+                        </span>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="dt_emprestimo" class="col-sm-3 control-label"> Data de Devolução </label>
+                    <label for="dt_devolucao" class="col-sm-3 control-label"> Data de Devolução </label>
                     <div class="col-sm-8">
-                        <input type="text" name="dt_emprestimo" class="form-control" value="<?php ?>" placeholder="Data de Devolução"/>
+                        <input type="text" name="dt_devolucao" class="form-control"  placeholder="Data de Devolução"/>
+                        <span class="text-danger"> 
+                            <?php echo form_error('dt_devolucao'); ?>
+                        </span>
                     </div>
                 </div>
                   
@@ -56,41 +65,44 @@
            <div class="col-sm-6">   
                
                <div class="form-group">
-                    <label for="tipo_leitor" class="col-sm-3 control-label"> Tipo de Item </label>
+                    <label for="tipo_item" class="col-sm-3 control-label"> Tipo de Item </label>
                     <div class="col-sm-8">
-                        <select name="tipo_leitor" class="form-control">
-                            <?php foreach ($todos_tipos_leitores as $tp) { ?>
-                                <option value="<?php echo $tp->id_tipo_leitor ?>" <?php echo set_select('tipo_leitor', $tp->id_tipo_leitor); ?> ><?php echo $tp->nome_tipo_leitor; ?></option>
+                        <select name="tipo_item" class="form-control">
+                            <?php foreach ($tipos_item as $tp) { ?>
+                                <option value="<?php echo $tp->id_tipo_item ?>" <?php echo set_select('tipo_item', $tp->id_tipo_item); ?> ><?php echo $tp->nome_tipo_item; ?></option>
                             <?php } ?>
                         </select>                          
                         <span class="text-danger"> 
-                            <?php echo form_error('nome_leitor'); ?>
+                            <?php echo form_error('tipo_item'); ?>
                         </span>
                     </div>
                 </div>
                 
                 <div class="form-group">
-                    <label for="telefone_leitor" class="col-sm-3 control-label"> Código Item </label>
+                    <label for="cod_item" class="col-sm-3 control-label"> Código do Item </label>
                     <div class="col-sm-8">
-                        <input type="text" name="telefone_leitor" class="form-control" value="<?php echo set_value('telefone_leitor');?>" placeholder="Código do Item"/>
+                        <input type="text" name="cod_item" class="form-control" value="<?php echo set_value('cod_item');?>" placeholder="Código do Item"/>
                         <span class="text-danger"> 
-                            <?php echo form_error('telefone_leitor'); ?>
+                            <?php echo form_error('cod_item'); ?>
                         </span>
                     </div>
                 </div>
                <div class="form-group">
-                    <label for="telefone_leitor" class="col-sm-3 control-label"> Volume </label>
+                    <label for="vol_item" class="col-sm-3 control-label"> Volume </label>
                     <div class="col-sm-8">
-                        <input type="text" name="telefone_leitor" class="form-control" value="<?php echo set_value('telefone_leitor');?>" placeholder="Volume"/>
+                        <input type="text" name="vol_item" class="form-control" value="<?php echo set_value('vol_item');?>" placeholder="Volume"/>
                         <span class="text-danger"> 
-                            <?php echo form_error('telefone_leitor'); ?>
+                            <?php echo form_error('vol_item'); ?>
                         </span>
                     </div>
                 </div>
                <div class="form-group">
-                    <label for="dt_emprestimo" class="col-sm-3 control-label"> Nome do Item </label>
+                    <label for="nome_item" class="col-sm-3 control-label"> Nome do Item </label>
                     <div class="col-sm-8">
-                        <input type="text" name="dt_emprestimo" class="form-control" readonly="true"/>
+                        <input type="text" name="nome_item" class="form-control" readonly="true"/>
+                        <span class="text-danger"> 
+                            <?php echo form_error('nome_item'); ?>
+                        </span>
                     </div>
                 </div>
                 

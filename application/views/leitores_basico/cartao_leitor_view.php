@@ -15,7 +15,7 @@
     </tr>
     <tr>
         <td>Turno: <?php echo $turno_leitor; ?> </td>
-        <td>Emissão:</td>
+        <td>Emissão: <?php echo $dataAtual; ?></td>
     </tr>
     </tbody>
 </table>

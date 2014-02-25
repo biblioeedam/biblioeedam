@@ -343,7 +343,8 @@ if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('n
               'serie_leitor' => $serie_leitor,
               'turma_leitor' => $turma_leitor,
               'turno_leitor' => $turno_leitor,
-              'telefone_leitor' => $telefone_leitor  
+              'telefone_leitor' => $telefone_leitor,
+              'dataAtual' => date('d/m/Y') 
             );
             
             $this->load->view('tela/titulo');

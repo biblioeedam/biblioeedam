@@ -39,7 +39,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo base_url("prateleira") ?>"> Prateleira</a></li>
                         <li><a href="<?php echo base_url("secao") ?>"> Seção </a></li>
-                        <li><a href="<?php echo base_url("#") ?>"> SubMenu03</a></li>
 
                     </ul>
                 </li>
