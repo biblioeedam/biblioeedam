@@ -23,11 +23,11 @@
 
 <br/>
 
-<table border="1" width="500">
+<table border="1" width="575">
         <thead>
             <tr>
                 <td width="90">Código do Livro</td>
-                <td width="150">Nome do Livro</td>
+                <td width="250">Nome do Livro</td>
                 <td width="80">Pegou em</td>
                 <td width="80">Devolver em</td>
             </tr>

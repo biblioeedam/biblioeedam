@@ -61,9 +61,7 @@ class Relatorios extends CI_Controller {
                 redirect(base_url('leitores'));
             } else {
 
-                $tipos_leitores = array(
-                    'todos_tipos_leitores' => $this->tipos_leitores_model->obterTodosTiposLeitores()->result()
-                );
+                
 
                 $query = $this->leitores_model->obterUmLeitor($id_leitor)->result();
 
@@ -86,6 +84,12 @@ class Relatorios extends CI_Controller {
                     $referencia_residencia_leitor = $qr->referencia_residencia_leitor;
                     $id_tipo_leitor = $qr->id_tipo_leitor;
                 }
+                
+                $tipo_leitor = $this->tipos_leitores_model->obterTipoLeitor($id_tipo_leitor)->result();
+             
+                foreach ($tipo_leitor as $tp){
+                    $nome_tipo_leitor = $tp->nome_tipo_leitor;
+                }
 
                 $dados = array(
                     'id_leitor' => $id_leitor,
@@ -104,8 +108,7 @@ class Relatorios extends CI_Controller {
                     'cidade_leitor' => $cidade_leitor,
                     'distrito_leitor' => $distrito_leitor,
                     'referencia_residencia_leitor' => $referencia_residencia_leitor,
-                    'tipos_leitores' => $tipos_leitores,
-                    'id_tipo_leitor' => $id_tipo_leitor
+                    'nome_tipo_leitor' => $nome_tipo_leitor
                 );
 
                 $this->load->view('tela/titulo');
