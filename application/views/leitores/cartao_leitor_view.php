@@ -15,8 +15,7 @@
     </tr>
     <tr>
         <td>Turno: <?php echo $turno_leitor; ?> </td>
-        <td>Emissão: <?php echo $dataAtual; ?></td>
-        <td><img width="25" height="25" src="print.gif"/></td>
+        <td>Emissão: <?php echo $dataAtual; ?> </td>
     </tr>
     </tbody>
 </table>
