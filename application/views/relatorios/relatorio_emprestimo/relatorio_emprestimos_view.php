@@ -1,32 +1,57 @@
-<!--Tabela de Leitores para Usuários Básicos-->
+<style>
+    table.table-collapsed{
+        width: auto;
+    }
+</style>
 <div class="col-lg-12">
-    <h3>Relatório de Itens que estão Emprestados</h3>
+        <fieldset>
+        <legend>
+            Relatório - Emprestimos 
+        </legend>
+            
+            <span class="text-danger"> 
+                <?php validation_errors(); ?>
+            </span>
+            <table class="table table-bordered table-striped table-collapsed">
+                <tbody>
+                        <tr>
+                            <td>Tipo de Leitor: </td>
+                            <td>Nome da Mãe: </td>
+                        </tr>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <td>Código do Item</td>
-                <td>Nome do Item</td>
-                <td>Autor</td>
-                <td>Código do Leitor</td>
-                <td>Nome do Leitor</td>
-                
-                <td> Data do Empréstimo</td>
-              
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($todos_leitores as $tp) { ?>
-                <tr>
-                    <td><?php echo $tp->id_leitor ?></td>
-                    <td><?php echo $tp->nome_leitor ?></td>
-                    <td><?php echo $tp->serie_leitor ?></td>
-                    <td><?php echo $tp->serie_leitor ?></td>
-                    <td><a class="btn btn-default" href="<?php echo base_url("leitores_basico/emitir_cartao_leitor/".$tp->id_leitor) ?>"> Emitir </a></td>
-                    <td><a class="btn btn-default" href="<?php echo base_url("leitores_basico/alterar_leitor/".$tp->id_leitor) ?>"> Alterar </a></td>
-                </tr>
-            <?php } ?>
-        </tbody>
-    </table>
-    <?php if(!empty($paginacao)){echo $paginacao;} ?>
+                        <tr>
+                            <td colspan="2">Nome: </td>
+                        </tr>
+                        <tr>
+                            <td>CPF: </td>                            
+                            <td>Nome da Rua: </td>
+                        </tr>
+                        <tr>
+                            <td>E-mail: </td>
+                            <td>Numero: </td>
+                        </tr>
+                        <tr>
+                            <td>Serie: </td>
+                            <td>Bairro: </td>
+                        </tr>
+                        <tr>
+                            <td>Turma: </td>
+                            <td>Cidade: </td>
+                        </tr>
+                        <tr>
+                            <td>Turno: </td>
+                            <td>Distrito: </td>
+                        </tr>
+                        <tr>
+                            <td>Nome do Pai: </td>
+                            <td>Referência: </td>
+                        </tr>
+
+                </tbody>
+            </table>
+
+             
+
+        </fieldset>
+
 </div>

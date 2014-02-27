@@ -45,8 +45,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Relatórios <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo base_url("relatorios/emprestimos") ?>">Empréstimos</a></li>
-                        <li><a href="<?php echo base_url("#") ?>">Devoluções Atrasadas</a></li>
+                        <li><a href="<?php echo base_url("relatorios/tabela_leitores_pendentes") ?>">Empréstimos Atrasados</a></li>
                         <li><a href="<?php echo base_url("relatorios/busca_leitor") ?>">Dados do Leitor</a></li>
                     </ul>
                 </li>
