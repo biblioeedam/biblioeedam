@@ -19,7 +19,7 @@
                     <td><?php echo $rs->nome_leitor;?></td>
                     <td><?php echo $rs->serie_leitor;?></td>
                     <td><?php echo $rs->telefone_leitor;?></td>
-                    <td><a class="btn btn-default" href="<?php echo base_url("leitores/emitir_cartao_leitor/".$rs->id_leitor) ?>"> Emitir </a></td>
+                    <td><a class="btn btn-default" href="<?php echo base_url("relatorios/lista_itens_atrasados/".$rs->id_leitor) ?>"> Emitir </a></td>
                 </tr>
             <?php } ?>
         </tbody>

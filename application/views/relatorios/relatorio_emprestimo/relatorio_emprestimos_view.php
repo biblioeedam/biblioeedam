@@ -1,6 +1,6 @@
 <style>
     table.table-collapsed{
-        width: auto;
+        width: 700px;
     }
 </style>
 <div class="col-lg-12">
@@ -15,37 +15,17 @@
             <table class="table table-bordered table-striped table-collapsed">
                 <tbody>
                         <tr>
-                            <td>Tipo de Leitor: </td>
-                            <td>Nome da Mãe: </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="2">Nome: </td>
+                            <td colspan="2">Emprestado em:</td>
                         </tr>
                         <tr>
-                            <td>CPF: </td>                            
-                            <td>Nome da Rua: </td>
+                            <td>Codigo do Item: </td>
+                            <td>Nome do Item: </td>
                         </tr>
                         <tr>
-                            <td>E-mail: </td>
-                            <td>Numero: </td>
+                            <td>Codigo do Leitor: </td>                            
+                            <td>Nome do Leitor: </td>
                         </tr>
-                        <tr>
-                            <td>Serie: </td>
-                            <td>Bairro: </td>
-                        </tr>
-                        <tr>
-                            <td>Turma: </td>
-                            <td>Cidade: </td>
-                        </tr>
-                        <tr>
-                            <td>Turno: </td>
-                            <td>Distrito: </td>
-                        </tr>
-                        <tr>
-                            <td>Nome do Pai: </td>
-                            <td>Referência: </td>
-                        </tr>
+                        
 
                 </tbody>
             </table>
