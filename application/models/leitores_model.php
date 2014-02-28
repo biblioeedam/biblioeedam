@@ -44,8 +44,12 @@ class Leitores_model extends CI_Model {
     
     //Obtem lista de itens atrasados por determinado leitor
     function obterItensAtrasados($id_leitor){
-        $this->db->select('id_leitor,nome_leitor,id_item,nome_item,data_acao');
+        $this->db->select('leitor.id_leitor,leitor.nome_leitor,item.id_item,item.nome_item,acao.data_acao');
         $this->db->from('item');
+        $this->db->join('item_acao','item.id_item = item_acao.id_item');
+        $this->db->join('acao','item_acao.id_acao = acao.id_acao');
+        $this->db->join('leitor','acao.id_leitor = leitor.id_leitor');
+        return $this->db->get();
     }
 
 

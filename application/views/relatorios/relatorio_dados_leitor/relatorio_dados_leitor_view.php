@@ -1,6 +1,6 @@
 <style>
     table.table-collapsed{
-        width: auto;
+        width: 750px;
     }
 </style>
 <div class="col-lg-12">

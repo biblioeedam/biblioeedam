@@ -1,6 +1,6 @@
 <style>
     table.table-collapsed{
-        width: 700px;
+        width: 750px;
     }
 </style>
 <div class="col-lg-12">
@@ -14,19 +14,20 @@
             </span>
             <table class="table table-bordered table-striped table-collapsed">
                 <tbody>
-                        <tr>
-                            <td colspan="2">Emprestado em:</td>
-                        </tr>
-                        <tr>
-                            <td>Codigo do Item: </td>
-                            <td>Nome do Item: </td>
-                        </tr>
-                        <tr>
-                            <td>Codigo do Leitor: </td>                            
-                            <td>Nome do Leitor: </td>
-                        </tr>
+                        <?php foreach ($itens_atrasados as $ia){ ?>
+                            <tr>
+                                <td>Codigo do Leitor: <?php echo $ia->id_leitor; ?> </td>                            
+                                <td>Nome do Leitor: <?php echo $ia->nome_leitor; ?> </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Emprestado em: <?php echo $ia->data_acao; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Codigo do Item: <?php echo $ia->id_item; ?></td>
+                                <td>Nome do Item: <?php echo $ia->nome_item; ?></td>
+                            </tr>
+                        <?php } ?>
                         
-
                 </tbody>
             </table>
 

@@ -39,14 +39,13 @@ class Relatorios extends CI_Controller {
          if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {            
 
             $id_leitor = $this->uri->segment(3);;
-/*
+
             $dados = array(
                 'itens_atrasados' => $this->leitores_model->obterItensAtrasados($id_leitor)->result()
-            );*/
-
+            );
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
-            $this->load->view('relatorios/relatorio_emprestimo/relatorio_emprestimos_view');
+            $this->load->view('relatorios/relatorio_emprestimo/relatorio_emprestimos_view',$dados);
             $this->load->view('tela/rodape');
          }else{
             redirect(base_url() . "seguranca");
