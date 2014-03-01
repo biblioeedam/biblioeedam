@@ -15,12 +15,16 @@ class Emprestimo extends CI_Controller {
         $this->load->model("emprestimo_model");
         $this->load->library('form_validation');
         $this->load->helper('date');
+        date_default_timezone_set('UTC');
     }
 
     public function index() {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
+            
+            
+            
             $datestring = date('d/m/Y');
             $time = time();
             $dados = array(
@@ -38,20 +42,21 @@ class Emprestimo extends CI_Controller {
         }
     }
 
-    public function obter_nome_leitor($id_leitor) {
+    public function obter_nome_leitor() {
   
         
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
               
-            $id_leitor = $_POST['id_leitor'];
+           // $id_leitor = $_POST['id_leitor'];
             
-            $resultado = $this->emprestimo_model->obterNomeLeitor($id_leitor)->result();
+           // $resultado = $this->emprestimo_model->obterNomeLeitor($id_leitor)->result();
            
-            echo 'oi';
+            echo 'Hairton';
         } else {
-            redirect(base_url() . "seguranca");
+          //  redirect(base_url() . "seguranca");
+            echo 'ola';
         }
-        echo 'oi';
+        
     }
     
     function liberar_emprestimo(){
