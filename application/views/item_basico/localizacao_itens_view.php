@@ -74,7 +74,6 @@
                 <td>Nome</td>
                 <td>Registro</td>
                 <td>Autor</td>
-                <td>Origem</td>
                 <td>Volume</td>
                 <td>Seção</td>
                 <td>Prateleira</td>
@@ -85,13 +84,12 @@
             <?php foreach ($todos_itens as $ti) { ?>
                 <tr>
                     
-                    <td><?php echo $ti->nome_item ?></td>
-                    <td><?php echo $ti->numRegistro_item ?></td>
-                    <td><?php echo $ti->autor_item ?></td>
-                    <td><?php echo $ti->origem_item ?></td>
-                    <td><?php echo $ti->volume_item ?></td>
-                    <td><?php echo $ti->volume_item ?></td>
-                    <td><?php echo $ti->volume_item ?></td>
+                    <td><?php echo $ti->nome_item; ?></td>
+                    <td><?php echo $ti->numRegistro_item; ?></td>
+                    <td><?php echo $ti->autor_item; ?></td>
+                    <td><?php echo $ti->volume_item; ?></td>
+                    <td><?php echo $ti->nome_secao; ?></td>
+                    <td><?php echo $ti->nome_prateleira; ?></td>
                     
                 </tr>
             <?php } ?>

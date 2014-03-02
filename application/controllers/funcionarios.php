@@ -25,7 +25,7 @@ class Funcionarios extends CI_Controller {
             //Configurações da paginação de dados
             $config['base_url'] = base_url("funcionarios/index");
             $config['total_rows'] = $this->funcionario_model->obterTodosFuncionarios()->num_rows(); 
-            $config['per_page'] = 2;    
+            $config['per_page'] = 20;    
             $qtde = $config['per_page'];
             $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
             $this->pagination->initialize($config);

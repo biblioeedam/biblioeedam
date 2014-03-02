@@ -26,7 +26,7 @@ if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('n
             //Configurações da paginação de dados
             $config['base_url'] = base_url("leitores/index");
             $config['total_rows'] = $this->leitores_model->obterTodosLeitores()->num_rows(); 
-            $config['per_page'] = 1;    
+            $config['per_page'] = 20;    
             $qtde = $config['per_page'];
             $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
             $this->pagination->initialize($config);

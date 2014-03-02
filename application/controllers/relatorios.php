@@ -20,7 +20,7 @@ class Relatorios extends CI_Controller {
     
     public function tabela_leitores_pendentes(){
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {            
-
+            //Retorna lista de leitores com pendencia
             $dados = array(
                 'leitores_pendentes' => $this->leitores_model->obterLeitoresPendentes()->result()
             );
@@ -41,6 +41,7 @@ class Relatorios extends CI_Controller {
             $id_leitor = $this->uri->segment(3);;
 
             $dados = array(
+                'leitor' => $this->leitores_model->obterUmLeitor($id_leitor)->result(),
                 'itens_atrasados' => $this->leitores_model->obterItensAtrasados($id_leitor)->result()
             );
             $this->load->view('tela/titulo');
