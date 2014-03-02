@@ -17,6 +17,7 @@ class Leitores extends CI_Controller {
         $this->load->model('tipos_leitores_model');
         $this->load->helper('date');
         $this->load->library("pagination");
+        date_default_timezone_set("Brazil/East");
     }
 
     public function index() {

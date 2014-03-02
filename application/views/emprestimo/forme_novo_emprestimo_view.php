@@ -61,17 +61,20 @@
             </div>   
 
             <div class="col-sm-6">   
-
+                
+                Item emprestado:
+                
+<!--
                 <div class="form-group">
                     <label for="tipo_item" class="col-sm-3 control-label"> Tipo de Item </label>
                     <div class="col-sm-8">
                         <select name="tipo_item" class="form-control">
-                            <?php foreach ($tipos_item as $tp) { ?>
-                                <option value="<?php echo $tp->id_tipo_item ?>" <?php echo set_select('tipo_item', $tp->id_tipo_item); ?> ><?php echo $tp->nome_tipo_item; ?></option>
-                            <?php } ?>
+                            <?php// foreach ($tipos_item as $tp) { ?>
+                                <option value="<?php// echo $tp->id_tipo_item ?>" <?php// echo set_select('tipo_item', $tp->id_tipo_item); ?> ><?php echo $tp->nome_tipo_item; ?></option>
+                            <?php // } ?>
                         </select>                          
                         <span class="text-danger"> 
-                            <?php echo form_error('tipo_item'); ?>
+                            <?php// echo form_error('tipo_item'); ?>
                         </span>
                     </div>
                 </div>
@@ -81,7 +84,7 @@
                     <div class="col-sm-8">
                         <input type="text" name="cod_item" class="form-control" value="<?php echo set_value('cod_item'); ?>" placeholder="Código do Item"/>
                         <span class="text-danger"> 
-                            <?php echo form_error('cod_item'); ?>
+                            <?php// echo form_error('cod_item'); ?>
                         </span>
                     </div>
                 </div>
@@ -99,7 +102,7 @@
                     <div class="col-sm-8">
                         <input type="text" name="nome_item" class="form-control" readonly="true"/>
                         <span class="text-danger"> 
-                            <?php echo form_error('nome_item'); ?>
+                            <?php// echo form_error('nome_item'); ?>
                         </span>
                     </div>
                 </div>
@@ -108,7 +111,7 @@
                     <div class="col-sm-offset-3 col-sm-4">
                         <button type="submit" class="btn btn-primary">Liberar</button>
                     </div>
-                </div>
+                </div>-->
 
             </div> 
 
@@ -121,7 +124,7 @@
 </div>
 <div class="col-lg-12">
     <h4>
-        Últimos Empréstimos Realizados
+        itens disponiveisl para emprestimo
     </h4>
     <table class="table">
         <thead>
@@ -132,8 +135,7 @@
                 <td>Autor</td>
                 <td>Origem</td>
                 <td>Volume</td>
-                <td>Seção</td>
-                <td>Prateleira</td>
+                <td>incluir</td>
             </tr>
         </thead>
         <tbody>
@@ -146,8 +148,8 @@
                         <td><?php echo $ti->autor_item ?></td>
                         <td><?php echo $ti->origem_item ?></td>
                         <td><?php echo $ti->volume_item ?></td>
-                        <td><?php echo $ti->volume_item ?></td>
-                        <td><?php echo $ti->volume_item ?></td>
+                        <td><a class="btn" href="<?php echo base_url('emprestimo/incluir_item/'.$ti->id_item) ?>">incluir</a></td>
+                        
 
                     </tr>
                 <?php } ?>
