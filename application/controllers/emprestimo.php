@@ -13,6 +13,7 @@ class Emprestimo extends CI_Controller {
         $this->load->database();
         $this->load->helper('form');
         $this->load->model("emprestimo_model");
+        $this->load->model("item_model");
         $this->load->library('form_validation');
         $this->load->helper('date');
         date_default_timezone_set('UTC');
@@ -21,15 +22,33 @@ class Emprestimo extends CI_Controller {
     public function index() {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
+ 
 
+            $dados = array(
+                'todos_emprestimos' => $this->emprestimo_model->obterTodosEmprestimos()->result()
+            );
             
+            $this->load->view('tela/titulo');
+            $this->load->view('tela/menu_basico');
+            $this->load->view('emprestimo/tabela_emprestimo_view',$dados);
+            $this->load->view('tela/rodape');
             
-            
+        } else {
+            redirect(base_url() . "seguranca");
+        }
+    }
+
+    
+    public function novo_emprestimo(){
+        
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
+ 
             $datestring = date('d/m/Y');
             $time = time();
             $dados = array(
                 'dtAtual'=>mdate($datestring,$time),
-                'tipos_item' => $this->emprestimo_model->obterTiposItem()->result()
+                'tipos_item' => $this->emprestimo_model->obterTiposItem()->result(),
+                'todos_itens' => $this->item_model->obterTodosItens()->result(),
             );
             
             $this->load->view('tela/titulo');
@@ -42,6 +61,9 @@ class Emprestimo extends CI_Controller {
         }
     }
 
+
+    
+    
     public function obter_nome_leitor() {
   
         
