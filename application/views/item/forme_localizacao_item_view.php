@@ -1,3 +1,8 @@
+<style>
+    #ordemItemDiv{
+        display: none;
+    }
+</style>
 <div class="col-lg-12">
     <form class="form-horizontal" role="form" action="<?php echo base_url('item/salvar_localizacao') ?>" method="post">
         <fieldset>
@@ -35,18 +40,18 @@
                     </table>
                 </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-6" id="ordemItemDiv">
 
 
 
                 <input name="idItem" type="hidden" id="idItem" value="<?php echo $id_item ?>"/>
                 <div class="form-group">
-                    <label for="ordemItem" class="col-sm-2 control-label">Ordem</label>
+                    <!--<label for="ordemItem" class="col-sm-2 control-label">Ordem</label>-->
                     <div class="col-sm-10">
                         <select name="ordemItem" class="form-control" id="ordemItem" >
-                            <option value="">Selecione uma ordem</option>
+                            <option value="a">Selecione uma ordem</option>
                             <?php foreach ($ordem_item as $oi) { ?>
-                                <option value="<?php echo $oi->id_ordem_item ?>"><?php echo $oi->nome_ordem_item ?> </option>
+                            <option value="<?php echo $oi->id_ordem_item ?>" selected="b"><?php echo $oi->nome_ordem_item ?> </option>
                             <?php } ?>
                         </select>
                         <span class="text-danger"> 

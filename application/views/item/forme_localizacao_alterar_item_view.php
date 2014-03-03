@@ -1,3 +1,8 @@
+<style>
+    #ordemItemDiv{
+        display: none;
+    }
+</style>
 <div class="col-lg-12">
     <form class="form-horizontal" role="form" action="<?php echo base_url('item/alterar_localizacao') ?>" method="post">
         <fieldset>
@@ -45,10 +50,12 @@
                     }
                     ?></span>
                     <span class="text-info">
-                        ,Na prateleira : </span>
+                        . Na prateleira : </span>
                     <span class="text-success"><?php echo $prateleiras_secao ?> </span>
-                    <span class="text-info">
-                        ,na letra: </span>
+                    <!--<span class="text-info">
+                        ,na letra: 
+                    </span>
+                    -->
                     <span class="text-success">
                             <?php
                             foreach ($ordem_item as $oi) {
@@ -62,7 +69,7 @@
 
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-6" id="ordemItemDiv">
 
 
 
@@ -71,7 +78,7 @@
                     <label for="ordemItem" class="col-sm-2 control-label">Ordem</label>
                     <div class="col-sm-10">
                         <select name="ordemItem" class="form-control" id="ordemItem" >
-                            <option value="">Selecione uma ordem</option>
+                            <option value="a">Selecione uma ordem</option>
                             <?php
                             foreach ($ordem_item as $oi) {
                                 if ($oi->id_ordem_item == $id_ordem) {
@@ -80,7 +87,7 @@
                                     <?php
                                 } else {
                                     ?>
-                                    <option value="<?php echo $oi->id_ordem_item ?>"><?php echo $oi->nome_ordem_item ?> </option>
+                                    <option value="<?php echo $oi->id_ordem_item ?>" selected="a"><?php echo $oi->nome_ordem_item ?> </option>
                                     <?php
                                 }
                             }

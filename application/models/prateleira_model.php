@@ -12,7 +12,8 @@
  */
 class prateleira_model extends CI_Model {
 
-    function obterTodasPrateleiras() {
+    function obterTodasPrateleiras($qtde=0,$inicio=0) {
+        if($qtde >0 ){$this->db->limit($qtde,$inicio);}
         return $this->db->get('prateleira');
     }
 

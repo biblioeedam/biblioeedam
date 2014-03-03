@@ -12,7 +12,9 @@
  */
 class tipo_item_model extends CI_Model {
 
-    function obterTodosTiposItens() {
+    function obterTodosTiposItens($qtde=0,$inicio=0) {
+        //parametros de paginação
+        if($qtde >0 ){$this->db->limit($qtde,$inicio);}
         return $this->db->get('tipo_item');
     }
 

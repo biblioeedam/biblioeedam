@@ -14,14 +14,24 @@ class Tipo_item extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->model("tipo_item_model");
+        $this->load->library("pagination");
     }
 
     public function index() {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
 
+            //Configurações da paginação de dados
+            $config['base_url'] = base_url("tipo_item/index");
+            $config['total_rows'] = $this->tipo_item_model->obterTodosTiposItens()->num_rows(); 
+            $config['per_page'] = 20;    
+            $qtde = $config['per_page'];
+            $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
+            $this->pagination->initialize($config);
+            
             $dados = array(
-                'todos_tipos_itens' => $this->tipo_item_model->obterTodosTiposItens()->result()
+                'todos_tipos_itens' => $this->tipo_item_model->obterTodosTiposItens($qtde,$inicio)->result(),
+                'paginacao' => $this->pagination->create_links(),
             );
 
             $this->load->view('tela/titulo');
