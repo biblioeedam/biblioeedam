@@ -30,5 +30,5 @@
             <?php } ?>
         </tbody>
     </table>
-
+    <?php if(!empty($paginacao)){echo $paginacao;} ?>
 </div>

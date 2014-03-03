@@ -25,15 +25,24 @@ class secao extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model("secao_model");
         $this->load->model("prateleira_model");
+        $this->load->library("pagination");
     }
 
     public function index() {
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
 
+            //Configurações da paginação de dados
+            $config['base_url'] = base_url("secao/index");
+            $config['total_rows'] = $this->secao_model->obterTodasSecoes()->num_rows(); 
+            $config['per_page'] = 20;    
+            $qtde = $config['per_page'];
+            $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
+            $this->pagination->initialize($config);
+            
             $prateleiras = '';
 
             $todas_secoes = array();
-            foreach ($this->secao_model->obterTodasSecoes()->result() as $td) {
+            foreach ($this->secao_model->obterTodasSecoes($qtde,$inicio)->result() as $td) {
                 $query = $this->secao_model->obterPrateleirasPorSecao($td->id_secao)->result();
                 foreach ($query as $qy) {
                     $prateleiras = $prateleiras . '<button class="btn btn-default">' . $qy->nome_prateleira . '</button>';
@@ -45,6 +54,7 @@ class secao extends CI_Controller {
 
             $dados = array(
                 'todas_secoes' => $todas_secoes,
+                'paginacao' => $this->pagination->create_links(),
             );
 
 

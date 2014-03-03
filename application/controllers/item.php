@@ -17,14 +17,24 @@ class Item extends CI_Controller {
         $this->load->model("categoria_item_model");
         $this->load->model("tipo_item_model");
         $this->load->model("secao_model");
+        $this->load->library("pagination");
     }
 
     public function index() {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
 
+            //Configurações da paginação de dados
+            $config['base_url'] = base_url("item/index");
+            $config['total_rows'] = $this->item_model->obterTodosItens()->num_rows(); 
+            $config['per_page'] = 20;    
+            $qtde = $config['per_page'];
+            $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
+            $this->pagination->initialize($config);
+            
             $dados = array(
-                'todos_itens' => $this->item_model->obterTodosItens()->result()
+                'todos_itens' => $this->item_model->obterTodosItens($qtde,$inicio)->result(),
+                'paginacao' => $this->pagination->create_links(),
             );
 
             $this->load->view('tela/titulo');
@@ -74,6 +84,7 @@ class Item extends CI_Controller {
             $this->form_validation->set_rules('dataLancamentoItem', 'Data Lançamento', "required");
             $this->form_validation->set_rules('categoriaItem', 'Categoria', "required");
             $this->form_validation->set_rules('tipoItem', 'Tipo', "required");
+            $this->form_validation->set_rules('qtdItem', 'Quantidade', "required");            
 
 
             if ($this->form_validation->run() == false) {
@@ -99,6 +110,7 @@ class Item extends CI_Controller {
                 $data_lancamento_item = $_POST['dataLancamentoItem'];
                 $categoria_item = $_POST['categoriaItem'];
                 $tipo_item = $_POST['tipoItem'];
+                $qtd_item = $_POST['qtdItem'];
 
 
                 date_default_timezone_set('UTC');
@@ -114,17 +126,17 @@ class Item extends CI_Controller {
                     'editora_item' => $editora_item,
                     'descricao_item' => $descricao_item,
                     'dataLancamento_item' => implode("-", array_reverse(explode("/", $data_lancamento_item))),
+                    'status_item' => 1,
                     'id_funcionario' => $this->session->userdata('id_funcionario'),
                     'id_tipo_item' => $tipo_item,
-                    'id_categoria_item' => $categoria_item
+                    'id_categoria_item' => $categoria_item,
+                    'quantidade_item' => $qtd_item
                 );
 
+                $id=$this->item_model->salvarItem($dados);
+                
 
-
-
-                $this->item_model->salvarItem($dados);
-
-                redirect(base_url('item'));
+                redirect(base_url('item/localizacao_item/'.$id));
             }
         } else {
             redirect(base_url() . "seguranca");
@@ -135,7 +147,7 @@ class Item extends CI_Controller {
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario'))) {
 
             // Capturando o seguimento três da URL atual
-           echo  $id_item = $this->uri->segment(3);
+           $id_item = $this->uri->segment(3);
 
             // verificando se o seguimento existe
             if (empty($id_item)) {
@@ -335,6 +347,7 @@ class Item extends CI_Controller {
             $this->form_validation->set_rules('dataLancamentoItem', 'Data Lançamento', "required");
             $this->form_validation->set_rules('categoriaItem', 'Categoria', "required");
             $this->form_validation->set_rules('tipoItem', 'Tipo', "required");
+            $this->form_validation->set_rules('qtdItem', 'Quantidade', "required");  
 
             // verificando se as regras de todos os campos foram validas.
             if ($this->form_validation->run() == false) {
@@ -352,7 +365,7 @@ class Item extends CI_Controller {
                 $data_lancamento_item = $_POST['dataLancamentoItem'];
                 $categoria_item = $_POST['categoriaItem'];
                 $tipo_item = $_POST['tipoItem'];
-
+                $qtd_item = $_POST['qtdItem'];
 
 
                 $dados = array(
@@ -368,7 +381,8 @@ class Item extends CI_Controller {
                     'dataLancamento_item' => implode("-", array_reverse(explode("/", $data_lancamento_item))),
                     'id_funcionario' => $this->session->userdata('id_funcionario'),
                     'id_tipo_item' => $tipo_item,
-                    'id_categoria_item' => $categoria_item
+                    'id_categoria_item' => $categoria_item,
+                    'quantidade_item' => $qtd_item
                 );
 
 

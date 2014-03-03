@@ -12,8 +12,10 @@
  */
 class item_model extends CI_Model {
 
-    function obterTodosItens() {
+    function obterTodosItens($qtde=0,$inicio=0) {
+        if($qtde >0 ){$this->db->limit($qtde,$inicio);}
         $this->db->where('status_item !=',0);
+        $this->db->order_by('id_item','desc');
         return $this->db->get('item');
     }
 
@@ -44,6 +46,7 @@ class item_model extends CI_Model {
     //Salvando os dados do item
     function salvarItem($dados) {
         $this->db->insert('item', $dados);
+        return $this->db->insert_id();
     }
     
     // Salvando a localização dos itens

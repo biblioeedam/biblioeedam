@@ -133,6 +133,15 @@
                             </span>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="qtdItem" class="col-sm-2 control-label">Quantidade</label>
+                        <div class="col-sm-10">
+                            <input name="qtdItem" class="form-control" id="qtdItem" value="<?php echo $it->quantidade_item; ?>" placeholder="Quantidade de Itens">
+                            <span class="text-danger"> 
+                                <?php echo form_error('qtdItem'); ?>
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">

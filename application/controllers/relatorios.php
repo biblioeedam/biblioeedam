@@ -16,13 +16,24 @@ class Relatorios extends CI_Controller {
         $this->load->model('tipos_leitores_model');        
         $this->load->library('form_validation');
         $this->load->helper('date');
+        $this->load->library("pagination");
     }
     
     public function tabela_leitores_pendentes(){
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {            
+            
+            //Configurações da paginação de dados
+            $config['base_url'] = base_url("relatorios/tabela_leitores_pendentes");
+            $config['total_rows'] = $this->leitores_model->obterLeitoresPendentes()->num_rows(); 
+            $config['per_page'] = 20;    
+            $qtde = $config['per_page'];
+            $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
+            $this->pagination->initialize($config);
+
             //Retorna lista de leitores com pendencia
             $dados = array(
-                'leitores_pendentes' => $this->leitores_model->obterLeitoresPendentes()->result()
+                'leitores_pendentes' => $this->leitores_model->obterLeitoresPendentes($qtde,$inicio)->result(),
+                'paginacao' => $this->pagination->create_links(),
             );
            
             $this->load->view('tela/titulo');

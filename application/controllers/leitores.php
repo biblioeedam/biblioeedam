@@ -48,8 +48,8 @@ if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('n
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu');
             $this->load->view('leitores/tabela_leitores_view',$dados);
-
             $this->load->view('tela/rodape');
+            
         } else {
             redirect(base_url() . "seguranca");
         }

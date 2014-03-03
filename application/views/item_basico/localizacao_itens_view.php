@@ -75,8 +75,8 @@
                 <td>Registro</td>
                 <td>Autor</td>
                 <td>Volume</td>
-                <td>Seção</td>
                 <td>Prateleira</td>
+                <td>Seção</td>
             </tr>
         </thead>
         <tbody>
@@ -88,8 +88,8 @@
                     <td><?php echo $ti->numRegistro_item; ?></td>
                     <td><?php echo $ti->autor_item; ?></td>
                     <td><?php echo $ti->volume_item; ?></td>
-                    <td><?php echo $ti->nome_secao; ?></td>
                     <td><?php echo $ti->nome_prateleira; ?></td>
+                    <td><?php echo $ti->nome_secao; ?></td>
                     
                 </tr>
             <?php } ?>
