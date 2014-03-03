@@ -1,3 +1,21 @@
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+<script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+
+  <script>
+        $(function() {
+            $("#dataDevolucao").datepicker({
+                dateFormat: 'dd/mm/yy',
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'],
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+            });
+        });
+    </script>
+
 <style>
     .tamanhoIguais {
         height: 100px;
@@ -60,7 +78,7 @@
                 <div class="form-group">
                     <div class="col-sm-5 "> <?php echo $dtAtual; ?> </div>
                     <div class="col-sm-7">
-                        <input type="text" name="dt_devolucao" class="form-control"  placeholder="Data de Devolução"/>
+                        <input type="text" id="dataDevolucao" name="dt_devolucao" class="form-control"  placeholder="00/00/0000"/>
 
                     </div>
                 </div>
@@ -113,7 +131,7 @@
                                 <?php
                             }
                             ?></td>
-                        
+
                         <td><a class="btn btn-primary" href="<?php echo base_url('emprestimo/novo_emprestimo/incluir_item/' . $ti->id_item) ?>">incluir</a></td>
                     </tr>
                 <?php  } ?>
