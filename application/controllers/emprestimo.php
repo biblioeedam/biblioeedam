@@ -14,6 +14,7 @@ class Emprestimo extends CI_Controller {
         $this->load->helper('form');
         $this->load->model("emprestimo_model");
         $this->load->model("item_model");
+        $this->load->model("leitores_model");
         $this->load->library('form_validation');
         $this->load->helper('date');
         date_default_timezone_set('UTC');
@@ -21,118 +22,189 @@ class Emprestimo extends CI_Controller {
 
     public function index() {
 
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
- 
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario') == 1)) {
+
 
             $dados = array(
                 'todos_emprestimos' => $this->emprestimo_model->obterTodosEmprestimos()->result()
             );
-            
+
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu_basico');
-            $this->load->view('emprestimo/tabela_emprestimo_view',$dados);
+            $this->load->view('emprestimo/tabela_emprestimo_view', $dados);
             $this->load->view('tela/rodape');
-            
         } else {
             redirect(base_url() . "seguranca");
         }
     }
 
-    
-    public function novo_emprestimo(){
-        
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
- 
-            $datestring = date('d/m/Y');
-            $time = time();
-            $dados = array(
-                'dtAtual'=>mdate($datestring,$time),
-                'tipos_item' => $this->emprestimo_model->obterTiposItem()->result(),
-                'todos_itens' => $this->item_model->obterTodosItens()->result(),
-            );
-            
-            $this->load->view('tela/titulo');
-            $this->load->view('tela/menu_basico');
-            $this->load->view('emprestimo/forme_novo_emprestimo_view',$dados);
-            $this->load->view('tela/rodape');
-            
+    public function novo_emprestimo() {
+
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario') == 1)) {
+
+            $opcao = $this->uri->segment(3);
+
+            switch ($opcao) {
+                case "leitor": {
+
+                        $dados = array(
+                            'todos_leitores' => $this->leitores_model->obtertodosleitores2()->result(),
+                        );
+
+                        $this->load->view('tela/titulo');
+                        $this->load->view('tela/menu_basico');
+                        $this->load->view('emprestimo/forme_novo_emprestimo_leitor_view', $dados);
+                        $this->load->view('tela/rodape');
+                    }
+                    break;
+
+                case "selecionar_leitor": {
+                        $id_leitor = $this->uri->segment(4);
+
+                        if (is_numeric($id_leitor)) {
+
+                            $query = $this->leitores_model->obterUmLeitor($id_leitor)->result();
+
+                            foreach ($query as $qr) {
+                                $this->session->set_userdata(array('id_leitor' => $qr->id_leitor, 'nome_leitor' => $qr->nome_leitor));
+                            }
+
+                            redirect(base_url('emprestimo/novo_emprestimo/item'));
+                        };
+                    }
+                    break;
+
+                case "item": {
+
+                        $datestring = date('d/m/Y');
+                        $time = time();
+                        $dados = array(
+                            'dtAtual' => mdate($datestring, $time),
+                            'tipos_item' => $this->emprestimo_model->obterTiposItem()->result(),
+                            'todos_itens' => $this->item_model->obterTodosItens()->result(),
+                        );
+
+                        $this->load->view('tela/titulo');
+                        $this->load->view('tela/menu_basico');
+                        $this->load->view('emprestimo/forme_novo_emprestimo_item_view', $dados);
+                        $this->load->view('tela/rodape');
+                    }
+                    break;
+
+                case "incluir_item": {
+                        $id_item = $this->uri->segment(4);
+
+
+                        $query = $this->item_model->obterItenSelecionado($id_item)->result();
+
+                        $item_para_emprestimo = $this->session->userdata("item_emprestimo");
+
+
+                        foreach ($query as $qy) {
+                            $item_para_emprestimo[] = array(
+                                'id_item' => $qy->id_item,
+                                'nome_item' => $qy->nome_item
+                            );
+                        }
+
+                        $dados = array(
+                            'item_emprestimo' => $item_para_emprestimo,
+                        );
+
+                        $this->session->set_userdata($dados);
+
+                        redirect(base_url("emprestimo/novo_emprestimo/item"));
+                    }
+                    break;
+
+                case "cacelar_itens_emprestimo": {
+                        $this->session->unset_userdata("item_emprestimo");
+                        redirect(base_url("emprestimo/novo_emprestimo/item"));
+                    }
+                    break;
+                case "salvar_emprestimo": {
+
+                        $this->form_validation->set_rules('dt_devolucao', 'Data de Devolução', 'required');
+
+
+                        if ($this->form_validation->run() == FALSE) {
+                            $datestring = date('d/m/Y');
+                            $time = time();
+
+                            $dados = array(
+                                'dtAtual' => mdate($datestring, $time),
+                                'tipos_item' => $this->emprestimo_model->obterTiposItem()->result(),
+                                'todos_itens' => $this->item_model->obterTodosItens()->result(),
+                            );
+
+                            $this->load->view('tela/titulo');
+                            $this->load->view('tela/menu_basico');
+                            $this->load->view('emprestimo/forme_novo_emprestimo_item_view', $dados);
+                            $this->load->view('tela/rodape');
+                        } else {
+                            $dados = array(
+                                'data_acao' => date('Y-m-d'),
+                                'dataDevolucao_acao' => $this->input->post('dt_devolucao'),
+                                'id_leitor' => $this->session->userdata('id_leitor'),
+                                'id_funcionario' => $this->session->userdata('id_funcionario'),
+                                'id_tipo_acao' => 1,
+                            );
+
+                            $query = $this->emprestimo_model->registraEmprestimo($dados)->result();
+
+                            $id_acao;
+
+                            foreach ($query as $qy) {
+                                $id_acao = $qy->id_acao;
+                            }
+
+                            $dados_item = array();
+
+                            $item_emprestimo = $this->session->userdata('item_emprestimo');
+
+                            foreach ($item_emprestimo as $ie) {
+
+                               $teste = array(
+                                    'id_acao' => $id_acao,
+                                    'id_item' => $ie['id_item'],
+                                );
+                                array_push($dados_item, $teste);
+                            }
+
+                            print_r($dados_item);
+
+                            $this->emprestimo_model->salvar_itens_emprestimo($dados_item);
+
+                            redirect(base_url("emprestimo/novo_emprestimo/cancelar_emprestimo"));
+                        }
+                    }
+                    break;
+                case "cancelar_emprestimo": {
+                        $this->session->unset_userdata(array('id_leitor' => "", 'nome_leitor' => "", 'item_emprestimo' => ""));
+
+                        redirect(base_url("emprestimo"));
+                    }
+                    break;
+            }
         } else {
             redirect(base_url() . "seguranca");
         }
     }
 
-
-    
-    
     public function obter_nome_leitor() {
-  
-        
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
-              
-           // $id_leitor = $_POST['id_leitor'];
-            
-           // $resultado = $this->emprestimo_model->obterNomeLeitor($id_leitor)->result();
-           
+
+
+        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario') == 1)) {
+
+            // $id_leitor = $_POST['id_leitor'];
+            // $resultado = $this->emprestimo_model->obterNomeLeitor($id_leitor)->result();
+
             echo 'Hairton';
         } else {
-          //  redirect(base_url() . "seguranca");
+            //  redirect(base_url() . "seguranca");
             echo 'ola';
         }
-        
     }
-    
-    function liberar_emprestimo(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
-           
-            $this->form_validation->set_rules('cod_leitor','Codigo do Leitor','required');
-            $this->form_validation->set_rules('nome_leitor','Nome do Leitor','required');
-            $this->form_validation->set_rules('dt_emprestimo','Data do Emprestimo','required');
-            $this->form_validation->set_rules('dt_devolucao','Data de Devolução','required');
-            $this->form_validation->set_rules('tipo_item','Tipo de Item','required');
-            $this->form_validation->set_rules('cod_item','Codigo do Item','required');
-            $this->form_validation->set_rules('vol_item','Volume', 'required');
-            $this->form_validation->set_rules('nome_item','Nome do Item','required');
-            
-            if ($this->form_validation->run() == FALSE){
-                $dados = array(
-                    'dtAtual'=> date('d/m/Y'),
-                    'tipos_item' => $this->emprestimo_model->obterTiposItem()->result()
-                );
-          
-                $this->load->view('tela/titulo');
-                $this->load->view('tela/menu_basico');
-                $this->load->view('emprestimo/forme_novo_emprestimo_view',$dados);
-                $this->load->view('tela/rodape');
-            
-            }else{
-                $dados=array(
-                    'data_acao'=>  date('Y-m-d'),
-                    'dataDevolucao_acao'=>$this->input->post('dt_devolucao'),
-                    'id_leitor'=>$this->input->post('cod_leitor'),
-                    'id_funcionario'=>$this->session->userdata('id_funcionario'),
-                    'id_tipo_acao'=>  $this->input->post('1')
-                );
-                
-                $this->emprestimo_model->registraEmprestimo($dados);
-            }
-            
-            
-        }else{
-            redirect(base_url() . "seguranca");
-        }
-               
-    }
-    
-    function alterar_leitor(){
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1)) {
 
-        }else{
-            redirect(base_url() . "seguranca");    
-        }
-    }
-    
-
-    
-    
 }
 
