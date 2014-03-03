@@ -155,10 +155,12 @@ class Funcionarios extends CI_Controller {
                 foreach ($query as $qr) {
                     $id_funcionario = $qr->id_funcionario;
                     $nome_funcionario = $qr->nome_funcionario;
+                    $id_privilegio = $qr->id_privilegio;
                 }
                 $dados = array(
                     'id_funcionario' => $id_funcionario,
                     'nome_funcionario' => $nome_funcionario,
+                    'id_privilegio' => $id_privilegio,
                     'dadosPrivilegios' => $privilegios
                 );
                 

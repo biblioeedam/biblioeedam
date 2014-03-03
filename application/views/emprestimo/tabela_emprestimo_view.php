@@ -2,15 +2,14 @@
     <h3>Emprestimo</h3>
 
     <a class="btn btn-default" href="<?php echo base_url("emprestimo/novo_emprestimo/leitor"); ?>" title="Novo Emprestimo">Novo Emprestimo</a>
-    
+    <br/>
+    <br/>
     <form name="form_busca_funcionario" method="post" action="funcionarios"> 
         <div class="col-sm-offset-0 col-sm-0">
             <input type="text" name="nome_busca_funcionario" placeholder="Nome do Funcionario"/> <input type="submit" name="botao" value="Buscar" class="btn btn-primary"/>  
         </div>
     </form>
     
-    <br/>
-    <br/>
     <table class="table">
         <thead>
             <tr>
@@ -27,9 +26,9 @@
                 <tr>
                     <td><?php echo $te->id_acao ?></td>
                     <td><?php echo $te->data_acao ?></td>
-                    <td><?php echo $te->id_leitor ?></td>
+                    <td><?php echo $te->nome_leitor ?></td>
 
-                    <td><a class="btn btn-default" href="javascript:void(0)" onclick="Emprestimo.VerItemEmprestimo()"> Ver itens </a></td>
+                    <td><a class="btn btn-default" href="javascript:void(0)" onclick="Emprestimo.verItemEmprestimo('<?php echo $te->id_acao ?>')"> Ver itens </a></td>
                 </tr>
             <?php } ?>
         </tbody>
@@ -43,14 +42,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Modal title</h4>
+        <h4 class="modal-title">Itens Emprestimo:</h4>
       </div>
-      <div class="modal-body">
-        <p>One fine body&hellip;</p>
+        <div class="modal-body" id="conteudoModelEmprestimo">
+        <p></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"> Ok </button>
+        
       </div>
     </div>
   </div>

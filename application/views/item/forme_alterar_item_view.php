@@ -5,6 +5,7 @@
             <legend>
                 Alterar Item
             </legend>
+            
             <?php foreach ($item as $it) { ?>
             <input name="idItem" type="hidden" value="<?php echo $it->id_item ?>" />
                 <div class="col-sm-6">

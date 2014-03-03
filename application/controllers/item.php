@@ -84,7 +84,7 @@ class Item extends CI_Controller {
             $this->form_validation->set_rules('dataLancamentoItem', 'Data Lançamento', "required");
             $this->form_validation->set_rules('categoriaItem', 'Categoria', "required");
             $this->form_validation->set_rules('tipoItem', 'Tipo', "required");
-            $this->form_validation->set_rules('qtdItem', 'Quantidade', "required");            
+            $this->form_validation->set_rules('qtdItem', 'Quantidade', 'callback_qtdItem_check|trim|numeric|min_length[1]');            
 
 
             if ($this->form_validation->run() == false) {
@@ -347,7 +347,7 @@ class Item extends CI_Controller {
             $this->form_validation->set_rules('dataLancamentoItem', 'Data Lançamento', "required");
             $this->form_validation->set_rules('categoriaItem', 'Categoria', "required");
             $this->form_validation->set_rules('tipoItem', 'Tipo', "required");
-            $this->form_validation->set_rules('qtdItem', 'Quantidade', "required");  
+            $this->form_validation->set_rules('qtdItem', 'Quantidade', 'callback_qtdItem_check|trim|numeric|min_length[1]');   
 
             // verificando se as regras de todos os campos foram validas.
             if ($this->form_validation->run() == false) {
@@ -412,6 +412,16 @@ class Item extends CI_Controller {
             $this->item_model->excluirItem($dados,$id_item);
             // redirecionando para a tebela inicial de item.
             redirect(base_url('item'));
+        }
+    }
+    
+    //Valida a quantidade de itens disponíveis
+    public function qtdItem_check($qtdItem) {
+        if ($qtdItem < 1 || empty($qtdItem)) {
+                $this->form_validation->set_message('qtdItem_check', 'A %s é inválida, verifique se você digitou um número válido!');
+                return FALSE;
+        } else {
+                return TRUE;
         }
     }
 

@@ -1,16 +1,8 @@
-<script type="text/javascript">
-    $(document).ready(function() {
-
-        var path = '<?php echo site_url(); ?>';
-        $("#cod_leitor").change(function() {
-            var cod_leitor = $("#cod_leitor").val();
-            $("#nome_leitor").val('Aguarde, carregando...');
-            $.post('<?php echo base_url("emprestimo/obter_nome_leitor") ?>', {id_leitor: cod_leitor}, function(response) {
-                $("#nome_leitor").val(response);
-            });
-        });
-    });
-</script>
+<style>
+    .tamanhoIguais {
+        height: 100px;
+    }
+</style>
 
 <div class="col-lg-12">
     <form class="form-horizontal" role="form" action="<?php echo base_url('emprestimo/novo_emprestimo/salvar_emprestimo') ?>" method="post">
@@ -19,7 +11,7 @@
                 Emprestimos / Item  
             </legend>
 
-            <div class="col-sm-3 thumbnail">
+            <div class="col-sm-3 thumbnail tamanhoIguais">
                 <div class="form-group">
                     <div class="col-sm-5 "> <strong> Codigo Leitor </strong> </div>
                     <div class="col-sm-7">
@@ -35,10 +27,34 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3 thumbnail">
+            <div class="col-sm-3 thumbnail tamanhoIguais">
+
+                <strong>Item emprestado</strong>
+
+                <?php if (!empty($this->session->userdata("item_emprestimo"))) { ?>
+                    <a class = "btn" href ="<?php echo base_url("emprestimo/novo_emprestimo/cacelar_itens_emprestimo") ?> "> Limpar </a >
+                    <p style="height: 50px; overflow: auto;">
+                        <?php
+                        $item_em_emprestimo = $this->session->userdata("item_emprestimo");
+
+                        foreach ($item_em_emprestimo as $iee) {
+                            echo $iee['id_item'] . " | " . $iee['nome_item'] . "<br/>";
+                        }
+                        ?>
+                    </p>
+                    <?php
+                }
+                ?>
+            </div>   
+
+            <div class="col-sm-3 thumbnail tamanhoIguais">   
+
+
+
+
                 <div class="form-group">
-                    <div class="col-sm-5"> Data do Emprestimo </div>
-                    <div class="col-sm-7"> Data de Devolução </div>
+                    <div class="col-sm-5"> <strong> Data do Emprestimo </strong> </div>
+                    <div class="col-sm-7"> <strong> Data de Devolução </strong> </div>
                 </div>
 
                 <div class="form-group">
@@ -48,29 +64,10 @@
 
                     </div>
                 </div>
-
-            </div>   
-
-            <div class="col-sm-3 thumbnail">   
-
-                <strong>Item emprestado</strong>
-
-                <?php
-                if (!empty($this->session->userdata("item_emprestimo"))) {
-                    echo '<a class = "btn" href ="' . base_url("emprestimo/novo_emprestimo/cacelar_itens_emprestimo") . '"> Limpar </a ><br/>';
-                    $item_em_emprestimo = $this->session->userdata("item_emprestimo");
-
-                    foreach ($item_em_emprestimo as $iee) {
-                        echo $iee['id_item']." | ". $iee['nome_item'] . "<br/>";
-                    }
-                }
-                ?>
-
-
-
             </div> 
-            <div class="col-sm-3 thumbnail">
+            <div class="col-sm-3 thumbnail tamanhoIguais">
                 <div class="form-group">
+                    <br/>
                     <div class="col-sm-5"> <a class="btn btn-default" href="<?php echo base_url("emprestimo/novo_emprestimo/cancelar_emprestimo") ?>">Cancelar</a> </div>
                     <div class="col-sm-7"> <button class="btn btn-primary" type="submit">Salvar</button> </div>
                 </div>
@@ -91,8 +88,9 @@
                 <td>Nome</td>
                 <td>Registro</td>
                 <td>Autor</td>
-                <td>Origem</td>
                 <td>Volume</td>
+                <td>Quantidade</td>
+                <td>Disponível</td>
                 <td>incluir</td>
             </tr>
         </thead>
@@ -104,14 +102,22 @@
                         <td><?php echo $ti->nome_item ?></td>
                         <td><?php echo $ti->numRegistro_item ?></td>
                         <td><?php echo $ti->autor_item ?></td>
-                        <td><?php echo $ti->origem_item ?></td>
                         <td><?php echo $ti->volume_item ?></td>
-                        <td><a class="btn" href="<?php echo base_url('emprestimo/novo_emprestimo/incluir_item/' . $ti->id_item) ?>">incluir</a></td>
-
-
+                        <td><?php echo $ti->quantidade_item ?></td>
+                        <td><?php
+                            if ($ti->disponivel_item > 1) {
+                                echo $ti->disponivel_item;
+                            } else {
+                                ?>
+                                <span class="text-danger"><?php echo $ti->disponivel_item; ?></span>
+                                <?php
+                            }
+                            ?></td>
+                        
+                        <td><a class="btn btn-primary" href="<?php echo base_url('emprestimo/novo_emprestimo/incluir_item/' . $ti->id_item) ?>">incluir</a></td>
                     </tr>
-                <?php } ?>
-            <?php } ?>
+                <?php  } ?>
+<?php } ?>
         </tbody>
     </table>
 </div>
