@@ -41,7 +41,9 @@ class Leitores_model extends CI_Model {
         return $this->db->get();
     }
 
-    function obterLeitoresPendentes() {
+    function obterLeitoresPendentes($qtde=0,$inicio=0) {
+        //parametros de paginação
+        if($qtde >0 ){$this->db->limit($qtde,$inicio);}
         $this->db->select('leitor.id_leitor,nome_leitor,serie_leitor,telefone_leitor');
         $this->db->order_by('nome_leitor','asc');
         $this->db->from('leitor');
