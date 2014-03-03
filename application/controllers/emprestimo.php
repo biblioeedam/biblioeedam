@@ -142,7 +142,7 @@ class Emprestimo extends CI_Controller {
 
                             $qtde = $this->emprestimo_model->obterQuantidadeItemDisponivel($item['id_item']);
 
-                            if ($item['quantidade_item']-$qtde > 1) {
+                            if ($item['quantidade_item'] - $qtde > 1) {
                                 $verificar = false;
 
                                 if (!empty($this->session->userdata("item_emprestimo"))) {
@@ -188,55 +188,51 @@ class Emprestimo extends CI_Controller {
 
 
                         if ($this->form_validation->run() == FALSE) {
-                            $datestring = date('d/m/Y');
-                            $time = time();
+                            
+                            redirect(base_url("emprestimo/novo_emprestimo/item"));
 
-                            $dados = array(
-                                'dtAtual' => mdate($datestring, $time),
-                                'tipos_item' => $this->emprestimo_model->obterTiposItem()->result(),
-                                'todos_itens' => $this->item_model->obterTodosItens()->result(),
-                            );
-
-                            $this->load->view('tela/titulo');
-                            $this->load->view('tela/menu_basico');
-                            $this->load->view('emprestimo/forme_novo_emprestimo_item_view', $dados);
-                            $this->load->view('tela/rodape');
                         } else {
-                            $dados = array(
-                                'data_acao' => date('Y-m-d'),
-                                'dataDevolucao_acao' => $this->input->post('dt_devolucao'),
-                                'id_leitor' => $this->session->userdata('id_leitor'),
-                                'id_funcionario' => $this->session->userdata('id_funcionario'),
-                                'id_tipo_acao' => 1,
-                            );
 
-                            $query = $this->emprestimo_model->registraEmprestimo($dados)->result();
+                            if ((empty($this->session->userdata('id_leitor'))) or (empty($this->session->userdata('id_funcionario'))) or empty($this->session->userdata('item_emprestimo'))) {
+                                redirect(base_url("emprestimo/novo_emprestimo/item"));
+                            } else {
 
-                            $id_acao;
-
-                            foreach ($query as $qy) {
-                                $id_acao = $qy->id_acao;
-                            }
-
-                            $dados_item = array();
-
-                            $item_emprestimo = $this->session->userdata('item_emprestimo');
-
-                            foreach ($item_emprestimo as $ie) {
-
-                                $teste = array(
-                                    'id_acao' => $id_acao,
-                                    'id_item' => $ie['id_item'],
-                                    'status' => 1,
+                                $dados = array(
+                                    'data_acao' => date('Y-m-d'),
+                                    'dataDevolucao_acao' => implode("-", array_reverse(explode("/", $this->input->post('dt_devolucao')))),
+                                    'id_leitor' => $this->session->userdata('id_leitor'),
+                                    'id_funcionario' => $this->session->userdata('id_funcionario'),
+                                    'id_tipo_acao' => 1,
                                 );
-                                array_push($dados_item, $teste);
+
+                                $query = $this->emprestimo_model->registraEmprestimo($dados)->result();
+
+                                $id_acao;
+
+                                foreach ($query as $qy) {
+                                    $id_acao = $qy->id_acao;
+                                }
+
+                                $dados_item = array();
+
+                                $item_emprestimo = $this->session->userdata('item_emprestimo');
+
+                                foreach ($item_emprestimo as $ie) {
+
+                                    $teste = array(
+                                        'id_acao' => $id_acao,
+                                        'id_item' => $ie['id_item'],
+                                        'status' => 1,
+                                    );
+                                    array_push($dados_item, $teste);
+                                }
+
+                                print_r($dados_item);
+
+                                $this->emprestimo_model->salvar_itens_emprestimo($dados_item);
+
+                                redirect(base_url("emprestimo/novo_emprestimo/cancelar_emprestimo"));
                             }
-
-                            print_r($dados_item);
-
-                            $this->emprestimo_model->salvar_itens_emprestimo($dados_item);
-
-                            redirect(base_url("emprestimo/novo_emprestimo/cancelar_emprestimo"));
                         }
                     }
                     break;
