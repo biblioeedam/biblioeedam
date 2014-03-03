@@ -75,23 +75,41 @@ class item_model extends CI_Model {
     
     //Obtem itens com os parametros tipo_item e categoria_item
     function obterItem1($id_tipo_item, $id_categoria_item){
+        $this->db->select('nome_item,numRegistro_item,autor_item,volume_item,nome_secao,nome_prateleira');
+        $this->db->from('item');
+        $this->db->join('item_secao_ordem_item','item.id_item = item_secao_ordem_item.id_item');
+        $this->db->join('secao','item_secao_ordem_item.id_secao = secao.id_secao');
+        $this->db->join('secao_prateleira','secao.id_secao = secao_prateleira.id_secao');
+        $this->db->join('prateleira','secao_prateleira.id_prateleira = prateleira.id_prateleira');
         $this->db->where('id_tipo_item',$id_tipo_item);
         $this->db->where('id_categoria_item',$id_categoria_item);
-        return $this->db->get('item');
+        return $this->db->get();
     }
     //Obtem itens com os parametros tipo_item e nome_item
     function obterItem2($id_tipo_item, $nome_item){
+        $this->db->select('nome_item,numRegistro_item,autor_item,volume_item,nome_secao,nome_prateleira');
+        $this->db->from('item');
+        $this->db->join('item_secao_ordem_item','item.id_item = item_secao_ordem_item.id_item');
+        $this->db->join('secao','item_secao_ordem_item.id_secao = secao.id_secao');
+        $this->db->join('secao_prateleira','secao.id_secao = secao_prateleira.id_secao');
+        $this->db->join('prateleira','secao_prateleira.id_prateleira = prateleira.id_prateleira');
         $this->db->where('id_tipo_item',$id_tipo_item);
         $this->db->like('nome_item',$nome_item);
-        return $this->db->get('item');
+        return $this->db->get();
     }
     
     //Obtem itens com os parametros tipo_item, categoria_item e nome_item
     function obterItem3($id_tipo_item,$id_categoria_item,$nome_item){
+        $this->db->select('nome_item,numRegistro_item,autor_item,volume_item,nome_secao,nome_prateleira');
+        $this->db->from('item');
+        $this->db->join('item_secao_ordem_item','item.id_item = item_secao_ordem_item.id_item');
+        $this->db->join('secao','item_secao_ordem_item.id_secao = secao.id_secao');
+        $this->db->join('secao_prateleira','secao.id_secao = secao_prateleira.id_secao');
+        $this->db->join('prateleira','secao_prateleira.id_prateleira = prateleira.id_prateleira');
         $this->db->where('id_tipo_item',$id_tipo_item);
         $this->db->where('id_categoria_item',$id_categoria_item);
         $this->db->like('nome_item',$nome_item);
-        return $this->db->get('item');
+        return $this->db->get();
     }
     //put your code here
 }

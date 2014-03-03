@@ -5,10 +5,11 @@
 </style>
 <div class="col-lg-12">
         <fieldset>
-        <legend>
-            Relatório - Dados Leitor
-        </legend>
-            
+            <legend>
+                Relatório - Dados do Leitor
+            </legend>
+            <a onclick="print();return false" href="#"><span class="glyphicon glyphicon-print"></span></a>
+
             <span class="text-danger"> 
                 <?php validation_errors(); ?>
             </span>

@@ -1,4 +1,10 @@
-<table border="1">
+<style>
+    table.table-collapsed{
+        width: 600px;
+    }
+</style>
+<a onclick="print();return false" href="#"><span class="glyphicon glyphicon-print"></span></a>
+<table border="1" class="table table-bordered table-collapsed">
     <tbody>
         <tr>
             <td>Código: <?php echo $id_leitor;?> </td>
@@ -23,7 +29,7 @@
 
 <br/>
 
-<table border="1" width="575">
+<table class="table table-bordered table-collapsed">
         <thead>
             <tr>
                 <td width="90">Código do Livro</td>
