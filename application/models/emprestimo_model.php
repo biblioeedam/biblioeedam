@@ -16,9 +16,17 @@ class Emprestimo_model extends CI_Model {
         return $this->db->get('tipo_item');
     }
 
-    function registraEmprestimo($dados = array()) {
+    function registraEmprestimo($dados = array()) {        
         $this->db->insert('acao', $dados);
+        $this->db->select_max('id_acao');
+        return $this->db->get('acao');
+        
     }
+
+    function salvar_itens_emprestimo($dados){
+        $this->db->insert_batch('item_acao', $dados); 
+    }
+
 
 }
 

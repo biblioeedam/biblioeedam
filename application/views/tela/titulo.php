@@ -12,6 +12,7 @@
         <!--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">-->
         <!--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap-glyphicons.css" type="text/css" rel="stylesheet">-->
         <script src="<?php echo base_url(); ?>js/jquery.js"></script>
+        <script src="<?php echo base_url(); ?>js/precessamento.js"></script>
         <script src="<?php echo base_url() ; ?>bt/js/bootstrap.min.js"></script>
     </head>
     <body>

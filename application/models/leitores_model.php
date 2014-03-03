@@ -6,7 +6,12 @@ class Leitores_model extends CI_Model {
         if($qtde >0 ){$this->db->limit($qtde,$inicio);}
         return $this->db->get('leitor');
     }
-   
+    
+    
+    function obtertodosleitores2(){
+        return $this->db->get('leitor');
+    }
+            
     function obterUmLeitor($id_leitor) {
         return $this->db->get_where('leitor', array('id_leitor' => $id_leitor));
     }
