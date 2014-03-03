@@ -15,6 +15,7 @@ class categoria_item_model extends CI_Model {
     function obterTodasCategoriasItens($qtde=0,$inicio=0) {
         //parametros de paginação
         if($qtde >0 ){$this->db->limit($qtde,$inicio);}
+        $this->db->order_by('id_categoria_item','desc');
         return $this->db->get('categoria_item');
     }
 

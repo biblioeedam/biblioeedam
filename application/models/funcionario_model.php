@@ -12,6 +12,7 @@ class funcionario_model extends CI_Model {
     
     function obterTodosFuncionarios($qtde=0,$inicio=0){
         if($qtde >0) {$this->db->limit($qtde, $inicio);}
+        $this->db->order_by('nome_funcionario','asc');
         return $this->db->get_where('funcionario', array('status_funcionario' => 1));
     }
     

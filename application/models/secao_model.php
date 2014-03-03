@@ -14,6 +14,7 @@ class secao_model extends CI_Model {
 
     function obterTodasSecoes($qtde=0,$inicio=0) {
         if($qtde >0 ){$this->db->limit($qtde,$inicio);}
+        $this->db->order_by('id_secao','desc');
         return $this->db->get('secao');
     }
 

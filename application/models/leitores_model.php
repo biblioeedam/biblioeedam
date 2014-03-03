@@ -5,6 +5,7 @@ class Leitores_model extends CI_Model {
     function obterTodosLeitores($qtde=0,$inicio=0){
         //parametros de paginação
         if($qtde >0 ){$this->db->limit($qtde,$inicio);}
+        $this->db->order_by('nome_leitor','asc');
         return $this->db->get('leitor');
     }
     
@@ -45,6 +46,7 @@ class Leitores_model extends CI_Model {
         //parametros de paginção
         if($qtde >0 ){$this->db->limit($qtde,$inicio);}
         $this->db->select('leitor.id_leitor,nome_leitor,serie_leitor,telefone_leitor');
+        $this->db->order_by('nome_leitor','asc');
         $this->db->from('leitor');
         $this->db->join('acao','acao.id_leitor = leitor.id_leitor');
         $this->db->where('acao.dataDevolucao_acao <',date('Y-m-d'));
