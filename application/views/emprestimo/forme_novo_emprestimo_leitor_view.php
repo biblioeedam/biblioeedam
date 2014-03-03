@@ -1,19 +1,6 @@
-<script type="text/javascript">
-    $(document).ready(function() {
-
-        var path = '<?php echo site_url(); ?>';
-        $("#cod_leitor").change(function() {
-            var cod_leitor = $("#cod_leitor").val();
-            $("#nome_leitor").val('Aguarde, carregando...');
-            $.post('<?php echo base_url("emprestimo/obter_nome_leitor") ?>', {id_leitor: cod_leitor}, function(response) {
-                $("#nome_leitor").val(response);
-            });
-        });
-    });
-</script>
 
 <div class="col-lg-12">
-    <form class="form-horizontal" role="form" action="<?php echo base_url('emprestimo/liberar_emprestimo') ?>" method="post">
+    <form class="form-horizontal" role="form" action="<?php echo base_url('emprestimo/novo_emprestimo/leitor') ?>" method="post">
         <fieldset>
             <legend>
                 Emprestimos / Leitor
@@ -23,17 +10,14 @@
 
                 <div class="form-group col-lg-6">
                     <div class="col-lg-12">
-                        <input type="radio" name="opcaoPesquisa" value="codigo"/> Codigo
-                        <input type="radio" name="opcaoPesquisa" value="nome"/> Nome
+                        <input type="radio" name="opcaoPesquisaLeitor" value="codigo"/> Codigo
+                        <input type="radio" checked="true" name="opcaoPesquisaLeitor" value="nome"/> Nome
                     </div>
                     <div class="col-sm-8">
-                        <input type="text" name="cod_leitor" id="cod_leitor" class="form-control" placeholder="Código do Leitor"/>
-
+                        <input type="text" name="pesquisaLeitor" id="pesquisaLeitor" class="form-control" placeholder="Presquisa Leitor"/>
                     </div>
-                    <div  class="col-sm-3 "> <button type="button" class="btn btn-primary">Buscar</button> </div>
+                    <div  class="col-sm-3 "> <button type="submit" class="btn btn-primary">Buscar</button> </div>
                 </div>
-
-
             </div> 
 
         </fieldset>
@@ -61,7 +45,7 @@
                         <td><?php echo $tl->email_leitor ?></td>
                         <td><?php echo $tl->telefone_leitor ?></td>
                         <td><?php echo $tl->nomeMae_leitor ?></td>
-                        <td><a class="btn" href="<?php echo base_url('emprestimo/novo_emprestimo/selecionar_leitor/' . $tl->id_leitor) ?>">Selecionar</a></td>
+                        <td><a class="btn btn-primary" href="<?php echo base_url('emprestimo/novo_emprestimo/selecionar_leitor/' . $tl->id_leitor) ?>">Selecionar</a></td>
 
 
                     </tr>

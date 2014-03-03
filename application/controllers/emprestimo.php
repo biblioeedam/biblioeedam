@@ -38,17 +38,48 @@ class Emprestimo extends CI_Controller {
         }
     }
 
+    public function obterItemEmprestimo() {
+
+        $id_acao = $_POST['id_acao'];
+
+        $query = $this->emprestimo_model->obterItemAcaoEntrestimo($id_acao)->result();
+
+        foreach ($query as $qr) {
+            echo $qr->nome_item . "<br/>";
+        }
+    }
+
     public function novo_emprestimo() {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario') == 1)) {
 
-            $opcao = $this->uri->segment(3);
+            $opcao_novo_emprestimo = $this->uri->segment(3);
 
-            switch ($opcao) {
+            switch ($opcao_novo_emprestimo) {
                 case "leitor": {
 
+                        $query;
+
+                        if (isset($_POST['pesquisaLeitor']) && isset($_POST['opcaoPesquisaLeitor'])) {
+
+                            $opcao_leitor = $_POST['opcaoPesquisaLeitor'];
+                            $pesquisaLeitor = $_POST['pesquisaLeitor'];
+
+                            if ($opcao_leitor == 'codigo') {
+                                if (is_numeric($pesquisaLeitor)) {
+                                    $query = $this->leitores_model->obterUmLeitor($pesquisaLeitor)->result();
+                                } else {
+                                    $query = $this->leitores_model->obtertodosleitores2()->result();
+                                }
+                            } else if ($opcao_leitor == 'nome') {
+                                $query = $this->leitores_model->obterUmLeitor2($pesquisaLeitor)->result();
+                            };
+                        } else {
+                            $query = $this->leitores_model->obtertodosleitores2()->result();
+                        };
+
                         $dados = array(
-                            'todos_leitores' => $this->leitores_model->obtertodosleitores2()->result(),
+                            'todos_leitores' => $query,
                         );
 
                         $this->load->view('tela/titulo');
@@ -78,10 +109,22 @@ class Emprestimo extends CI_Controller {
 
                         $datestring = date('d/m/Y');
                         $time = time();
+                        $item = $this->item_model->obterTodosItens()->result();
+                        $todos_itens = array();
+
+                        foreach ($item as $ti) {
+                            $qtde = $this->emprestimo_model->obterQuantidadeItemDisponivel($ti->id_item);
+
+                            $ti->disponivel_item = $ti->quantidade_item - $qtde;
+                            $todos_itens[] = $ti;
+                        }
+
+
+
                         $dados = array(
                             'dtAtual' => mdate($datestring, $time),
                             'tipos_item' => $this->emprestimo_model->obterTiposItem()->result(),
-                            'todos_itens' => $this->item_model->obterTodosItens()->result(),
+                            'todos_itens' => $todos_itens
                         );
 
                         $this->load->view('tela/titulo');
@@ -93,27 +136,44 @@ class Emprestimo extends CI_Controller {
 
                 case "incluir_item": {
                         $id_item = $this->uri->segment(4);
+                        if (is_numeric($id_item)) {
+                            $query = $this->item_model->obterItenSelecionado($id_item)->result();
+                            $item = get_object_vars($query[0]);
 
+                            $qtde = $this->emprestimo_model->obterQuantidadeItemDisponivel($item['id_item']);
 
-                        $query = $this->item_model->obterItenSelecionado($id_item)->result();
+                            if ($item['quantidade_item']-$qtde > 1) {
+                                $verificar = false;
 
-                        $item_para_emprestimo = $this->session->userdata("item_emprestimo");
+                                if (!empty($this->session->userdata("item_emprestimo"))) {
+                                    $item_para_emprestimo = $this->session->userdata("item_emprestimo");
+                                    foreach ($item_para_emprestimo as $ipe) {
+                                        if ($ipe['id_item'] == $item['id_item']) {
+                                            $verificar = true;
+                                            break;
+                                        }
+                                    }
+                                }
 
+                                if ($verificar == FALSE) {
+                                    foreach ($query as $qy) {
+                                        $item_para_emprestimo[] = array(
+                                            'id_item' => $qy->id_item,
+                                            'nome_item' => $qy->nome_item
+                                        );
+                                    }
 
-                        foreach ($query as $qy) {
-                            $item_para_emprestimo[] = array(
-                                'id_item' => $qy->id_item,
-                                'nome_item' => $qy->nome_item
-                            );
+                                    $dados = array(
+                                        'item_emprestimo' => $item_para_emprestimo,
+                                    );
+
+                                    $this->session->set_userdata($dados);
+                                }
+                            }
+                            redirect(base_url("emprestimo/novo_emprestimo/item"));
+                        } else {
+                            redirect(base_url("emprestimo/novo_emprestimo/item"));
                         }
-
-                        $dados = array(
-                            'item_emprestimo' => $item_para_emprestimo,
-                        );
-
-                        $this->session->set_userdata($dados);
-
-                        redirect(base_url("emprestimo/novo_emprestimo/item"));
                     }
                     break;
 
@@ -164,9 +224,10 @@ class Emprestimo extends CI_Controller {
 
                             foreach ($item_emprestimo as $ie) {
 
-                               $teste = array(
+                                $teste = array(
                                     'id_acao' => $id_acao,
                                     'id_item' => $ie['id_item'],
+                                    'status' => 1,
                                 );
                                 array_push($dados_item, $teste);
                             }
