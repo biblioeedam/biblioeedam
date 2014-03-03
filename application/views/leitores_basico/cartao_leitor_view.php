@@ -2,8 +2,13 @@
     table.table-collapsed{
         width: 600px;
     }
+    @media print{
+        #imprimir{
+            display: none;
+        }
+    }
 </style>
-<a onclick="print();return false" href="#"><span class="glyphicon glyphicon-print"></span></a>
+<a onclick="print();return false" href="#" id="imprimir"><span class="glyphicon glyphicon-print"></span></a>
 <table class="table table-bordered table-collapsed">
     <tbody>
         <tr>

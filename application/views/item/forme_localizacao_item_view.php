@@ -3,7 +3,8 @@
         <fieldset>
             <legend>
                 Localização
-            </legend>                <div class="row">
+            </legend>  
+            <div class="row">
                     <table class="table">
                         <thead>
                             <tr>

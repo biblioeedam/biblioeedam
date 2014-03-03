@@ -2,13 +2,18 @@
     table.table-collapsed{
         width: 750px;
     }
+    @media print{
+        #imprimir{
+            display: none;
+        }
+    }
 </style>
 <div class="col-lg-12">
         <fieldset>
             <legend>
                 Empréstimos Atrasados
             </legend>
-            <a onclick="print();return false" href="#"><span class="glyphicon glyphicon-print"></span></a>
+            <a onclick="print();return false" href="#" id="imprimir"><span class="glyphicon glyphicon-print"></span></a>
 
             <span class="text-danger"> 
                 <?php validation_errors(); ?>
