@@ -22,7 +22,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Ações <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo base_url("emprestimo") ?>"> Emprestimo</a></li>
-                        <li><a href="<?php echo base_url("#") ?>"> Devolução</a></li>
+                        <li><a href="<?php echo base_url("devolucao") ?>"> Devolução</a></li>
 
                     </ul>
                 </li>
