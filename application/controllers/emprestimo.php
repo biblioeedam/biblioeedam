@@ -18,16 +18,33 @@ class Emprestimo extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->helper('date');
         date_default_timezone_set('UTC');
+        $this->load->library("pagination");
     }
 
     public function index() {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario') == 1)) {
 
-
-            $dados = array(
-                'todos_emprestimos' => $this->emprestimo_model->obterTodosEmprestimos()->result()
-            );
+            //Configurações da paginação de dados
+            $config['base_url'] = base_url("emprestimo/index");
+            $config['total_rows'] = $this->emprestimo_model->obterTodosEmprestimos()->num_rows(); 
+            $config['per_page'] = 20;    
+            $qtde = $config['per_page'];
+            $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
+            $this->pagination->initialize($config);
+            
+            //verifica se exite valor no campo de busca na tabela de emprestimos 
+            $nome_leitor = $this->input->post('nome_busca_leitor');
+            if(!empty($nome_leitor)){
+                $dados = array(
+                    'todos_emprestimos' => $this->emprestimo_model->obterUmEmprestimo($nome_leitor)->result(),
+                );
+            }else{    
+                $dados = array(
+                    'todos_emprestimos' => $this->emprestimo_model->obterTodosEmprestimos($qtde,$inicio)->result(),
+                    'paginacao' => $this->pagination->create_links(),
+                );
+            }
 
             $this->load->view('tela/titulo');
             $this->load->view('tela/menu_basico');

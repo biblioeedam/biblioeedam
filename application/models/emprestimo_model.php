@@ -6,12 +6,26 @@ class Emprestimo_model extends CI_Model {
         $this->db->select('nome_leitor');
         return $this->db->get_where('leitor', array('id_leitor' => $id_leitor));
     }
-
-    function obterTodosEmprestimos() {
+    
+    //Pesquisa determinado leitor para o campo de busca de leitor
+    function obterUmEmprestimo($nome_leitor){
         $this->db->select("*");
         $this->db->from("acao A");
         $this->db->join("leitor L", "L.id_leitor=A.id_leitor");
         $this->db->where('id_tipo_acao ', 1);
+        $this->db->like('nome_leitor', $nome_leitor);
+        $this->db->order_by('A.data_acao','asc');
+        return $this->db->get();
+    }
+        
+    function obterTodosEmprestimos($qtde=0, $inicio=0) {
+        //parametros de paginação
+        if($qtde >0 ){$this->db->limit($qtde,$inicio);}
+        $this->db->select("*");
+        $this->db->from("acao A");
+        $this->db->join("leitor L", "L.id_leitor=A.id_leitor");
+        $this->db->where('id_tipo_acao ', 1);
+        $this->db->order_by('data_acao','asc');
         return $this->db->get();
     }
 
