@@ -97,8 +97,13 @@
 </div>
 <div class="col-lg-12">
     <h4>
-        itens disponiveisl para emprestimo
+        Itens
     </h4>
+    <form name="form_busca_itens" method="post" action="item"> 
+        <div class="col-sm-offset-0 col-sm-0">
+            <input type="text" name="num_registro" placeholder="Número de Registro"/> <input type="submit" name="botao" value="Buscar" class="btn btn-primary"/>  
+        </div>
+    </form>
     <table class="table">
         <thead>
             <tr>

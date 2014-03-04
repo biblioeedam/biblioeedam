@@ -38,9 +38,14 @@ class item_model extends CI_Model {
         return $query = $this->db->get('item');
     }
 
-    // obtendo um item pelo id
+    // obtem um item pelo id
     function obterItenSelecionado($id_item) {
         return $this->db->get_where('item', array('id_item' => $id_item));
+    }
+    
+    //obtem um item pelo numero de registro
+    function obterItemPeloNumeroRegistro($num_registro) {
+        return $this->db->get_where('item', array('numRegistro_item' => $num_registro));
     }
     
     //Salvando os dados do item

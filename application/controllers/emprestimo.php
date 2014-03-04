@@ -123,10 +123,16 @@ class Emprestimo extends CI_Controller {
                     break;
 
                 case "item": {
-
+                        
+                        $num_registro = $this->input->post('num_registro');
+                        if(!empty($num_registro)){
+                            $item = $this->item_model->obterItemPeloNumeroRegistro($num_registro)->result();
+                        }else{
+                            $item = $this->item_model->obterTodosItens()->result();
+                        }
+                        
                         $datestring = date('d/m/Y');
                         $time = time();
-                        $item = $this->item_model->obterTodosItens()->result();
                         $todos_itens = array();
 
                         foreach ($item as $ti) {
