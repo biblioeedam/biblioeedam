@@ -76,7 +76,9 @@ class Emprestimo extends CI_Controller {
                 case "leitor": {
 
                         $query;
-
+                        
+                         $this->session->unset_userdata(array('id_leitor' => "", 'nome_leitor' => "", 'item_emprestimo' => ""));
+                        
                         if (isset($_POST['pesquisaLeitor']) && isset($_POST['opcaoPesquisaLeitor'])) {
 
                             $opcao_leitor = $_POST['opcaoPesquisaLeitor'];
@@ -130,7 +132,7 @@ class Emprestimo extends CI_Controller {
                         $todos_itens = array();
 
                         foreach ($item as $ti) {
-                            $qtde = $this->emprestimo_model->obterQuantidadeItemDisponivel($ti->id_item);
+                            $qtde = $this->emprestimo_model->obterQuantidadeItemEmprestado($ti->id_item);
 
                             $ti->disponivel_item = $ti->quantidade_item - $qtde;
                             $todos_itens[] = $ti;
@@ -157,7 +159,7 @@ class Emprestimo extends CI_Controller {
                             $query = $this->item_model->obterItenSelecionado($id_item)->result();
                             $item = get_object_vars($query[0]);
 
-                            $qtde = $this->emprestimo_model->obterQuantidadeItemDisponivel($item['id_item']);
+                            $qtde = $this->emprestimo_model->obterQuantidadeItemEmprestado($item['id_item']);
 
                             if ($item['quantidade_item'] - $qtde > 1) {
                                 $verificar = false;
@@ -209,8 +211,12 @@ class Emprestimo extends CI_Controller {
                             redirect(base_url("emprestimo/novo_emprestimo/item"));
 
                         } else {
-
-                            if ((empty($this->session->userdata('id_leitor'))) or (empty($this->session->userdata('id_funcionario'))) or empty($this->session->userdata('item_emprestimo'))) {
+                            
+                            if(empty($this->session->userdata('id_leitor'))){
+                                redirect(base_url("emprestimo/novo_emprestimo/leitor"));
+                            }else{
+                            
+                            if ((empty($this->session->userdata('id_funcionario'))) or empty($this->session->userdata('item_emprestimo'))) {
                                 redirect(base_url("emprestimo/novo_emprestimo/item"));
                             } else {
 
@@ -250,6 +256,7 @@ class Emprestimo extends CI_Controller {
 
                                 redirect(base_url("emprestimo/novo_emprestimo/cancelar_emprestimo"));
                             }
+                        }
                         }
                     }
                     break;

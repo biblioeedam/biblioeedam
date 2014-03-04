@@ -41,235 +41,65 @@ class Devolucao extends CI_Controller {
     public function emprestimo() {
 
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario') == 1)) {
-
-
             $id_acao = $this->uri->segment(3);
 
             if (is_numeric($id_acao)) {
-                
-                $query = $this->emprestimo_model->obterEmprestimoSelecionado($id_acao)->result();
-                $emprestimo = get_object_vars($query[0]);
-                
 
-                $query = $this->emprestimo_model->obterItemAcaoEntrestimo($emprestimo['id_acao'])->result();
+                $query_emprestimo = $this->emprestimo_model->obterEmprestimoSelecionado($id_acao)->result();
+                $emprestimo = get_object_vars($query_emprestimo[0]);
+                $query_itens = $this->emprestimo_model->obterItemAcaoEntrestimo($emprestimo['id_acao'])->result();
 
 
+                $dados = array(
+                    'emprestimo' => $query_emprestimo,
+                    'itens_emprestimo' => $query_itens,
+                );
+
+
+                $this->load->view('tela/titulo');
+                $this->load->view('tela/menu_basico');
+                $this->load->view('devolucao/emprestimo_selecionado_view', $dados);
+                $this->load->view('tela/rodape');
+            } else {
+                redirect(base_url("devolucao/"));
             }
         } else {
             redirect(base_url() . "seguranca");
         }
     }
 
-    public function novo_emprestimo() {
-
+    public function receber() {
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario') == 1)) {
 
-            $opcao_novo_emprestimo = $this->uri->segment(3);
+            $url = $this->uri->uri_to_assoc(3);
 
-            switch ($opcao_novo_emprestimo) {
-                case "leitor": {
+            $id_item = $url['item'];
+            $id_acao = $url['emprestimo'];
 
-                        $query;
+            if ((is_numeric($id_item)) && (is_numeric($id_acao))) {
 
-                        if (isset($_POST['pesquisaLeitor']) && isset($_POST['opcaoPesquisaLeitor'])) {
+                $dados = array(
+                    'status' => 0,
+                );
 
-                            $opcao_leitor = $_POST['opcaoPesquisaLeitor'];
-                            $pesquisaLeitor = $_POST['pesquisaLeitor'];
+                $this->emprestimo_model->excluirItemEmprestado($dados, $id_acao, $id_item);
+                
+                $qtde = $this->emprestimo_model->obterQuantidadeItemEmprestadoPorAcao($id_acao);
+                if ($qtde <= 0) {
 
-                            if ($opcao_leitor == 'codigo') {
-                                if (is_numeric($pesquisaLeitor)) {
-                                    $query = $this->leitores_model->obterUmLeitor($pesquisaLeitor)->result();
-                                } else {
-                                    $query = $this->leitores_model->obtertodosleitores2()->result();
-                                }
-                            } else if ($opcao_leitor == 'nome') {
-                                $query = $this->leitores_model->obterUmLeitor2($pesquisaLeitor)->result();
-                            };
-                        } else {
-                            $query = $this->leitores_model->obtertodosleitores2()->result();
-                        };
-
-                        $dados = array(
-                            'todos_leitores' => $query,
-                        );
-
-                        $this->load->view('tela/titulo');
-                        $this->load->view('tela/menu_basico');
-                        $this->load->view('emprestimo/forme_novo_emprestimo_leitor_view', $dados);
-                        $this->load->view('tela/rodape');
-                    }
-                    break;
-
-                case "selecionar_leitor": {
-                        $id_leitor = $this->uri->segment(4);
-
-                        if (is_numeric($id_leitor)) {
-
-                            $query = $this->leitores_model->obterUmLeitor($id_leitor)->result();
-
-                            foreach ($query as $qr) {
-                                $this->session->set_userdata(array('id_leitor' => $qr->id_leitor, 'nome_leitor' => $qr->nome_leitor));
-                            }
-
-                            redirect(base_url('emprestimo/novo_emprestimo/item'));
-                        };
-                    }
-                    break;
-
-                case "item": {
-
-                        $datestring = date('d/m/Y');
-                        $time = time();
-                        $item = $this->item_model->obterTodosItens()->result();
-                        $todos_itens = array();
-
-                        foreach ($item as $ti) {
-                            $qtde = $this->emprestimo_model->obterQuantidadeItemDisponivel($ti->id_item);
-
-                            $ti->disponivel_item = $ti->quantidade_item - $qtde;
-                            $todos_itens[] = $ti;
-                        }
-
-
-
-                        $dados = array(
-                            'dtAtual' => mdate($datestring, $time),
-                            'tipos_item' => $this->emprestimo_model->obterTiposItem()->result(),
-                            'todos_itens' => $todos_itens
-                        );
-
-                        $this->load->view('tela/titulo');
-                        $this->load->view('tela/menu_basico');
-                        $this->load->view('emprestimo/forme_novo_emprestimo_item_view', $dados);
-                        $this->load->view('tela/rodape');
-                    }
-                    break;
-
-                case "incluir_item": {
-                        $id_item = $this->uri->segment(4);
-                        if (is_numeric($id_item)) {
-                            $query = $this->item_model->obterItenSelecionado($id_item)->result();
-                            $item = get_object_vars($query[0]);
-
-                            $qtde = $this->emprestimo_model->obterQuantidadeItemDisponivel($item['id_item']);
-
-                            if ($item['quantidade_item'] - $qtde > 1) {
-                                $verificar = false;
-
-                                if (!empty($this->session->userdata("item_emprestimo"))) {
-                                    $item_para_emprestimo = $this->session->userdata("item_emprestimo");
-                                    foreach ($item_para_emprestimo as $ipe) {
-                                        if ($ipe['id_item'] == $item['id_item']) {
-                                            $verificar = true;
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                if ($verificar == FALSE) {
-                                    foreach ($query as $qy) {
-                                        $item_para_emprestimo[] = array(
-                                            'id_item' => $qy->id_item,
-                                            'nome_item' => $qy->nome_item
-                                        );
-                                    }
-
-                                    $dados = array(
-                                        'item_emprestimo' => $item_para_emprestimo,
-                                    );
-
-                                    $this->session->set_userdata($dados);
-                                }
-                            }
-                            redirect(base_url("emprestimo/novo_emprestimo/item"));
-                        } else {
-                            redirect(base_url("emprestimo/novo_emprestimo/item"));
-                        }
-                    }
-                    break;
-
-                case "cacelar_itens_emprestimo": {
-                        $this->session->unset_userdata("item_emprestimo");
-                        redirect(base_url("emprestimo/novo_emprestimo/item"));
-                    }
-                    break;
-                case "salvar_emprestimo": {
-
-                        $this->form_validation->set_rules('dt_devolucao', 'Data de Devolução', 'required');
-
-
-                        if ($this->form_validation->run() == FALSE) {
-
-                            redirect(base_url("emprestimo/novo_emprestimo/item"));
-                        } else {
-
-                            if ((empty($this->session->userdata('id_leitor'))) or (empty($this->session->userdata('id_funcionario'))) or empty($this->session->userdata('item_emprestimo'))) {
-                                redirect(base_url("emprestimo/novo_emprestimo/item"));
-                            } else {
-
-                                $dados = array(
-                                    'data_acao' => date('Y-m-d'),
-                                    'dataDevolucao_acao' => implode("-", array_reverse(explode("/", $this->input->post('dt_devolucao')))),
-                                    'id_leitor' => $this->session->userdata('id_leitor'),
-                                    'id_funcionario' => $this->session->userdata('id_funcionario'),
-                                    'id_tipo_acao' => 1,
-                                );
-
-                                $query = $this->emprestimo_model->registraEmprestimo($dados)->result();
-
-                                $id_acao;
-
-                                foreach ($query as $qy) {
-                                    $id_acao = $qy->id_acao;
-                                }
-
-                                $dados_item = array();
-
-                                $item_emprestimo = $this->session->userdata('item_emprestimo');
-
-                                foreach ($item_emprestimo as $ie) {
-
-                                    $teste = array(
-                                        'id_acao' => $id_acao,
-                                        'id_item' => $ie['id_item'],
-                                        'status' => 1,
-                                    );
-                                    array_push($dados_item, $teste);
-                                }
-
-                                print_r($dados_item);
-
-                                $this->emprestimo_model->salvar_itens_emprestimo($dados_item);
-
-                                redirect(base_url("emprestimo/novo_emprestimo/cancelar_emprestimo"));
-                            }
-                        }
-                    }
-                    break;
-                case "cancelar_emprestimo": {
-                        $this->session->unset_userdata(array('id_leitor' => "", 'nome_leitor' => "", 'item_emprestimo' => ""));
-
-                        redirect(base_url("emprestimo"));
-                    }
-                    break;
+                    $dados = array(
+                        'id_tipo_acao' => 2,
+                    );
+                    $this->emprestimo_model->excluirEmprestimo($dados, $id_acao);
+                    redirect(base_url("devolucao/"));
+                } else {
+                    redirect(base_url("devolucao/emprestimo/" . $id_acao));
+                };
+            } else {
+                redirect(base_url("devolucao/"));
             }
         } else {
             redirect(base_url() . "seguranca");
-        }
-    }
-
-    public function obter_nome_leitor() {
-
-
-        if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario') == 1)) {
-
-// $id_leitor = $_POST['id_leitor'];
-// $resultado = $this->emprestimo_model->obterNomeLeitor($id_leitor)->result();
-
-            echo 'Hairton';
-        } else {
-//  redirect(base_url() . "seguranca");
-            echo 'ola';
         }
     }
 
