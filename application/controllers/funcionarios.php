@@ -96,6 +96,7 @@ class Funcionarios extends CI_Controller {
                         );
 
                 if($this->funcionario_model->salvarFuncionario($dados)){
+                    $this->session->set_flashdata('sucesso','Funcionario(a): '.$this->input->post('nome').', salvo com sucesso!');
                     redirect('funcionarios');
                 }
             }
@@ -184,7 +185,7 @@ class Funcionarios extends CI_Controller {
                 );
 
                 $this->funcionario_model->salvarFuncionarioAlterado($dados, $id_funcionario);
-
+                $this->session->set_flashdata('sucesso','Funcionario(a): '.$this->input->post('nome').', alterado com sucesso!');
                 redirect(base_url('funcionarios'));
             }
        }else {
@@ -208,7 +209,7 @@ class Funcionarios extends CI_Controller {
             } else {
 
                 $this->funcionario_model->excluirFuncionario($dados, $id_funcionario);
-
+                $this->session->set_flashdata('sucesso','Funcionario(a), excluido(a) com sucesso!');
                 redirect(base_url('funcionarios'));
             }
        }else{

@@ -128,7 +128,7 @@ class secao extends CI_Controller {
             }
 
             $this->secao_model->salvarSecaoPrateleira($dados_secao_prateleira);
-
+            $this->session->set_flashdata('sucesso','Seção, salva com sucesso!');
             redirect(base_url("secao"));
         }
     }
@@ -199,6 +199,7 @@ class secao extends CI_Controller {
             }
 
             $this->secao_model->salvarSecaoPrateleira($dados_secao_prateleira);
+            $this->session->set_flashdata('sucesso','Seção, alterada com sucesso!');
             redirect(base_url("secao"));
         }
     }
@@ -216,7 +217,7 @@ class secao extends CI_Controller {
                 $this->secao_model->excluirSecaoPrateleira($id_secao);
                 $this->secao_model->excluirSecao($id_secao);
             }
-
+            $this->session->set_flashdata('sucesso','Seção, excluída com sucesso!');
             redirect(base_url("secao"));
         }
     }

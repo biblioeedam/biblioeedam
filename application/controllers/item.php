@@ -136,7 +136,6 @@ class Item extends CI_Controller {
 
                 $id=$this->item_model->salvarItem($dados);
                 
-
                 redirect(base_url('item/localizacao_item/'.$id));
             }
         } else {
@@ -255,7 +254,7 @@ class Item extends CI_Controller {
 
                 // Enviando os dados para o model salvar a localização do item
                 $this->item_model->salvarItemSecaoOrdemItem($dados);
-
+                $this->session->set_flashdata('sucesso','Localização, salva com sucesso!');
                 // Redirecionando para a tebela de item
                 redirect(base_url("item"));
             }
@@ -411,6 +410,7 @@ class Item extends CI_Controller {
             );
             // enviando os dados para o model excluir o item
             $this->item_model->excluirItem($dados,$id_item);
+            $this->session->set_flashdata('sucesso','Item, excluido com sucesso!');
             // redirecionando para a tebela inicial de item.
             redirect(base_url('item'));
         }

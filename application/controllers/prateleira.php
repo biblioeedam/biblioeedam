@@ -79,7 +79,7 @@ class Prateleira extends CI_Controller {
             );
 
             $this->prateleira_model->salvarPrateleira($dados);
-
+            $this->session->set_flashdata('sucesso','Prateleira, salva com sucesso!');
             redirect(base_url('prateleira'));
         }
     }
@@ -129,7 +129,7 @@ class Prateleira extends CI_Controller {
             );
 
             $this->prateleira_model->salvarPrateleiraAlterada($dados, $id_prateleira);
-
+            $this->session->set_flashdata('sucesso','Prateleira, alterada com sucesso!');
             redirect(base_url('prateleira'));
         }
     }
@@ -147,6 +147,7 @@ class Prateleira extends CI_Controller {
             if ($qtde == 0) {
                 
                 $this->prateleira_model->excluirPrateleira($id_prateleira);
+                $this->session->set_flashdata('sucesso','Prateleira, excluída com sucesso!');
             }
 
              redirect(base_url('prateleira'));
