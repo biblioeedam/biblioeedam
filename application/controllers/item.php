@@ -18,6 +18,7 @@ class Item extends CI_Controller {
         $this->load->model("tipo_item_model");
         $this->load->model("secao_model");
         $this->load->library("pagination");
+        date_default_timezone_set('UTC');
     }
 
     public function index() {
@@ -113,7 +114,7 @@ class Item extends CI_Controller {
                 $qtd_item = $_POST['qtdItem'];
 
 
-                date_default_timezone_set('UTC');
+                
 
                 $dados = array(
                     'id_item' => '',
@@ -150,8 +151,8 @@ class Item extends CI_Controller {
            $id_item = $this->uri->segment(3);
 
             // verificando se o seguimento existe
-            if (empty($id_item)) {
-                //redirect(base_url("item"));
+            if (is_numeric($id_item)) {
+                redirect(base_url("item"));
             } else {
 
                 // verificando se a localização para o item já existe.
@@ -306,7 +307,7 @@ class Item extends CI_Controller {
         // capturando o seguimento 3 do url.
         $id_item = $this->uri->segment(3);
         // verificando se o seguimento 3 é vasiu
-        if (empty($id_item)) {
+        if (is_numeric($id_item)) {
             // redirecionando para a tabela de item.
             redirect(base_url('item'));
         } else {
@@ -399,8 +400,8 @@ class Item extends CI_Controller {
     public function excluir_item() {
         // Capturando o seguimento 3 da url que é o id do item a ser excluido
         $id_item = $this->uri->segment(3);
-        // verificando se o seguimente 3 existe o esta vasio
-        if (empty($id_item)) {
+        // verificando se o seguimente 3 existe ou esta vasio
+        if (!is_numeric($id_item)) {
             // redirecionando para a tabela inicial de item
             redirect(base_url('item'));
         } else {

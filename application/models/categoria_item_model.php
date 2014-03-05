@@ -12,17 +12,19 @@
  */
 class categoria_item_model extends CI_Model {
 
-    function obterTodasCategoriasItens($qtde=0,$inicio=0) {
+    function obterTodasCategoriasItens($qtde = 0, $inicio = 0) {
         //parametros de paginação
-        if($qtde >0 ){$this->db->limit($qtde,$inicio);}
-        $this->db->order_by('id_categoria_item','desc');
+        if ($qtde > 0) {
+            $this->db->limit($qtde, $inicio);
+        }
+        $this->db->order_by('id_categoria_item', 'desc');
         return $this->db->get('categoria_item');
     }
 
     function verificarCategoriaItemUtilisado($id_categoria_item) {
-        $this->db->select_max('id_categoria_item', 'cartegoria_item');
         $this->db->where('id_categoria_item', $id_categoria_item);
-        return $query = $this->db->get('item');
+        $this->db->from('item');
+        return $this->db->count_all_results();
     }
 
     function obterUmaCategoriaItem($id_categoria_item) {

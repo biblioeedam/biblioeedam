@@ -138,23 +138,18 @@ class Prateleira extends CI_Controller {
 
         $id_prateleira = $this->uri->segment(3);
 
-        if (empty($id_prateleira)) {
+        if (!is_numeric($id_prateleira)) {
             redirect(base_url('prateleira'));
         } else {
-            $verificador = 0;
-            $query = $this->prateleira_model->verificarPrateleiraUtilisada($id_prateleira)->result();
-            foreach ($query as $qy) {
-                $verificador = $qy->prateleira;
-            }
-
-            if ($verificador > 0) {
+            
+            $qtde = $this->prateleira_model->verificarPrateleiraUtilisada($id_prateleira);
+            
+            if ($qtde == 0) {
                 
-            } else {
-
                 $this->prateleira_model->excluirPrateleira($id_prateleira);
             }
 
-            redirect(base_url('prateleira'));
+             redirect(base_url('prateleira'));
         }
     }
 

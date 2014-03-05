@@ -114,7 +114,7 @@
                         <div class="col-sm-10">
                             <select name="tipoItem" class="form-control" id="tipoItem" >
                                 <option value="">Selecione uma Tipo</option>
-                                <option value=""> <a href="globo.com.br"> testiculo </a>  </option>  
+                                
                                 
                                 <?php
                                 foreach ($tipo_item as $ti) {
