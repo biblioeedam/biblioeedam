@@ -123,6 +123,7 @@ if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('n
                     'referencia_residencia_leitor' => $this->input->post('referencia_residencia_leitor'),
                 );
                 if($this->leitores_model->salvarLeitor($dados)){
+                    $this->session->set_flashdata('sucesso','Leitor: '.$this->input->post('nome_leitor').', salvo com sucesso!');
                     redirect('leitores');
                 } 
             }
@@ -313,7 +314,7 @@ if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('n
                 );
 
                 $this->leitores_model->salvarLeitorAlterado($dados, $id_leitor);
-
+                $this->session->set_flashdata('sucesso','Leitor: '.$nome_leitor.', alterado com sucesso!');
                 redirect(base_url('leitores'));
             }
         }else{
