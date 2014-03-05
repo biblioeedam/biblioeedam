@@ -17,6 +17,7 @@ class Relatorios extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->helper('date');
         $this->load->library("pagination");
+        date_default_timezone_set('UTC');
     }
     
     public function tabela_leitores_pendentes(){

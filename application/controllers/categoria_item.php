@@ -138,20 +138,19 @@ class Categoria_item extends CI_Controller {
 
         $id_categoria_item = $this->uri->segment(3);
 
-        if (empty($id_categoria_item)) {
+        if (!is_numeric($id_categoria_item)) {
             redirect(base_url('categoria_item'));
         } else {
-            $verificador = 0;
-            $query = $this->categoria_item_model->verificarCategoriaItemUtilisado($id_categoria_item)->result();
-            foreach ($query as $qy) {
-                $verificador = $qy->categoria_item;
-            }
-
-            if ($verificador > 0) {
-                
+            
+            $qtde = $this->categoria_item_model->verificarCategoriaItemUtilisado($id_categoria_item);
+         
+            if ($qtde > 0) {
+                redirect(base_url('categoria_item/'));
             } else {
                 $this->categoria_item_model->excluirCategoriaItem($id_categoria_item);
             }
+            
+            
             redirect(base_url('categoria_item'));
         }
     }

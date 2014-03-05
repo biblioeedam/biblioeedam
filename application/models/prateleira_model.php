@@ -19,9 +19,9 @@ class prateleira_model extends CI_Model {
     }
 
     function verificarPrateleiraUtilisada($id_prateleira) {
-        $this->db->select_max('prateleira_id_prateleira', 'prateleira');
-        $this->db->where('prateleira_id_prateleira', $id_prateleira);
-        return $query = $this->db->get('secao_prateleira');
+        $this->db->where('id_prateleira', $id_prateleira);
+        $query = $this->db->from('secao_prateleira');
+        return $this->db->count_all_results();
     }
 
     function obterUmaPrateleira($id_prateleira) {

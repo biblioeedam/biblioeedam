@@ -23,14 +23,14 @@ class Tipo_item extends CI_Controller {
 
             //Configurações da paginação de dados
             $config['base_url'] = base_url("tipo_item/index");
-            $config['total_rows'] = $this->tipo_item_model->obterTodosTiposItens()->num_rows(); 
-            $config['per_page'] = 20;    
+            $config['total_rows'] = $this->tipo_item_model->obterTodosTiposItens()->num_rows();
+            $config['per_page'] = 20;
             $qtde = $config['per_page'];
             $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
             $this->pagination->initialize($config);
-            
+
             $dados = array(
-                'todos_tipos_itens' => $this->tipo_item_model->obterTodosTiposItens($qtde,$inicio)->result(),
+                'todos_tipos_itens' => $this->tipo_item_model->obterTodosTiposItens($qtde, $inicio)->result(),
                 'paginacao' => $this->pagination->create_links(),
             );
 
@@ -138,17 +138,13 @@ class Tipo_item extends CI_Controller {
 
         $id_tipo_item = $this->uri->segment(3);
 
-        if (empty($id_tipo_item)) {
+        if (!is_numeric($id_tipo_item)) {
             redirect(base_url('tipo_item'));
         } else {
-            $verificador = 0;
-            $query = $this->tipo_item_model->verificarTipoItemUtilisado($id_tipo_item)->result();
-            foreach ($query as $qy) {
-                $verificador = $qy->tipo_item;
-            }
+            $qtde = $this->tipo_item_model->verificarTipoItemUtilisado($id_tipo_item);
 
-            if ($verificador > 0) {
-                
+            if ($qtde > 0) {
+                redirect(base_url("tipo_item"));
             } else {
 
                 $this->tipo_item_model->excluirTipoItem($id_tipo_item);

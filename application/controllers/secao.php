@@ -33,16 +33,16 @@ class secao extends CI_Controller {
 
             //Configurações da paginação de dados
             $config['base_url'] = base_url("secao/index");
-            $config['total_rows'] = $this->secao_model->obterTodasSecoes()->num_rows(); 
-            $config['per_page'] = 20;    
+            $config['total_rows'] = $this->secao_model->obterTodasSecoes()->num_rows();
+            $config['per_page'] = 20;
             $qtde = $config['per_page'];
             $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
             $this->pagination->initialize($config);
-            
+
             $prateleiras = '';
 
             $todas_secoes = array();
-            foreach ($this->secao_model->obterTodasSecoes($qtde,$inicio)->result() as $td) {
+            foreach ($this->secao_model->obterTodasSecoes($qtde, $inicio)->result() as $td) {
                 $query = $this->secao_model->obterPrateleirasPorSecao($td->id_secao)->result();
                 foreach ($query as $qy) {
                     $prateleiras = $prateleiras . '<button class="btn btn-default">' . $qy->nome_prateleira . '</button>';
@@ -206,12 +206,17 @@ class secao extends CI_Controller {
     public function excluir_secao() {
         $id_secao = $this->uri->segment(3);
 
-        if (empty($id_secao)) {
+        if (!is_numeric($id_secao)) {
             redirect(base_url("secao"));
         } else {
 
-            $this->secao_model->excluirSecaoPrateleira($id_secao);
-            $this->secao_model->excluirSecao($id_secao);
+            $qtde = $this->secao_model->verificarSecaoUtilizada($id_secao);
+
+            if($qtde==0) {
+                $this->secao_model->excluirSecaoPrateleira($id_secao);
+                $this->secao_model->excluirSecao($id_secao);
+            }
+
             redirect(base_url("secao"));
         }
     }

@@ -20,9 +20,11 @@ class tipo_item_model extends CI_Model {
     }
 
     function verificarTipoItemUtilisado($id_tipo_item) {
-        $this->db->select_max('id_tipo_item', 'tipo_item');
+ 
         $this->db->where('id_tipo_item', $id_tipo_item);
-        return $query = $this->db->get('item');
+        $this->db->from('item');
+        return $this->db->count_all_results();
+        
     }
 
     function obterUmTipoItem($id_tipo_item) {

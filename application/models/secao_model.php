@@ -12,9 +12,11 @@
  */
 class secao_model extends CI_Model {
 
-    function obterTodasSecoes($qtde=0,$inicio=0) {
-        if($qtde >0 ){$this->db->limit($qtde,$inicio);}
-        $this->db->order_by('id_secao','desc');
+    function obterTodasSecoes($qtde = 0, $inicio = 0) {
+        if ($qtde > 0) {
+            $this->db->limit($qtde, $inicio);
+        }
+        $this->db->order_by('id_secao', 'desc');
         return $this->db->get('secao');
     }
 
@@ -44,17 +46,12 @@ class secao_model extends CI_Model {
         $this->db->join('prateleira P', 'SP.id_prateleira=P.id_prateleira');
         $this->db->where('S.id_secao', $id_secao);
         return $this->db->get();
-        /*
-         * SELECT
-          nome_prateleira
-          FROM
-          secao S
-          INNER JOIN secao_prateleira SP on(S.id_secao=SP.secao_id_secao)
-          INNER JOIN prateleira P on(P.id_prateleira=SP.prateleira_id_prateleira)
-          where
-          S.id_secao = 5
-         * 
-         */
+    }
+
+    function verificarSecaoUtilizada($id_secao) {
+        $this->db->where('id_secao', $id_secao);
+        $query = $this->db->from('item_secao_ordem_item');
+        return $this->db->count_all_results();
     }
 
     function salvarSecaoAlterada($dados, $id_secao) {
