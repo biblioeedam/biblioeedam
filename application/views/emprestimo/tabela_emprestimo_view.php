@@ -1,7 +1,7 @@
 <div class="col-lg-12">
-    <h3>Emprestimo</h3>
+    <h3>Empréstimo</h3>
 
-    <a class="btn btn-default" href="<?php echo base_url("emprestimo/novo_emprestimo/leitor"); ?>" title="Novo Emprestimo">Novo Emprestimo</a>
+    <a class="btn btn-default" href="<?php echo base_url("emprestimo/novo_emprestimo/leitor"); ?>" title="Novo Emprestimo">Novo Empréstimo</a>
     <br/>
     <br/>
     <form name="form_busca_leitor" method="post" action="emprestimo"> 

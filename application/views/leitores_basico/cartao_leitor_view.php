@@ -44,7 +44,7 @@
         </thead>
         <tbody>
             <?php
-                for ($i=0; $i<=30; $i++){
+                for ($i=0; $i<=17; $i++){
                     echo '<tr>
                             <td>.</td>
                             <td>.</td>

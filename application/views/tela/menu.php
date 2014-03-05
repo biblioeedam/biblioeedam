@@ -30,7 +30,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Pessoas <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo base_url("leitores") ?>"> Leitores</a></li>
-                        <li><a href="<?php echo base_url("funcionarios") ?>"> Funcionarios</a></li>
+                        <li><a href="<?php echo base_url("funcionarios") ?>"> Funcionários</a></li>
 
                     </ul>
                 </li>

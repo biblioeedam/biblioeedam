@@ -3,9 +3,9 @@
 
     <!--<a class="btn btn-default" href="<?php //  echo base_url("emprestimo/novo_emprestimo/leitor"); ?>" title="Novo Emprestimo">Novo Emprestimo</a>-->
 
-    <form name="form_busca_funcionario" method="post" action="funcionarios"> 
+    <form name="form_busca_leitor" method="post" action="devolucao"> 
         <div class="col-sm-offset-0 col-sm-0">
-            <input type="text" name="nome_busca_funcionario" placeholder="Nome do Funcionario"/> <input type="submit" name="botao" value="Buscar" class="btn btn-primary"/>  
+            <input type="text" name="nome_leitor" placeholder="Nome do Leitor"/> <input type="submit" name="botao" value="Buscar" class="btn btn-primary"/>  
         </div>
     </form>
     
@@ -26,7 +26,7 @@
                 <tr>
                     <td><?php echo $te->id_acao ?></td>
                     <td><?php echo $te->nome_leitor ?></td>
-                    <td><?php echo $te->data_acao ?></td>
+                    <td><?php echo implode("/",array_reverse(explode("-",$te->data_acao))); ?></td>
                     <td><a class="btn btn-default" href="javascript:void(0)" onclick="Emprestimo.verItemEmprestimo('<?php echo $te->id_acao ?>')"> Ver itens </a></td>
                     <td><a class="btn btn-primary" href="<?php echo base_url("devolucao/emprestimo/".$te->id_acao) ?>" > Devolver </a></td>
                 </tr>

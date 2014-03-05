@@ -33,8 +33,8 @@
                 <thead>
                     <tr>
                         <th>Nome Leitor</th>
-                        <th>Emprestiomo</th>
-                        <th>Iniciado em</th>
+                        <th>Empréstimo</th>
+                        <th>Emprestado em</th>
                         <th>Devolver em</th>
                     </tr>
                 </thead>
@@ -45,8 +45,8 @@
 
                                 <td><?php echo $em->nome_leitor ?></td>
                                 <td><?php echo $em->id_acao ?></td>
-                                <td><?php echo $em->data_acao ?></td>
-                                <td><?php echo $em->dataDevolucao_acao ?></td>
+                                <td><?php echo implode("/",array_reverse(explode("-",$em->data_acao))) ?></td>
+                                <td><?php echo implode("/",array_reverse(explode("-",$em->dataDevolucao_acao))) ?></td>
 
 
                             </tr>
