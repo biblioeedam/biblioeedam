@@ -70,6 +70,14 @@ class Relatorios extends CI_Controller {
         
         if (($this->session->userdata('id_funcionario')) && ($this->session->userdata('nome_funcionario')) && ($this->session->userdata('login_funcionario')) && ($this->session->userdata('senha_funcionario')) && ($this->session->userdata('status_funcionario')==1) && ($this->session->userdata('privilegio_funcionario')==2)) {            
            
+            //Configurações da paginação de dados
+            $config['base_url'] = base_url("relatorios/busca_leitor");
+            $config['total_rows'] = $this->leitores_model->obterTodosLeitores()->num_rows(); 
+            $config['per_page'] = 20;    
+            $qtde = $config['per_page'];
+            $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
+            $this->pagination->initialize($config);
+            
             //verifica se exite valor no campo de busca na tabela de leitores 
             $nome_leitor = $this->input->post('nome_busca_leitor');
             if(!empty($nome_leitor)){
@@ -80,10 +88,14 @@ class Relatorios extends CI_Controller {
                 $this->load->view('tela/menu');
                 $this->load->view('relatorios/relatorio_dados_leitor/busca_leitor_view',$dados);
                 $this->load->view('tela/rodape');
-            }else{    
+            }else{  
+                $dados = array(
+                    'todos_leitores' => $this->leitores_model->obterTodosLeitores($qtde,$inicio)->result(),
+                    'paginacao' => $this->pagination->create_links()
+                );
                 $this->load->view('tela/titulo');
                 $this->load->view('tela/menu');
-                $this->load->view('relatorios/relatorio_dados_leitor/busca_leitor_view');
+                $this->load->view('relatorios/relatorio_dados_leitor/busca_leitor_view',$dados);
                 $this->load->view('tela/rodape');
             }
             
