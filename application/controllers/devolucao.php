@@ -108,6 +108,7 @@ class Devolucao extends CI_Controller {
                         'id_tipo_acao' => 2,
                     );
                     $this->emprestimo_model->excluirEmprestimo($dados, $id_acao);
+                    $this->session->set_flashdata('sucesso','Item(ns), devolvido(s) com sucesso!');
                     redirect(base_url("devolucao/"));
                 } else {
                     redirect(base_url("devolucao/emprestimo/" . $id_acao));

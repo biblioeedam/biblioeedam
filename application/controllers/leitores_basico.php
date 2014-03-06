@@ -126,6 +126,7 @@ class Leitores_basico extends CI_Controller {
                     'referencia_residencia_leitor' => $this->input->post('referencia_residencia_leitor'),
                 );
                 if($this->leitores_model->salvarLeitor($dados)){
+                    $this->session->set_flashdata('sucesso','Leitor: '.$this->input->post('nome_leitor').', salvo com sucesso!');
                     redirect('leitores_basico');
                 } 
             }
@@ -318,7 +319,7 @@ class Leitores_basico extends CI_Controller {
                 );
 
                 $this->leitores_model->salvarLeitorAlterado($dados, $id_leitor);
-
+                $this->session->set_flashdata('sucesso','Leitor: '.$nome_leitor.', alterado com sucesso!');
                 redirect(base_url('leitores_basico'));
             }
         }else{

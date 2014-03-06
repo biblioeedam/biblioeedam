@@ -77,7 +77,7 @@ class Emprestimo extends CI_Controller {
 
                         $query;
                         
-                         $this->session->unset_userdata(array('id_leitor' => "", 'nome_leitor' => "", 'item_emprestimo' => ""));
+                        $this->session->unset_userdata(array('id_leitor' => "", 'nome_leitor' => "", 'item_emprestimo' => ""));
                         
                         if (isset($_POST['pesquisaLeitor']) && isset($_POST['opcaoPesquisaLeitor'])) {
 
@@ -109,17 +109,26 @@ class Emprestimo extends CI_Controller {
                     break;
 
                 case "selecionar_leitor": {
+                    
                         $id_leitor = $this->uri->segment(4);
 
                         if (is_numeric($id_leitor)) {
+                            
+                            //Verifica se o leitor possui itens atrasados
+                            if($this->leitores_model->obterItensAtrasados($id_leitor)->result()){
+                                
+                                $this->session->set_flashdata('sucesso','O Leitor possui pendências, não é possível fazer empréstimos!');
+                                redirect(base_url('emprestimo/novo_emprestimo/leitor'));
+                                
+                            }else{
+                                
+                                $query = $this->leitores_model->obterUmLeitor($id_leitor)->result();
 
-                            $query = $this->leitores_model->obterUmLeitor($id_leitor)->result();
-
-                            foreach ($query as $qr) {
-                                $this->session->set_userdata(array('id_leitor' => $qr->id_leitor, 'nome_leitor' => $qr->nome_leitor));
+                                foreach ($query as $qr) {
+                                    $this->session->set_userdata(array('id_leitor' => $qr->id_leitor, 'nome_leitor' => $qr->nome_leitor));
+                                }
+                                redirect(base_url('emprestimo/novo_emprestimo/item'));
                             }
-
-                            redirect(base_url('emprestimo/novo_emprestimo/item'));
                         };
                     }
                     break;
@@ -259,7 +268,7 @@ class Emprestimo extends CI_Controller {
                                 print_r($dados_item);
 
                                 $this->emprestimo_model->salvar_itens_emprestimo($dados_item);
-
+                                
                                 redirect(base_url("emprestimo/novo_emprestimo/cancelar_emprestimo"));
                             }
                         }
@@ -268,7 +277,7 @@ class Emprestimo extends CI_Controller {
                     break;
                 case "cancelar_emprestimo": {
                         $this->session->unset_userdata(array('id_leitor' => "", 'nome_leitor' => "", 'item_emprestimo' => ""));
-
+                        $this->session->set_flashdata('sucesso','Empréstimo, realizado com sucesso!');
                         redirect(base_url("emprestimo"));
                     }
                     break;

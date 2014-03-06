@@ -1,4 +1,10 @@
-
+<script type="text/javascript">
+    $(document).ready(function(){
+        if("<?php echo $this->session->flashdata('sucesso')?>"){
+            alert("<?php echo $this->session->flashdata('sucesso')?>");
+        }
+    });
+</script>
 <div class="col-lg-12">
     <form class="form-horizontal" role="form" action="<?php echo base_url('emprestimo/novo_emprestimo/leitor') ?>" method="post">
         <fieldset>
