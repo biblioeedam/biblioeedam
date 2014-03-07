@@ -35,7 +35,7 @@
                 Sistema Biblioteca
             </div>
             <div class="col-lg-9">
-                <a href="<?php echo base_url()."/../../" ?>" class="btn btn-large btn-primary"> Voltar para o inicio </a> 
+                <!--<a href="<?php //echo base_url()."/../../" ?>" class="btn btn-large btn-primary"> Voltar para o inicio </a> -->
             </div>
         </div>
 
