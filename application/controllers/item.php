@@ -150,7 +150,7 @@ class Item extends CI_Controller {
            $id_item = $this->uri->segment(3);
 
             // verificando se o seguimento existe
-            if (is_numeric($id_item)) {
+            if (!is_numeric($id_item)) {
                 redirect(base_url("item"));
             } else {
 
@@ -306,7 +306,7 @@ class Item extends CI_Controller {
         // capturando o seguimento 3 do url.
         $id_item = $this->uri->segment(3);
         // verificando se o seguimento 3 é vasiu
-        if (is_numeric($id_item)) {
+        if (!is_numeric($id_item)) {
             // redirecionando para a tabela de item.
             redirect(base_url('item'));
         } else {
