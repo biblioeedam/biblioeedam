@@ -293,7 +293,7 @@ class Item extends CI_Controller {
 
                 // eviando os dado para o model alterar os dados no banco de dados
                 $this->item_model->AlterarItemSecaoOrdemItem($dados, $id_item);
-
+                $this->session->set_flashdata('sucesso','Localização, alterada com sucesso!');
                 redirect(base_url("item"));
             }
         } else {

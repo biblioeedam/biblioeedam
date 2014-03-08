@@ -60,7 +60,7 @@
                             <?php
                             foreach ($ordem_item as $oi) {
                                 if ($oi->id_ordem_item == $id_ordem) {
-                                     echo $oi->nome_ordem_item ;
+                                     //echo $oi->nome_ordem_item ;
                                 }
                             }
                             ?>

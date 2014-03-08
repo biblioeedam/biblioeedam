@@ -32,10 +32,10 @@
     <body>
         <div class="nav navbar" style="background-color: #eee;">
             <div class="col-lg-3 pull-right" >
-                Sistema Biblioteca
+                Sistema de Gestão Biblioteca
             </div>
             <div class="col-lg-9">
-                <!--<a href="<?php //echo base_url()."/../../" ?>" class="btn btn-large btn-primary"> Voltar para o inicio </a> -->
+                <a href="#<?php //echo base_url()."/../../" ?>" class="btn btn-large btn-primary"> Biblioteca EEDAM </a>
             </div>
         </div>
 
