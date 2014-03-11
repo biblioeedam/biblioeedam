@@ -79,7 +79,7 @@ class Categoria_item extends CI_Controller {
             );
 
             $this->categoria_item_model->salvarCategoriaItem($dados);
-
+            $this->session->set_flashdata('sucesso','Categoria, salva com sucesso!');
             redirect(base_url('categoria_item'));
         }
     }
@@ -129,7 +129,7 @@ class Categoria_item extends CI_Controller {
             );
 
             $this->categoria_item_model->salvarCategoriaItemAlterada($dados, $id_categoria_item);
-
+            $this->session->set_flashdata('sucesso','Categoria, alterada com sucesso!');
             redirect(base_url('categoria_item'));
         }
     }
@@ -148,6 +148,7 @@ class Categoria_item extends CI_Controller {
                 redirect(base_url('categoria_item/'));
             } else {
                 $this->categoria_item_model->excluirCategoriaItem($id_categoria_item);
+                $this->session->set_flashdata('sucesso','Categoria, excluída com sucesso!');
             }
             
             

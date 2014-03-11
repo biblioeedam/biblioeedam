@@ -1,3 +1,10 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+        if("<?php echo $this->session->flashdata('sucesso')?>"){
+            alert("<?php echo $this->session->flashdata('sucesso')?>");
+        }
+    });
+</script>
 <div class="col-lg-12">
     <h3>Categoria Item</h3>
 

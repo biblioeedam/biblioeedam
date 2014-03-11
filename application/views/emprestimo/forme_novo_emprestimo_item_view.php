@@ -44,7 +44,7 @@
             </div>
             <div class="col-sm-3 thumbnail tamanhoIguais">
 
-                <strong>Item emprestado</strong>
+                <strong>Itens adicionados para empréstimo</strong>
 
                 <?php if (!empty($this->session->userdata("item_emprestimo"))) { ?>
                     <a class = "btn" href ="<?php echo base_url("emprestimo/novo_emprestimo/cacelar_itens_emprestimo") ?> "> Limpar </a >
