@@ -60,6 +60,7 @@ class Leitores_model extends CI_Model {
         $this->db->join('item_acao', 'item.id_item = item_acao.id_item');
         $this->db->join('acao', 'item_acao.id_acao = acao.id_acao');
         $this->db->join('leitor', 'acao.id_leitor = leitor.id_leitor');
+        $this->db->where('item_acao.status', 1);
         $this->db->where('acao.dataDevolucao_acao <', date('Y-m-d'));
         $this->db->where('acao.id_leitor', $id_leitor);
         $this->db->order_by('item_acao.id_acao');

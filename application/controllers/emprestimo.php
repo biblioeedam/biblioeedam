@@ -176,7 +176,7 @@ class Emprestimo extends CI_Controller {
 
                             $qtde = $this->emprestimo_model->obterQuantidadeItemEmprestado($item['id_item']);
 
-                            if ($item['quantidade_item'] - $qtde > 1) {
+                            if ($item['quantidade_item'] - $qtde > 0) {
                                 $verificar = false;
 
                                 if (!empty($this->session->userdata("item_emprestimo"))) {
@@ -268,8 +268,9 @@ class Emprestimo extends CI_Controller {
                                 print_r($dados_item);
 
                                 $this->emprestimo_model->salvar_itens_emprestimo($dados_item);
-                                
-                                redirect(base_url("emprestimo/novo_emprestimo/cancelar_emprestimo"));
+                                $this->session->unset_userdata(array('id_leitor' => "", 'nome_leitor' => "", 'item_emprestimo' => ""));
+                                $this->session->set_flashdata('sucesso','Empréstimo, realizado com sucesso!');
+                                redirect(base_url("emprestimo"));
                             }
                         }
                         }
@@ -277,7 +278,7 @@ class Emprestimo extends CI_Controller {
                     break;
                 case "cancelar_emprestimo": {
                         $this->session->unset_userdata(array('id_leitor' => "", 'nome_leitor' => "", 'item_emprestimo' => ""));
-                        $this->session->set_flashdata('sucesso','Empréstimo, realizado com sucesso!');
+                        $this->session->set_flashdata('sucesso','Empréstimo cancelado!');
                         redirect(base_url("emprestimo"));
                     }
                     break;
