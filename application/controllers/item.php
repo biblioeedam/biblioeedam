@@ -387,7 +387,7 @@ class Item extends CI_Controller {
 
 
                 $this->item_model->salvarItemAlterado($dados, $id_item);
-
+                $this->session->set_flashdata('sucesso','Localização, alterada com sucesso!');
                 redirect(base_url('item'));
             }
         } else {

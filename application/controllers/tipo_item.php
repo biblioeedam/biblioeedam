@@ -79,6 +79,7 @@ class Tipo_item extends CI_Controller {
             );
 
             $this->tipo_item_model->salvarTipoItem($dados);
+            $this->session->set_flashdata('sucesso','Tipo de Item, salvo com sucesso!');
 
             redirect(base_url('tipo_item'));
         }
@@ -129,6 +130,7 @@ class Tipo_item extends CI_Controller {
             );
 
             $this->tipo_item_model->salvarTipoItemAlterada($dados, $id_tipo_item);
+            $this->session->set_flashdata('sucesso','Tipo de Item, alterado com sucesso!');
 
             redirect(base_url('tipo_item'));
         }
@@ -148,6 +150,8 @@ class Tipo_item extends CI_Controller {
             } else {
 
                 $this->tipo_item_model->excluirTipoItem($id_tipo_item);
+                $this->session->set_flashdata('sucesso','Tipo de Item, excluído com sucesso!');
+
             }
 
             redirect(base_url('tipo_item'));
