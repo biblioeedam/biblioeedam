@@ -10,7 +10,17 @@
             monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
             monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
         });
+        
     });
+    
+    var n = 0;
+    function qtd_itens(){
+        n = 5;
+        alert(n);
+        location.href("link");
+    }
+    
+    
 </script>
 
 <style>
@@ -53,7 +63,7 @@
                         $item_em_emprestimo = $this->session->userdata("item_emprestimo");
 
                         foreach ($item_em_emprestimo as $iee) {
-                            echo $iee['id_item'] . " | " . $iee['nome_item'] . "<br/>";
+                            echo $iee['nome_item'] . "- Qtde:".$iee['nome_item'] ."<br/>";
                         }
                         ?>
                     </p>
@@ -108,9 +118,10 @@
                 <td>Nome</td>
                 <td>Registro</td>
                 <td>Autor</td>
-                <td>Volume</td>
+                <!--Aqui foi removido o volume a pedido do cliente eeddam-->
                 <td>Quantidade</td>
                 <td>Disponível</td>
+                <td>Quant.p/Emprest.</td>
                 <td>incluir</td>
             </tr>
         </thead>
@@ -122,7 +133,7 @@
                         <td><?php echo $ti->nome_item ?></td>
                         <td><?php echo $ti->numRegistro_item ?></td>
                         <td><?php echo $ti->autor_item ?></td>
-                        <td><?php echo $ti->volume_item ?></td>
+                        <!--<td><?php //echo $ti->volume_item ?></td>-->
                         <td><?php echo $ti->quantidade_item ?></td>
                         <td><?php
                             if ($ti->disponivel_item > 1) {
@@ -132,9 +143,15 @@
                                 <span class="text-danger"><?php echo $ti->disponivel_item; ?></span>
                                 <?php
                             }
-                            ?></td>
-
-                        <td><a class="btn btn-primary" href="<?php echo base_url('emprestimo/novo_emprestimo/incluir_item/' . $ti->id_item) ?>">incluir</a></td>
+                            ?>
+                        </td>
+                        
+                        <td>
+                            
+                            <input name="quant_emprest" id="<?php echo $ti->id_item; ?>" type="text" size="10" onBlur="qtd_itens();"/>
+                            
+                        </td>
+                        <td><a class="btn btn-primary" href="<?php echo base_url('emprestimo/novo_emprestimo/incluir_item/'. $ti->id_item.'/');?>">incluir</a></td>
                     </tr>
                 <?php  } ?>
 <?php } ?>

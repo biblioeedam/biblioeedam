@@ -49,6 +49,7 @@ class Leitores_model extends CI_Model {
         $this->db->from('leitor');
         $this->db->join('acao', 'acao.id_leitor = leitor.id_leitor');
         $this->db->where('acao.dataDevolucao_acao <', date('Y-m-d'));
+        $this->db->where('acao.id_tipo_acao', 1);
         $this->db->group_by('leitor.id_leitor');
         return $this->db->get();
     }

@@ -18,7 +18,7 @@
                                 <td>Registro</td>
                                 <td>Autor</td>
                                 <td>Origem</td>
-                                <td>Volume</td>
+                                <td>Quantidade</td>
                                 <td>Editora</td>
 
                             </tr>
@@ -32,7 +32,7 @@
                                     <td><?php echo $ti->numRegistro_item ?></td>
                                     <td><?php echo $ti->autor_item ?></td>
                                     <td><?php echo $ti->origem_item ?></td>
-                                    <td><?php echo $ti->volume_item ?></td>
+                                    <td><?php echo $ti->quantidade_item ?></td>
                                     <td><?php echo $ti->editora_item ?></td>
                                 </tr>
                             <?php } ?>

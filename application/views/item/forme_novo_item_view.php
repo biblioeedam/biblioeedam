@@ -42,12 +42,24 @@
                         </span>
                     </div>
                 </div>
+                <!--
                 <div class="form-group">
                     <label for="volumeItem" class="col-sm-2 control-label">Volume</label>
-                    <div class="col-sm-10">
-                        <input name="volumeItem" class="form-control" id="volumeItem" value="<?php echo set_value('volumeItem'); ?>" placeholder="Volume">
+                    <div class="col-sm-10">-->
+                        <!--Não tem mais função para o cliente eedam/ Todos os volumes vão receber valor 1.-->
+                        <input type="hidden" name="volumeItem" class="form-control" id="volumeItem" value="1" placeholder="Volume">
+                        <!--
                         <span class="text-danger"> 
-                            <?php echo form_error('volumeItem'); ?>
+                            <?php //echo form_error('volumeItem'); ?>
+                        </span>
+                    </div>
+                </div>-->
+                <div class="form-group">
+                    <label for="qtdItem" class="col-sm-2 control-label">Quantidade</label>
+                    <div class="col-sm-10">
+                        <input name="qtdItem" class="form-control" id="qtdItem" value="<?php echo set_value('qtdItem'); ?>" placeholder="Quantidade de Itens">
+                        <span class="text-danger"> 
+                            <?php echo form_error('qtdItem'); ?>
                         </span>
                     </div>
                 </div>
@@ -110,15 +122,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="qtdItem" class="col-sm-2 control-label">Quantidade</label>
-                    <div class="col-sm-10">
-                        <input name="qtdItem" class="form-control" id="qtdItem" value="<?php echo set_value('qtdItem'); ?>" placeholder="Quantidade de Itens">
-                        <span class="text-danger"> 
-                            <?php echo form_error('qtdItem'); ?>
-                        </span>
-                    </div>
-                </div>
+                
             </div>
 
             <div class="form-group">

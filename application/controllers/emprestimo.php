@@ -208,6 +208,7 @@ class Emprestimo extends CI_Controller {
                         } else {
                             redirect(base_url("emprestimo/novo_emprestimo/item"));
                         }
+                        $this->session->set_flashdata('sucesso','Sucesso!');
                     }
                     break;
 

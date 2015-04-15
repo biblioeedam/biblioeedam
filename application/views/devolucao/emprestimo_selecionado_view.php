@@ -66,9 +66,9 @@
                 <td>Nome</td>
                 <td>Registro</td>
                 <td>Autor</td>
-                <td>Volume</td>
+                <!--<td>Volume</td>
                 <td>Quantidade</td>
-                <td>incluir</td>
+                <td>incluir</td>-->
             </tr>
         </thead>
         <tbody>
@@ -78,8 +78,9 @@
                         <td><?php echo $ti->nome_item ?></td>
                         <td><?php echo $ti->numRegistro_item ?></td>
                         <td><?php echo $ti->autor_item ?></td>
-                        <td><?php echo $ti->volume_item ?></td>
-                        <td><?php echo $ti->quantidade_item ?></td>
+                        <!--<td><?php //echo $ti->volume_item ?></td>-->
+                        <!--Consertar isso aqui-->
+                        <td><?php //echo $ti->quantidade_item ?></td>
                         <td><a class="btn btn-primary" href="<?php echo base_url('devolucao/receber/emprestimo/' . $ti->id_acao.'/item/'.$ti->id_item) ?>"> Receber </a></td>
                     </tr>
                 <?php } ?>
